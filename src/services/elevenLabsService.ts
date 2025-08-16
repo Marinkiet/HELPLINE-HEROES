@@ -11,7 +11,7 @@ class ElevenLabsService {
 
   async generateSpeech(config: AudioConfig): Promise<string> {
     // Use child voice for game content
-    const voiceId = config.voiceId || VOICE_IDS.child;
+    const voiceId = config.voiceId || 'vGQNBgLaiM3EdZtxIiuY'; // Default to child voice
     
     console.log(`🎵 Generating speech for: "${config.text.substring(0, 50)}..." in ${config.language} with voice ${voiceId}`);
     
