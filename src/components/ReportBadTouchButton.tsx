@@ -6,7 +6,6 @@ import { elevenLabsService } from '../services/elevenLabsService';
 export function ReportBadTouchButton() {
   const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -81,8 +80,6 @@ export function ReportBadTouchButton() {
       {/* Button */}
       <div
         className="relative flex items-center justify-center w-32 h-32 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsModalOpen(true)}
         aria-label="Report Bad Touch - Call for help"
         role="button"
@@ -94,15 +91,6 @@ export function ReportBadTouchButton() {
         }}
       >
         <Shield className="w-16 h-16 text-white" />
-        
-        {/* Tooltip on hover */}
-        {isHovered && (
-          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-            <div className="font-bold">Report Bad Touch</div>
-            {/* Arrow pointing down */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
-          </div>
-        )}
       </div>
 
       {/* Simplified Modal for Children */}
