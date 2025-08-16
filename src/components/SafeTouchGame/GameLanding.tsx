@@ -20,12 +20,18 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
   useEffect(() => {
     // Generate audio for welcome message
     const generateAudio = async () => {
-      const url = await elevenLabsService.generateSpeech({
-        language: selectedLanguage,
-        text: gameContent.welcome[selectedLanguage],
-        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
-      });
-      setAudioUrl(url);
+      try {
+        console.log('Generating welcome audio for language:', selectedLanguage);
+        const url = await elevenLabsService.generateSpeech({
+          language: selectedLanguage,
+          text: gameContent.welcome[selectedLanguage],
+          voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+        });
+        console.log('Audio URL generated:', url ? 'Success' : 'Failed');
+        setAudioUrl(url);
+      } catch (error) {
+        console.error('Failed to generate audio:', error);
+      }
     };
     
     generateAudio();
@@ -94,7 +100,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
             audioUrl={audioUrl}
             isPlaying={isPlaying}
             onPlayStateChange={setIsPlaying}
-            autoPlay={isNarrationEnabled}
+            autoPlay={true}
           />
         </div>
 

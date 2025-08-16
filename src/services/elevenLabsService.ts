@@ -14,8 +14,10 @@ class ElevenLabsService {
     // Use child voice for game content
     const voiceId = config.voiceId || VOICE_IDS.child;
     
+    console.log(`Generating speech for: "${config.text.substring(0, 50)}..." in ${config.language}`);
+    
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 200));
     
     // In a real implementation, this would make an actual API call:
     /*
@@ -40,8 +42,34 @@ class ElevenLabsService {
     return URL.createObjectURL(audioBlob);
     */
     
-    // For demo, return a placeholder audio URL
-    return `data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT`;
+    // For demo, create a simple beep sound using Web Audio API
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      // Create a simple pleasant tone
+      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4 note
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      
+      // Create a blob URL for the audio
+      const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+      
+      for (let i = 0; i < data.length; i++) {
+        data[i] = Math.sin(2 * Math.PI * 440 * i / audioContext.sampleRate) * 0.1;
+      }
+      
+      // Convert to blob and return URL
+      const audioBlob = new Blob([buffer], { type: 'audio/wav' });
+      return URL.createObjectURL(audioBlob);
+    } catch (error) {
+      console.warn('Web Audio API not supported, using fallback');
+      // Fallback to a data URL with a simple audio file
+      return `data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT`;
+    }
   }
 
   async preloadAudio(texts: Record<string, string>): Promise<Record<string, string>> {

@@ -15,41 +15,84 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !audioUrl) return;
+    if (!audio) return;
 
     const handleEnded = () => onPlayStateChange(false);
     const handlePlay = () => onPlayStateChange(true);
     const handlePause = () => onPlayStateChange(false);
+    const handleError = (e: Event) => {
+      console.error('Audio playback error:', e);
+      onPlayStateChange(false);
+    };
 
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
+    audio.addEventListener('error', handleError);
 
-    if (autoPlay && isNarrationEnabled) {
-      audio.play().catch(console.error);
+    // Handle audio URL changes and autoplay
+    if (audioUrl) {
+      audio.src = audioUrl;
+      audio.load(); // Ensure audio is loaded
+      
+      if (autoPlay && isNarrationEnabled) {
+        // Small delay to ensure audio is ready
+        setTimeout(() => {
+          audio.play().catch((error) => {
+            console.warn('Audio autoplay prevented by browser:', error);
+            // Don't set playing state if autoplay fails
+          });
+        }, 100);
+      }
+    } else if (isPlaying) {
+      // Stop playing if no audio URL
+      audio.pause();
+      onPlayStateChange(false);
     }
 
     return () => {
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('error', handleError);
     };
-  }, [audioUrl, onPlayStateChange, autoPlay]);
+  }, [audioUrl, onPlayStateChange, autoPlay, isNarrationEnabled]);
+
+  // Handle narration toggle changes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !audioUrl) return;
+
+    if (!isNarrationEnabled && isPlaying) {
+      audio.pause();
+    }
+  }, [isNarrationEnabled, audioUrl, isPlaying]);
 
   const togglePlayback = () => {
     if (!isNarrationEnabled) return;
     
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !audioUrl) return;
 
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch(console.error);
+      audio.play().catch((error) => {
+        console.error('Manual audio play failed:', error);
+      });
     }
   };
 
-  if (!audioUrl) return null;
+  if (!audioUrl) {
+    return (
+      <div className="flex items-center space-x-2">
+        <div className="p-2 rounded-full bg-gray-200 text-gray-400">
+          <VolumeX className="w-4 h-4" />
+        </div>
+        <span className="text-sm text-gray-500">Loading audio...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center space-x-2">
@@ -65,7 +108,13 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
       >
         {isPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
-      <audio ref={audioRef} src={audioUrl} preload="auto" />
+      <audio ref={audioRef} preload="auto" />
+      {isNarrationEnabled && (
+        <span className="text-sm text-green-600 font-medium">Narration ON</span>
+      )}
+      {!isNarrationEnabled && (
+        <span className="text-sm text-red-600 font-medium">Narration OFF</span>
+      )}
     </div>
   );
 }

@@ -34,29 +34,39 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
   const generateScenarioAudio = async () => {
     if (!currentScenarioData) return;
     
-    const text = currentScenarioData[selectedLanguage];
-    const url = await elevenLabsService.generateSpeech({
-      language: selectedLanguage,
-      text,
-      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
-    });
-    setAudioUrl(url);
+    try {
+      const text = currentScenarioData[selectedLanguage];
+      console.log('Generating scenario audio:', text.substring(0, 50) + '...');
+      const url = await elevenLabsService.generateSpeech({
+        language: selectedLanguage,
+        text,
+        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+      });
+      setAudioUrl(url);
+    } catch (error) {
+      console.error('Failed to generate scenario audio:', error);
+    }
   };
 
   const generateFeedbackAudio = async () => {
-    const feedbackKey = lastAnswerCorrect ? 'correct' : 'incorrect';
-    let text = gameContent.feedback[feedbackKey][selectedLanguage];
-    
-    if (lastAnswerCorrect && currentScenarioData) {
-      text += ' ' + currentScenarioData.explanation[selectedLanguage];
+    try {
+      const feedbackKey = lastAnswerCorrect ? 'correct' : 'incorrect';
+      let text = gameContent.feedback[feedbackKey][selectedLanguage];
+      
+      if (lastAnswerCorrect && currentScenarioData) {
+        text += ' ' + currentScenarioData.explanation[selectedLanguage];
+      }
+      
+      console.log('Generating feedback audio:', text.substring(0, 50) + '...');
+      const url = await elevenLabsService.generateSpeech({
+        language: selectedLanguage,
+        text,
+        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+      });
+      setAudioUrl(url);
+    } catch (error) {
+      console.error('Failed to generate feedback audio:', error);
     }
-    
-    const url = await elevenLabsService.generateSpeech({
-      language: selectedLanguage,
-      text,
-      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
-    });
-    setAudioUrl(url);
   };
 
   const handleAnswer = (answer: 'good' | 'bad') => {
@@ -158,7 +168,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                   audioUrl={audioUrl}
                   isPlaying={isPlaying}
                   onPlayStateChange={setIsPlaying}
-                  autoPlay={isNarrationEnabled}
+                  autoPlay={true}
                 />
               </div>
 
@@ -207,7 +217,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                   audioUrl={audioUrl}
                   isPlaying={isPlaying}
                   onPlayStateChange={setIsPlaying}
-                  autoPlay={isNarrationEnabled}
+                  autoPlay={true}
                 />
               </div>
 

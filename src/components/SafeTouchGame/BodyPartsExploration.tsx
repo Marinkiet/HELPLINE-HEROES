@@ -29,23 +29,33 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
   const generateBodyPartAudio = async () => {
     if (!hoveredArea) return;
     
-    const text = gameContent.bodyParts[currentBodyPart][selectedLanguage];
-    const url = await elevenLabsService.generateSpeech({
-      language: selectedLanguage,
-      text,
-      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
-    });
-    setAudioUrl(url);
+    try {
+      const text = gameContent.bodyParts[currentBodyPart][selectedLanguage];
+      console.log('Generating body part audio:', text.substring(0, 50) + '...');
+      const url = await elevenLabsService.generateSpeech({
+        language: selectedLanguage,
+        text,
+        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+      });
+      setAudioUrl(url);
+    } catch (error) {
+      console.error('Failed to generate body part audio:', error);
+    }
   };
 
   const generateTrustedAdultsAudio = async () => {
-    const text = gameContent.trustedAdults[selectedLanguage];
-    const url = await elevenLabsService.generateSpeech({
-      language: selectedLanguage,
-      text,
-      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
-    });
-    setAudioUrl(url);
+    try {
+      const text = gameContent.trustedAdults[selectedLanguage];
+      console.log('Generating trusted adults audio:', text.substring(0, 50) + '...');
+      const url = await elevenLabsService.generateSpeech({
+        language: selectedLanguage,
+        text,
+        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+      });
+      setAudioUrl(url);
+    } catch (error) {
+      console.error('Failed to generate trusted adults audio:', error);
+    }
   };
 
   const handleBodyPartHover = (area: string) => {
@@ -203,7 +213,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                 audioUrl={audioUrl}
                 isPlaying={isPlaying}
                 onPlayStateChange={setIsPlaying}
-                autoPlay={isNarrationEnabled}
+                autoPlay={true}
               />
             </div>
 
