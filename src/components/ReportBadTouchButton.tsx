@@ -9,20 +9,11 @@ export function ReportBadTouchButton() {
   const [isHovered, setIsHovered] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
-  const [backButtonAudio, setBackButtonAudio] = useState<string>('');
-  const [isPlayingBackButton, setIsPlayingBackButton] = useState(false);
 
   // Generate audio when modal opens
   useEffect(() => {
     if (isModalOpen && isNarrationEnabled) {
       generateModalAudio();
-    }
-  }, [isModalOpen, selectedLanguage, isNarrationEnabled]);
-
-  useEffect(() => {
-    // Pre-generate back button audio
-    if (isModalOpen && isNarrationEnabled) {
-      generateBackButtonAudio();
     }
   }, [isModalOpen, selectedLanguage, isNarrationEnabled]);
 
@@ -54,50 +45,6 @@ export function ReportBadTouchButton() {
       }
     } catch (error) {
       console.error('Failed to generate modal audio:', error);
-    }
-  };
-
-  const generateBackButtonAudio = async () => {
-    try {
-      const backButtonTexts = {
-        en: "Click the blue button to go back to the games and continue learning about safety!",
-        af: "Klik op die blou knoppie om terug te gaan na die speletjies en voort te gaan om oor veiligheid te leer!",
-        zu: "Chofoza inkinobho eluhlaza okwesibhakabhaka ukuze ubuyele emidlalweni futhi uqhubeke nokufunda ngokuphepha!"
-      };
-      
-      console.log('🎵 Generating back button audio...');
-      
-      const url = await elevenLabsService.generateSpeech({
-        language: selectedLanguage,
-        text: backButtonTexts[selectedLanguage],
-        voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child-friendly voice
-      });
-      
-      setBackButtonAudio(url);
-    } catch (error) {
-      console.error('Failed to generate back button audio:', error);
-    }
-  };
-
-  const playBackButtonNarration = async () => {
-    if (!backButtonAudio || !isNarrationEnabled) return;
-    
-    try {
-      console.log('🔊 Playing back button narration...');
-      const audio = new Audio(backButtonAudio);
-      audio.volume = 0.8;
-      
-      audio.addEventListener('play', () => setIsPlayingBackButton(true));
-      audio.addEventListener('ended', () => setIsPlayingBackButton(false));
-      audio.addEventListener('error', (e) => {
-        console.error('❌ Back button audio playback error:', e);
-        setIsPlayingBackButton(false);
-      });
-      
-      await audio.play();
-    } catch (error) {
-      console.error('❌ Failed to play back button audio:', error);
-      setIsPlayingBackButton(false);
     }
   };
 
@@ -206,22 +153,18 @@ export function ReportBadTouchButton() {
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className={`px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-2xl transition-all duration-200 transform hover:scale-105 ${
-                  isPlayingBackButton ? 'ring-3 ring-blue-300 animate-pulse' : ''
-                }`}
-                onMouseEnter={playBackButtonNarration}
-                aria-label="Go back to safety games"
+                className="px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-colors duration-200"
               >
-                🎮 Back to Games
+                I'm OK - Go Back
               </button>
             </div>
 
             {/* Audio indicator */}
-            {(isPlaying || isPlayingBackButton) && (
+            {isPlaying && (
               <div className="text-center mt-3">
                 <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">
                   <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                  <span>🔊 {isPlayingBackButton ? 'Back to games message' : 'Listening to help message'}</span>
+                  <span>🔊 Listening to help message</span>
                 </div>
               </div>
             )}
