@@ -158,7 +158,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                   audioUrl={audioUrl}
                   isPlaying={isPlaying}
                   onPlayStateChange={setIsPlaying}
-                  autoPlay={true}
+                  autoPlay={isNarrationEnabled}
                 />
               </div>
 
@@ -207,7 +207,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                   audioUrl={audioUrl}
                   isPlaying={isPlaying}
                   onPlayStateChange={setIsPlaying}
-                  autoPlay={true}
+                  autoPlay={isNarrationEnabled}
                 />
               </div>
 
