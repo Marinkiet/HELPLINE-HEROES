@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Menu, Home, Phone, BookOpen, Volume2, VolumeX, Globe } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
@@ -63,28 +63,6 @@ export function Navigation() {
             </button>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-6">
-            <a href="#home" className="flex items-center space-x-2 text-white font-bold hover:text-yellow-300 transition-colors duration-200">
-              <Home className="w-5 h-5" />
-              <span>Home</span>
-            </a>
-            <a href="#help" className="flex items-center space-x-2 text-white font-bold hover:text-yellow-300 transition-colors duration-200">
-              <Phone className="w-5 h-5" />
-              <span>Get Help</span>
-            </a>
-            <a href="#resources" className="flex items-center space-x-2 text-white font-bold hover:text-yellow-300 transition-colors duration-200">
-              <BookOpen className="w-5 h-5" />
-              <span>Resources</span>
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <button className="text-white hover:text-yellow-300 transition-colors duration-200">
-              <Menu className="w-8 h-8" />
-            </button>
-          </div>
         </div>
 
         {/* Mobile Narration Controls */}

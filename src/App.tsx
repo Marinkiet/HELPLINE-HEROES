@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { AudioProvider } from './contexts/AudioContext';
 import { Navigation } from './components/Navigation';
-import { HelplineBar } from './components/HelplineBar';
 import { FeaturedSection } from './components/FeaturedSection';
 import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
@@ -62,7 +61,6 @@ function App() {
     <AudioProvider>
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <HelplineBar />
           <Navigation />
           <div className="w-full"
           style={{
