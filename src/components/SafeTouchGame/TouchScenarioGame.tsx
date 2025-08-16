@@ -60,7 +60,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
         text,
-        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+        voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice
       });
       setAudioUrl(url);
     } catch (error) {
