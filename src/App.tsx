@@ -107,7 +107,7 @@ function App() {
                     <ReportBadTouchButton />
                   </div>
                   <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
-                    🛡️ Learn how to stay safe, help friends, and be brave! 💪
+                     Learn how to stay safe, help friends, and be brave! 
                   </p>
                 </div>
               </div>
