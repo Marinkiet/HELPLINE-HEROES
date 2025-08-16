@@ -38,8 +38,6 @@ export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps)
       case 'scenarios':
         return (
           <TouchScenarioGame
-            selectedLanguage={selectedLanguage}
-            onLanguageChange={setSelectedLanguage}
             onComplete={onClose}
           />
         );
