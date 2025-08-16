@@ -56,7 +56,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
     <div className=" rounded-3xl p-8 my-10 shadow-2xl ">
       <div className="flex items-center mb-6">
         <Star className="w-8 h-8 text-yellow-300 mr-3" />
-        <h2 className="text-3xl font-black text-white">Featured Safety Adventures</h2>
+        <h2 className="text-3xl font-black text-white">Safety Adventures</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
