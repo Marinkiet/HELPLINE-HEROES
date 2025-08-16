@@ -35,7 +35,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
         text,
-        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+        voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice
       });
       setAudioUrl(url);
     } catch (error) {
@@ -50,7 +50,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
         text,
-        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
+        voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice
       });
       setAudioUrl(url);
     } catch (error) {
