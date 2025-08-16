@@ -11,7 +11,6 @@ interface SafeTouchGameContainerProps {
 
 export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps) {
   const [currentStage, setCurrentStage] = useState<GameStage>('landing');
-  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'af' | 'zu'>('en');
 
   const handleStageComplete = (nextStage: GameStage) => {
     setCurrentStage(nextStage);
@@ -29,8 +28,6 @@ export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps)
       case 'exploration':
         return (
           <BodyPartsExploration
-            selectedLanguage={selectedLanguage}
-            onLanguageChange={setSelectedLanguage}
             onComplete={() => handleStageComplete('scenarios')}
           />
         );

@@ -86,7 +86,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
           </h1>
           <LanguageSelector 
             selectedLanguage={selectedLanguage}
-            onLanguageChange={onLanguageChange}
+            onLanguageChange={setSelectedLanguage}
           />
         </div>
 
