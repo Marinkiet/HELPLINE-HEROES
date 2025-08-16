@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sun, ArrowRight, Check } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
-import { LanguageSelector } from '../LanguageSelector';
 import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
@@ -11,7 +10,7 @@ interface BodyPartsExplorationProps {
 }
 
 export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) {
-  const { selectedLanguage, setSelectedLanguage, isNarrationEnabled } = useAudio();
+  const { selectedLanguage, isNarrationEnabled } = useAudio();
   const [currentBodyPart, setCurrentBodyPart] = useState<'upperBody' | 'lowerBody'>('upperBody');
   const [showTrustedAdults, setShowTrustedAdults] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
@@ -80,14 +79,10 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
     <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-center items-center mb-6">
           <h1 className="text-3xl font-black text-white">
             Body Safety Explorer
           </h1>
-          <LanguageSelector 
-            selectedLanguage={selectedLanguage}
-            onLanguageChange={setSelectedLanguage}
-          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

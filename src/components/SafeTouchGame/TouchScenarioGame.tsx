@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, RotateCcw, Trophy } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
-import { LanguageSelector } from '../LanguageSelector';
 import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
@@ -11,7 +10,7 @@ interface TouchScenarioGameProps {
 }
 
 export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
-  const { selectedLanguage, setSelectedLanguage, isNarrationEnabled } = useAudio();
+  const { selectedLanguage, isNarrationEnabled } = useAudio();
   const [currentScenario, setCurrentScenario] = useState(0);
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -126,7 +125,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-center items-center mb-6">
           <div className="flex items-center space-x-4">
             <h1 className="text-3xl font-black text-white">
               Good Touch vs Bad Touch
@@ -137,10 +136,6 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
               </span>
             </div>
           </div>
-          <LanguageSelector 
-            selectedLanguage={selectedLanguage}
-            onLanguageChange={setSelectedLanguage}
-          />
         </div>
 
         {/* Score */}
