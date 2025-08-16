@@ -5,10 +5,7 @@ class ElevenLabsService {
   private baseUrl = 'https://api.elevenlabs.io/v1';
   
   constructor() {
-    // TO USE REAL ELEVEN LABS API:
-    // 1. Get your API key from https://elevenlabs.io/
-    // 2. Set this.apiKey = 'your-actual-api-key-here'
-    // 3. Uncomment the real API implementation in generateSpeech method
+    // Real Eleven Labs API key - replace with your actual key from https://elevenlabs.io/
     this.apiKey = 'sk_8bf03898286bfe228254410a9b3251d00cb8383132b37287';
   }
 
@@ -18,13 +15,13 @@ class ElevenLabsService {
     
     console.log(`🎵 Generating speech for: "${config.text.substring(0, 50)}..." in ${config.language} with voice ${voiceId}`);
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // Simulate API call delay for demo
+    await new Promise(resolve => setTimeout(resolve, 200));
     
-    // REAL ELEVEN LABS API IMPLEMENTATION (UNCOMMENT WHEN YOU HAVE API KEY):
-    /*
-    if (this.apiKey !== 'demo-key') {
+    // REAL ELEVEN LABS API IMPLEMENTATION
+    if (this.apiKey && this.apiKey !== 'demo-key') {
       try {
+        console.log('🔗 Attempting real Eleven Labs API call...');
         const response = await fetch(`${this.baseUrl}/text-to-speech/${voiceId}`, {
           method: 'POST',
           headers: {
@@ -47,18 +44,20 @@ class ElevenLabsService {
         if (response.ok) {
           const audioBlob = await response.blob();
           const audioUrl = URL.createObjectURL(audioBlob);
-          console.log('✅ Real Eleven Labs audio generated successfully!');
+          console.log('✅ Real Eleven Labs speech generated successfully!');
           return audioUrl;
         } else {
-          console.error('❌ Eleven Labs API error:', response.status, response.statusText);
+          const errorText = await response.text();
+          console.error('❌ Eleven Labs API error:', response.status, response.statusText, errorText);
         }
       } catch (error) {
         console.error('❌ Eleven Labs API request failed:', error);
       }
     }
-    */
     
-    // ENHANCED SIMULATED AUDIO (Remove this when using real API)
+    console.log('⚠️ Falling back to simulated audio...');
+    
+    // FALLBACK SIMULATED AUDIO (Used when API fails or no key provided)
     try {
       console.log('🔊 Creating enhanced simulated audio...');
       
@@ -109,7 +108,7 @@ class ElevenLabsService {
       console.log('✅ Enhanced simulated audio created successfully!');
       return audioUrl;
     } catch (error) {
-      console.warn('⚠️ Enhanced audio creation failed, using fallback:', error);
+      console.warn('⚠️ Simulated audio creation failed, using simple fallback:', error);
       // Simple fallback
       return this.createSimpleBeep();
     }
