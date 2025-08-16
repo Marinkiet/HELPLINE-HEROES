@@ -1,9 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Shield, X, AlertTriangle } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { elevenLabsService } from '../services/elevenLabsService';
 
 export function ReportBadTouchButton() {
+  const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string>('');
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Generate audio when modal opens
+  useEffect(() => {
+    if (isModalOpen && isNarrationEnabled) {
+      generateModalAudio();
+    }
+  }, [isModalOpen, selectedLanguage, isNarrationEnabled]);
+
+  const generateModalAudio = async () => {
+    try {
+      const modalText = getModalText();
+      console.log('🎵 Generating Report Bad Touch modal audio...');
+      
+      const url = await elevenLabsService.generateSpeech({
+        language: selectedLanguage,
+        text: modalText,
+        voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child-friendly voice
+      });
+      
+      setAudioUrl(url);
+      
+      // Auto-play the audio
+      if (url) {
+        const audio = new Audio(url);
+        audio.addEventListener('play', () => setIsPlaying(true));
+        audio.addEventListener('ended', () => setIsPlaying(false));
+        audio.addEventListener('error', () => setIsPlaying(false));
+        
+        setTimeout(() => {
+          audio.play().catch(error => {
+            console.warn('Audio autoplay prevented:', error);
+          });
+        }, 500);
+      }
+    } catch (error) {
+      console.error('Failed to generate modal audio:', error);
+    }
+  };
+
+  const getModalText = () => {
+    const texts = {
+      en: "Hi there! If someone touched you in a way that made you feel scared or uncomfortable, you can call 116 to talk to a kind adult who will help you. Only call if you really need help. Don't call to play games.",
+      af: "Hallo daar! As iemand jou geraak het op 'n manier wat jou bang of ongemaklik laat voel het, kan jy 116 bel om met 'n vriendelike volwassene te praat wat jou sal help. Bel net as jy regtig hulp nodig het. Moenie bel om speletjies te speel nie.",
+      zu: "Sawubona! Uma umuntu ekuthinte ngendlela eyakwenza wazizwa wesaba noma ungakhululekile, ungashayela u-116 ukukhuluma nomuntu omdala onobubele ozokusiza. Shayela kuphela uma udinga usizo ngempela. Ungashayeli ukudlala imidlalo."
+    };
+    return texts[selectedLanguage];
+  };
 
   const handleCall = () => {
     // Show additional confirmation before making the call
@@ -28,7 +80,7 @@ export function ReportBadTouchButton() {
     <>
       {/* Button */}
       <div
-        className="relative flex items-center justify-center w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
+        className="relative flex items-center justify-center w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsModalOpen(true)}
@@ -41,94 +93,86 @@ export function ReportBadTouchButton() {
           }
         }}
       >
-        <Shield className="w-10 h-10 text-white" />
+        <Shield className="w-8 h-8 text-white" />
         
         {/* Tooltip on hover */}
         {isHovered && (
-          <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
             <div className="font-bold">Report Bad Touch</div>
-            <div className="text-xs">Call 116 for help</div>
             {/* Arrow pointing down */}
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
           </div>
         )}
       </div>
 
-      {/* Modal */}
+      {/* Simplified Modal for Children */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl transform animate-bounce-in">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl transform animate-bounce-in">
             {/* Close button */}
-            <div className="flex justify-end mb-4">
+            <div className="flex justify-end mb-2">
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
                 aria-label="Close"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Modal content */}
+            {/* Simplified content for children */}
             <div className="text-center mb-6">
-              <div className="bg-red-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                <Phone className="w-10 h-10 text-red-600" />
+              <div className="bg-red-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Phone className="w-8 h-8 text-red-600" />
               </div>
-              <h2 className="text-2xl font-black text-gray-800 mb-4">Need Help Right Now?</h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                Childline (116) is here to help children who feel unsafe, scared, or have experienced bad touch.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                A kind, trusted adult will listen to you and help you feel safe again. You are brave for asking for help.
+              <h2 className="text-xl font-black text-gray-800 mb-3">Need Help? 🤗</h2>
+              <p className="text-base text-gray-700 leading-relaxed mb-4">
+                If someone touched you in a way that made you feel scared or uncomfortable, you can call <strong>116</strong> to talk to a kind adult who will help you.
               </p>
             </div>
 
-            {/* Warning section */}
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl mb-6">
-              <div className="flex items-start mb-2">
-                <AlertTriangle className="w-5 h-5 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold text-yellow-800 mb-1">VERY IMPORTANT:</h3>
-                  <p className="text-yellow-700 text-sm leading-relaxed">
-                    This number is only for children who really need help. Calling for fun, games, or pranks is wrong and stops other children from getting the help they need. Only call if you truly need help.
-                  </p>
-                </div>
+            {/* Simple warning */}
+            <div className="bg-yellow-100 border border-yellow-300 rounded-xl p-3 mb-4">
+              <div className="flex items-center justify-center mb-2">
+                <AlertTriangle className="w-5 h-5 text-yellow-600 mr-2" />
+                <span className="font-bold text-yellow-800 text-sm">Important!</span>
               </div>
-            </div>
-
-            {/* What happens when you call */}
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-xl mb-6">
-              <h3 className="font-bold text-blue-800 mb-2">What happens when you call:</h3>
-              <ul className="text-blue-700 text-sm space-y-1">
-                <li>• A caring adult will answer and listen to you</li>
-                <li>• They will believe you and take you seriously</li>
-                <li>• They will help you figure out what to do</li>
-                <li>• You can talk about anything that makes you feel unsafe</li>
-                <li>• The call is free and confidential</li>
-              </ul>
+              <p className="text-yellow-700 text-sm text-center">
+                Only call if you really need help. Don't call to play games! 🚫
+              </p>
             </div>
 
             {/* Action buttons */}
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-3">
               <button
                 onClick={handleCall}
-                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2 text-lg"
+                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black py-3 px-4 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2"
               >
-                <Phone className="w-6 h-6" />
-                <span>Call 116 Now - I Need Help</span>
+                <Phone className="w-5 h-5" />
+                <span>Call 116 - I Need Help</span>
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-6 py-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-colors duration-200 text-lg"
+                className="px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-colors duration-200"
               >
-                Cancel - I Don't Need Help Right Now
+                I'm OK - Go Back
               </button>
             </div>
 
-            {/* Additional reassurance */}
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500">
-                Remember: You are brave, you are important, and you deserve to feel safe. 💙
+            {/* Audio indicator */}
+            {isPlaying && (
+              <div className="text-center mt-3">
+                <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  <span>🔊 Listening to help message</span>
+                </div>
+              </div>
+            )}
+
+            {/* Simple reassurance */}
+            <div className="mt-4 text-center">
+              <p className="text-xs text-gray-500">
+                You are brave and important! 💙
               </p>
             </div>
           </div>

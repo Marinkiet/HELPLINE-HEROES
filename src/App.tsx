@@ -102,7 +102,7 @@ function App() {
                     <h1 className="text-4xl md:text-6xl font-black text-purple-800 leading-tight">
                       You Are a
                       <br />
-                      <span className="text-blue-600">Helpline Hero!</span>
+                <div className="flex items-center justify-center space-x-6 mb-4">
                     </h1>
                     <ReportBadTouchButton />
                   </div>
