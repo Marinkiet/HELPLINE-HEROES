@@ -61,12 +61,6 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
       aria-label={`Learn about ${title}`}
     >
-      {featured && (
-        <div className="absolute -top-2 -right-2 bg-yellow-400 rounded-full p-2 border-2 border-white shadow-lg">
-          <Shield className="w-5 h-5 text-purple-600" />
-        </div>
-      )}
-      
       {isPlayingNarration && (
         <div className="absolute -top-2 -left-2 bg-blue-500 rounded-full p-2 border-2 border-white shadow-lg animate-bounce">
           <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
