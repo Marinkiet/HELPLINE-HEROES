@@ -27,7 +27,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
         const url = await elevenLabsService.generateSpeech({
           language: selectedLanguage,
           text: gameContent.welcome[selectedLanguage],
-          voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice
+          voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice - friendly narrator
         });
         console.log('Audio URL generated:', url ? 'Success' : 'Failed');
         setAudioUrl(url);
