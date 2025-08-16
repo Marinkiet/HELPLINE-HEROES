@@ -21,7 +21,7 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
     const handlePlay = () => onPlayStateChange(true);
     const handlePause = () => onPlayStateChange(false);
     const handleError = (e: Event) => {
-      console.error('Audio playback error:', e);
+      console.error('🔊 Audio playback error:', e);
       onPlayStateChange(false);
     };
 
@@ -32,20 +32,23 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
 
     // Handle audio URL changes and autoplay
     if (audioUrl) {
+      console.log('🎵 Loading new audio URL:', audioUrl.substring(0, 50) + '...');
       audio.src = audioUrl;
       audio.load(); // Ensure audio is loaded
       
       if (autoPlay && isNarrationEnabled) {
+        console.log('🔊 Attempting autoplay...');
         // Small delay to ensure audio is ready
         setTimeout(() => {
           audio.play().catch((error) => {
-            console.warn('Audio autoplay prevented by browser:', error);
+            console.warn('⚠️ Audio autoplay prevented by browser:', error);
             // Don't set playing state if autoplay fails
           });
         }, 100);
       }
     } else if (isPlaying) {
       // Stop playing if no audio URL
+      console.log('🔇 Stopping audio - no URL provided');
       audio.pause();
       onPlayStateChange(false);
     }
@@ -75,10 +78,12 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
     if (!audio || !audioUrl) return;
 
     if (isPlaying) {
+      console.log('⏸️ Pausing audio playback');
       audio.pause();
     } else {
+      console.log('▶️ Starting manual audio playback');
       audio.play().catch((error) => {
-        console.error('Manual audio play failed:', error);
+        console.error('❌ Manual audio play failed:', error);
       });
     }
   };

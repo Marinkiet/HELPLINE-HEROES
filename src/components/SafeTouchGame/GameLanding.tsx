@@ -16,6 +16,8 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [starsClicked, setStarsClicked] = useState<boolean[]>([false, false, false]);
   const [showPlayButton, setShowPlayButton] = useState(false);
+  const [starClickAudio, setStarClickAudio] = useState<string>('');
+  const [playingStarSound, setPlayingStarSound] = useState(false);
 
   useEffect(() => {
     // Generate audio for welcome message
@@ -37,7 +39,47 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
     generateAudio();
   }, [selectedLanguage]);
 
+  useEffect(() => {
+    // Pre-generate star click sound effect
+    const generateStarSound = async () => {
+      try {
+        console.log('⭐ Pre-generating star click sound...');
+        const starSound = await elevenLabsService.generateStarClickSound();
+        setStarClickAudio(starSound);
+        console.log('✅ Star click sound ready!');
+      } catch (error) {
+        console.error('❌ Failed to generate star sound:', error);
+      }
+    };
+    
+    generateStarSound();
+  }, []);
+
+  const playStarClickSound = async () => {
+    if (!starClickAudio || !isNarrationEnabled) return;
+    
+    try {
+      console.log('🔊 Playing star click sound...');
+      const audio = new Audio(starClickAudio);
+      audio.volume = 0.7; // Slightly quieter than narration
+      
+      audio.addEventListener('play', () => setPlayingStarSound(true));
+      audio.addEventListener('ended', () => setPlayingStarSound(false));
+      audio.addEventListener('error', (e) => {
+        console.error('❌ Star sound playback error:', e);
+        setPlayingStarSound(false);
+      });
+      
+      await audio.play();
+    } catch (error) {
+      console.error('❌ Failed to play star sound:', error);
+      setPlayingStarSound(false);
+    }
+  };
   const handleStarClick = (index: number) => {
+    // Play star click sound effect
+    playStarClickSound();
+    
     const newStarsClicked = [...starsClicked];
     newStarsClicked[index] = true;
     setStarsClicked(newStarsClicked);
@@ -119,7 +161,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
                   starsClicked[index] 
                     ? 'scale-125 animate-pulse' 
                     : 'hover:scale-110 hover:rotate-12'
-                }`}
+                } ${playingStarSound ? 'animate-bounce' : ''}`}
                 aria-label={`Click star ${index + 1}`}
               >
                 <Star 
@@ -132,6 +174,16 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
               </button>
             ))}
           </div>
+          
+          {/* Audio feedback indicator */}
+          {playingStarSound && (
+            <div className="text-center mt-4">
+              <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <span>⭐ Star Sound Playing</span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Play Button */}
