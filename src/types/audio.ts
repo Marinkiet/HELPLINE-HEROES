@@ -21,6 +21,24 @@ export const VOICE_IDS = {
 
 export const LANGUAGES = {
   en: 'English',
-  af: 'Afrikaans', 
-  zu: 'Zulu'
+  af: 'Afrikaans',
+  zu: 'Zulu',
+  xh: 'Xhosa',
+  st: 'Sesotho',
+  tn: 'Setswana',
+  ts: 'Tsonga',
+  ve: 'Venda',
+  nr: 'South Ndebele',
+  nso: 'Northern Sotho (Sepedi)',
+  sw: 'Swahili',
+  fr: 'French',
+  de: 'German',
+  es: 'Spanish',
+  pt: 'Portuguese',
+  ar: 'Arabic',
+  hi: 'Hindi',
+  ur: 'Urdu',
+  zh: 'Chinese',
+  ja: 'Japanese',
+  ru: 'Russian'
 } as const;
