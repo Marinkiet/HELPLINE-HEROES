@@ -3,6 +3,7 @@ import { X, Play, Phone, Heart } from 'lucide-react';
 import { Game } from '../data/games';
 import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
+import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
 
 interface GameModalProps {
   game: Game | null;
@@ -12,6 +13,7 @@ interface GameModalProps {
 
 export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
+  const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
 
   if (!isOpen || !game) return null;
 
@@ -27,12 +29,26 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
     );
   }
 
+  // Handle Trusted Heroes Circle game specifically
+  if (showTrustedHeroesGame && game.id === '2') {
+    return (
+      <TrustedHeroesGameContainer 
+        onClose={() => {
+          setShowTrustedHeroesGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
   const handleStartLearning = () => {
     if (game.id === '1') {
       setShowSafeTouchGame(true);
+    } else if (game.id === '2') {
+      setShowTrustedHeroesGame(true);
     } else {
-      // For other games, show a placeholder or redirect
-      alert('This game is coming soon! For now, enjoy Safe Touch Detective.');
+      // For other games, show a placeholder
+      alert('This game is coming soon! For now, enjoy Safe Touch Detective and Trusted Heroes Circle.');
     }
   };
 
