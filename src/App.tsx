@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { AudioProvider } from './contexts/AudioContext';
 import { Navigation } from './components/Navigation';
 import { CommunitySafetyModal } from './components/CommunitySafetyModal';
+import { PhoneVerificationModal } from './components/PhoneVerificationModal';
 import { FeaturedSection } from './components/FeaturedSection';
 import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
@@ -15,6 +16,8 @@ function App() {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCommunitySafetyOpen, setIsCommunitySafetyOpen] = useState(false);
+  const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
   const filteredGames = useMemo(() => {
     let filtered = games;
@@ -60,11 +63,25 @@ function App() {
   };
 
   const handleCommunitySafetyClick = () => {
-    setIsCommunitySafetyOpen(true);
+    if (isPhoneVerified) {
+      setIsCommunitySafetyOpen(true);
+    } else {
+      setIsPhoneVerificationOpen(true);
+    }
   };
 
   const closeCommunitySafety = () => {
     setIsCommunitySafetyOpen(false);
+  };
+
+  const closePhoneVerification = () => {
+    setIsPhoneVerificationOpen(false);
+  };
+
+  const handlePhoneVerified = () => {
+    setIsPhoneVerified(true);
+    setIsPhoneVerificationOpen(false);
+    setIsCommunitySafetyOpen(true);
   };
 
   return (
@@ -120,6 +137,12 @@ function App() {
           <CommunitySafetyModal 
             isOpen={isCommunitySafetyOpen}
             onClose={closeCommunitySafety}
+          />
+
+          <PhoneVerificationModal 
+            isOpen={isPhoneVerificationOpen}
+            onClose={closePhoneVerification}
+            onVerified={handlePhoneVerified}
           />
         </div>
       </div>
