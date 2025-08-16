@@ -10,6 +10,7 @@ import { SearchBar } from './components/SearchBar';
 import { GameModal } from './components/GameModal';
 import { games, Game } from './data/games';
 import kidsbg from './assets/kidsbg.jpg';
+import { ReportBadTouchButton } from './components/ReportBadTouchButton';
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -93,16 +94,23 @@ function App() {
           style={{
                   backgroundImage: `url(${kidsbg})`, 
                   backgroundSize: 'cover',}}> 
-              <div className="text-center ">
-              <h1 className="text-4xl md:text-6xl font-black text-purple-800 mb-4 leading-tight">
-                You Are a
-                <br />
-                <span className="text-blue-600">Helpline Hero!</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
-                🛡️ Learn how to stay safe, help friends, and be brave! 💪
-              </p>
-            </div>
+              <div className="text-center py-8">
+                {/* Hero text and button container */}
+                <div className="flex flex-col items-center justify-center mb-6">
+                  {/* Main heading and button row */}
+                  <div className="flex items-center justify-center space-x-6 mb-4">
+                    <h1 className="text-4xl md:text-6xl font-black text-purple-800 leading-tight">
+                      You Are a
+                      <br />
+                      <span className="text-blue-600">Helpline Hero!</span>
+                    </h1>
+                    <ReportBadTouchButton />
+                  </div>
+                  <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
+                    🛡️ Learn how to stay safe, help friends, and be brave! 💪
+                  </p>
+                </div>
+              </div>
               <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
             </div>
           
