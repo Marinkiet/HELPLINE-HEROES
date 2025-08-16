@@ -1,9 +1,13 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe, Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
-export function Navigation() {
+interface NavigationProps {
+  onCommunitySafetyClick?: () => void;
+}
+
+export function Navigation({ onCommunitySafetyClick }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -22,6 +26,16 @@ export function Navigation() {
 
           {/* Narration Controls */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Community Safety Button */}
+            <button
+              onClick={onCommunitySafetyClick}
+              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
+              aria-label="Community Safety for Adults"
+            >
+              <Users className="w-4 h-4" />
+              <span>Community Safety</span>
+            </button>
+
             {/* Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
@@ -68,6 +82,16 @@ export function Navigation() {
         {/* Mobile Narration Controls */}
         <div className="md:hidden pb-3">
           <div className="flex items-center justify-center space-x-4">
+            {/* Mobile Community Safety Button */}
+            <button
+              onClick={onCommunitySafetyClick}
+              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
+              aria-label="Community Safety for Adults"
+            >
+              <Users className="w-4 h-4" />
+              <span>Safety</span>
+            </button>
+
             {/* Mobile Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />

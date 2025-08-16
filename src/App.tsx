@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { AudioProvider } from './contexts/AudioContext';
 import { Navigation } from './components/Navigation';
+import { CommunitySafetyModal } from './components/CommunitySafetyModal';
 import { FeaturedSection } from './components/FeaturedSection';
 import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
@@ -13,6 +14,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCommunitySafetyOpen, setIsCommunitySafetyOpen] = useState(false);
 
   const filteredGames = useMemo(() => {
     let filtered = games;
@@ -57,11 +59,19 @@ function App() {
     setSelectedGame(null);
   };
 
+  const handleCommunitySafetyClick = () => {
+    setIsCommunitySafetyOpen(true);
+  };
+
+  const closeCommunitySafety = () => {
+    setIsCommunitySafetyOpen(false);
+  };
+
   return (
     <AudioProvider>
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <Navigation />
+          <Navigation onCommunitySafetyClick={handleCommunitySafetyClick} />
           <div className="w-full"
           style={{
                   backgroundImage: `url(${kidsbg})`, 
@@ -105,6 +115,11 @@ function App() {
             game={selectedGame}
             isOpen={isModalOpen}
             onClose={closeModal}
+          />
+
+          <CommunitySafetyModal 
+            isOpen={isCommunitySafetyOpen}
+            onClose={closeCommunitySafety}
           />
         </div>
       </div>
