@@ -80,7 +80,7 @@ export function ReportBadTouchButton() {
     <>
       {/* Button */}
       <div
-        className="relative flex items-center justify-center w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
+        className="relative flex items-center justify-center w-32 h-32 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsModalOpen(true)}
@@ -93,7 +93,7 @@ export function ReportBadTouchButton() {
           }
         }}
       >
-        <Shield className="w-8 h-8 text-white" />
+        <Shield className="w-16 h-16 text-white" />
         
         {/* Tooltip on hover */}
         {isHovered && (

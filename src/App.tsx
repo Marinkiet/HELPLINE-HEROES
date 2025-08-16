@@ -98,7 +98,7 @@ function App() {
                 {/* Hero text and button container */}
                 <div className="flex flex-col items-center justify-center mb-6">
                   {/* Main heading and button row */}
-                  <div className="flex items-center justify-center space-x-6 mb-4">
+                  <div className="flex items-center justify-center space-x-8 mb-4">
                     <h1 className="text-4xl md:text-6xl font-black text-purple-800 leading-tight">
                       You Are a
                       <br />
