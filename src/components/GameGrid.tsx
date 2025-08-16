@@ -25,6 +25,7 @@ export function GameGrid({ games, onGameClick, filteredCategory }: GameGridProps
             key={game.id}
             id={game.id}
             title={game.title}
+            description={game.description}
             image={game.image}
             featured={game.featured}
             onClick={() => onGameClick(game)}

@@ -2,6 +2,7 @@ import React from 'react';
 import { X, Play, Phone, Heart } from 'lucide-react';
 import { Game } from '../data/games';
 import { helplineNumbers } from '../data/games';
+import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 
 interface GameModalProps {
   game: Game | null;
@@ -10,7 +11,30 @@ interface GameModalProps {
 }
 
 export function GameModal({ game, isOpen, onClose }: GameModalProps) {
+  const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
+
   if (!isOpen || !game) return null;
+
+  // Handle Safe Touch Detective game specifically
+  if (showSafeTouchGame && game.id === '1') {
+    return (
+      <SafeTouchGameContainer 
+        onClose={() => {
+          setShowSafeTouchGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
+  const handleStartLearning = () => {
+    if (game.id === '1') {
+      setShowSafeTouchGame(true);
+    } else {
+      // For other games, show a placeholder or redirect
+      alert('This game is coming soon! For now, enjoy Safe Touch Detective.');
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -49,7 +73,10 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
         </div>
         
         <div className="flex gap-4">
-          <button className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2 text-lg">
+          <button 
+            onClick={handleStartLearning}
+            className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2 text-lg"
+          >
             <Play className="w-6 h-6" />
             <span>Start Learning!</span>
           </button>

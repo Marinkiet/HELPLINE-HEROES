@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { AudioProvider } from './contexts/AudioContext';
 import { Navigation } from './components/Navigation';
-import { HelplineBar } from './components/HelplineBar';
 import { FeaturedSection } from './components/FeaturedSection';
 import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
@@ -58,56 +58,57 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-yellow-300">
-      <div className="relative z-10">
-        <HelplineBar />
-        <Navigation />
-        <div className="w-full"
-        style={{
-                backgroundImage: `url(${kidsbg})`, 
-                backgroundSize: 'cover',}}> 
-            <div className="text-center ">
-            <h1 className="text-4xl md:text-6xl font-black text-purple-800 mb-4 leading-tight">
-              You Are a
-              <br />
-              <span className="text-blue-600">Helpline Hero!</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
-              🛡️ Learn how to stay safe, help friends, and be brave! 💪
-            </p>
-          </div>
-            <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
-          </div>
-        
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Hero Section */}
+    <AudioProvider>
+      <div className="min-h-screen bg-yellow-300">
+        <div className="relative z-10">
+          <Navigation />
+          <div className="w-full"
+          style={{
+                  backgroundImage: `url(${kidsbg})`, 
+                  backgroundSize: 'cover',}}> 
+              <div className="text-center ">
+              <h1 className="text-4xl md:text-6xl font-black text-purple-800 mb-4 leading-tight">
+                You Are a
+                <br />
+                <span className="text-blue-600">Helpline Hero!</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
+                🛡️ Learn how to stay safe, help friends, and be brave! 💪
+              </p>
+            </div>
+              <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
+            </div>
           
-          
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Hero Section */}
+            
+            
 
-          
-          
-          <CategoryCards onCategoryClick={handleCategoryClick} />
+            
+            
+            <CategoryCards onCategoryClick={handleCategoryClick} />
 
-          <SearchBar 
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            onSurpriseMe={handleSurpriseMe}
+            <SearchBar 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              onSurpriseMe={handleSurpriseMe}
+            />
+
+            <GameGrid 
+              games={filteredGames}
+              onGameClick={handleGameClick}
+              filteredCategory={selectedCategory}
+            />
+          </main>
+
+          <GameModal 
+            game={selectedGame}
+            isOpen={isModalOpen}
+            onClose={closeModal}
           />
-
-          <GameGrid 
-            games={filteredGames}
-            onGameClick={handleGameClick}
-            filteredCategory={selectedCategory}
-          />
-        </main>
-
-        <GameModal 
-          game={selectedGame}
-          isOpen={isModalOpen}
-          onClose={closeModal}
-        />
+        </div>
       </div>
-    </div>
+    </AudioProvider>
   );
 }
 
