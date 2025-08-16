@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Play } from 'lucide-react';
+import { Star, Play, Volume2, VolumeX } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { LanguageSelector } from '../LanguageSelector';
+import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
@@ -10,7 +11,7 @@ interface GameLandingProps {
 }
 
 export function GameLanding({ onStartGame }: GameLandingProps) {
-  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'af' | 'zu'>('en');
+  const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [starsClicked, setStarsClicked] = useState<boolean[]>([false, false, false]);
@@ -21,7 +22,8 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
     const generateAudio = async () => {
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
-        text: gameContent.welcome[selectedLanguage]
+        text: gameContent.welcome[selectedLanguage],
+        voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
       });
       setAudioUrl(url);
     };
@@ -44,7 +46,30 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl p-8 max-w-2xl w-full shadow-2xl text-center">
         {/* Language Selector */}
-        <div className="flex justify-end mb-6">
+        <div className="flex justify-between items-center mb-6">
+          {/* Narration Toggle Button */}
+          <button
+            onClick={toggleNarration}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full font-bold transition-all duration-200 ${
+              isNarrationEnabled
+                ? 'bg-green-500 hover:bg-green-600 text-white'
+                : 'bg-red-500 hover:bg-red-600 text-white'
+            }`}
+            aria-label={`Turn narration ${isNarrationEnabled ? 'off' : 'on'}`}
+          >
+            {isNarrationEnabled ? (
+              <>
+                <Volume2 className="w-5 h-5" />
+                <span>Narration ON</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="w-5 h-5" />
+                <span>Narration OFF</span>
+              </>
+            )}
+          </button>
+          
           <LanguageSelector 
             selectedLanguage={selectedLanguage}
             onLanguageChange={setSelectedLanguage}
@@ -69,7 +94,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
             audioUrl={audioUrl}
             isPlaying={isPlaying}
             onPlayStateChange={setIsPlaying}
-            autoPlay={true}
+            autoPlay={isNarrationEnabled}
           />
         </div>
 

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, RotateCcw, Trophy } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { LanguageSelector } from '../LanguageSelector';
+import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface TouchScenarioGameProps {
-  selectedLanguage: 'en' | 'af' | 'zu';
-  onLanguageChange: (language: 'en' | 'af' | 'zu') => void;
   onComplete: () => void;
 }
 
-export function TouchScenarioGame({ selectedLanguage, onLanguageChange, onComplete }: TouchScenarioGameProps) {
+export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
+  const { selectedLanguage, setSelectedLanguage, isNarrationEnabled } = useAudio();
   const [currentScenario, setCurrentScenario] = useState(0);
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -37,7 +37,8 @@ export function TouchScenarioGame({ selectedLanguage, onLanguageChange, onComple
     const text = currentScenarioData[selectedLanguage];
     const url = await elevenLabsService.generateSpeech({
       language: selectedLanguage,
-      text
+      text,
+      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
     });
     setAudioUrl(url);
   };
@@ -52,7 +53,8 @@ export function TouchScenarioGame({ selectedLanguage, onLanguageChange, onComple
     
     const url = await elevenLabsService.generateSpeech({
       language: selectedLanguage,
-      text
+      text,
+      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
     });
     setAudioUrl(url);
   };
@@ -127,7 +129,7 @@ export function TouchScenarioGame({ selectedLanguage, onLanguageChange, onComple
           </div>
           <LanguageSelector 
             selectedLanguage={selectedLanguage}
-            onLanguageChange={onLanguageChange}
+            onLanguageChange={setSelectedLanguage}
           />
         </div>
 

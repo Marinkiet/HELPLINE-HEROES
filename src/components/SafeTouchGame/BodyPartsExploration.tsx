@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Sun, ArrowRight, Check } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { LanguageSelector } from '../LanguageSelector';
+import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BodyPartsExplorationProps {
-  selectedLanguage: 'en' | 'af' | 'zu';
-  onLanguageChange: (language: 'en' | 'af' | 'zu') => void;
   onComplete: () => void;
 }
 
-export function BodyPartsExploration({ selectedLanguage, onLanguageChange, onComplete }: BodyPartsExplorationProps) {
+export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) {
+  const { selectedLanguage, setSelectedLanguage, isNarrationEnabled } = useAudio();
   const [currentBodyPart, setCurrentBodyPart] = useState<'upperBody' | 'lowerBody'>('upperBody');
   const [showTrustedAdults, setShowTrustedAdults] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
@@ -32,7 +32,8 @@ export function BodyPartsExploration({ selectedLanguage, onLanguageChange, onCom
     const text = gameContent.bodyParts[currentBodyPart][selectedLanguage];
     const url = await elevenLabsService.generateSpeech({
       language: selectedLanguage,
-      text
+      text,
+      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
     });
     setAudioUrl(url);
   };
@@ -41,7 +42,8 @@ export function BodyPartsExploration({ selectedLanguage, onLanguageChange, onCom
     const text = gameContent.trustedAdults[selectedLanguage];
     const url = await elevenLabsService.generateSpeech({
       language: selectedLanguage,
-      text
+      text,
+      voiceId: 'oJebhZNaPllxk6W0LSBA' // Child voice
     });
     setAudioUrl(url);
   };
@@ -201,7 +203,7 @@ export function BodyPartsExploration({ selectedLanguage, onLanguageChange, onCom
                 audioUrl={audioUrl}
                 isPlaying={isPlaying}
                 onPlayStateChange={setIsPlaying}
-                autoPlay={true}
+                autoPlay={isNarrationEnabled}
               />
             </div>
 

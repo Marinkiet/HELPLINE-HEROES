@@ -15,7 +15,8 @@ export interface GameAudio {
 export const VOICE_IDS = {
   en: 'pNInz6obpgDQGcFmaJgB', // Adam - friendly male voice
   af: 'EXAVITQu4vr4xnSDxMaL', // Sarah - warm female voice  
-  zu: 'VR6AewLTigWG4xSOukaG'  // Grace - gentle female voice
+  zu: 'VR6AewLTigWG4xSOukaG', // Grace - gentle female voice
+  child: 'oJebhZNaPllxk6W0LSBA' // Carla - Children's story narrator
 };
 
 export const LANGUAGES = {

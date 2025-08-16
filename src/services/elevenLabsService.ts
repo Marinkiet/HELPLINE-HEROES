@@ -11,12 +11,15 @@ class ElevenLabsService {
   }
 
   async generateSpeech(config: AudioConfig): Promise<string> {
+    // Use child voice for game content
+    const voiceId = config.voiceId || VOICE_IDS.child;
+    
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 500));
     
     // In a real implementation, this would make an actual API call:
     /*
-    const response = await fetch(`${this.baseUrl}/text-to-speech/${VOICE_IDS[config.language]}`, {
+    const response = await fetch(`${this.baseUrl}/text-to-speech/${voiceId}`, {
       method: 'POST',
       headers: {
         'Accept': 'audio/mpeg',

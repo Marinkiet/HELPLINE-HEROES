@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
 
 interface AudioPlayerProps {
   audioUrl?: string;
@@ -10,6 +11,7 @@ interface AudioPlayerProps {
 
 export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay = false }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { isNarrationEnabled } = useAudio();
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -23,7 +25,7 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
 
-    if (autoPlay) {
+    if (autoPlay && isNarrationEnabled) {
       audio.play().catch(console.error);
     }
 
@@ -35,6 +37,8 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
   }, [audioUrl, onPlayStateChange, autoPlay]);
 
   const togglePlayback = () => {
+    if (!isNarrationEnabled) return;
+    
     const audio = audioRef.current;
     if (!audio) return;
 
@@ -51,8 +55,13 @@ export function AudioPlayer({ audioUrl, isPlaying, onPlayStateChange, autoPlay =
     <div className="flex items-center space-x-2">
       <button
         onClick={togglePlayback}
-        className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full transition-colors duration-200"
+        className={`p-2 rounded-full transition-colors duration-200 ${
+          isNarrationEnabled 
+            ? 'bg-blue-500 hover:bg-blue-600 text-white cursor-pointer' 
+            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        }`}
         aria-label={isPlaying ? 'Pause audio' : 'Play audio'}
+        disabled={!isNarrationEnabled}
       >
         {isPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
