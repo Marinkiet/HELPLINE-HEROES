@@ -9,7 +9,7 @@ class ElevenLabsService {
     // 1. Get your API key from https://elevenlabs.io/
     // 2. Set this.apiKey = 'your-actual-api-key-here'
     // 3. Uncomment the real API implementation in generateSpeech method
-    this.apiKey = 'demo-key';
+    this.apiKey = 'sk_8bf03898286bfe228254410a9b3251d00cb8383132b37287';
   }
 
   async generateSpeech(config: AudioConfig): Promise<string> {
