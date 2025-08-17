@@ -115,7 +115,7 @@ export function ReportBadTouchButton() {
               </div>
               <h2 className="text-xl font-black text-gray-800 mb-3">Need Help? 🤗</h2>
               <p className="text-base text-gray-700 leading-relaxed mb-4">
-                If someone touched you in a way that made you feel scared or uncomfortable, you can call <strong>116</strong> to talk to a kind adult who will help you.
+                If someone touched you in a way that made you feel scared or uncomfortable(Bad touch), you can call <strong>116</strong> to talk to a kind adult who will help you.
               </p>
             </div>
 
