@@ -3,7 +3,7 @@ import { Star, Shield, Heart, Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { appContent } from '../data/appContent';
 import { games } from '../data/games';
-import kidsbg from '../assets/kidsbg.jpg';
+import shout from '../assets/shout.jpg';
 interface FeaturedSectionProps {
   onGameClick: (gameId: string) => void;
 }
@@ -24,7 +24,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       title: game.title[selectedLanguage],
       subtitle: game.description[selectedLanguage],
       icon: icons[index],
-      image: kidsbg,
+      image: shout,
       onClick: () => onGameClick(game.id)
     };
   });
