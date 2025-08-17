@@ -6,6 +6,7 @@ import { Game } from '../data/games';
 import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
+import { BraveVoiceGameContainer } from './BraveVoiceGame/BraveVoiceGameContainer';
 
 interface GameModalProps {
   game: Game | null;
@@ -17,6 +18,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const { selectedLanguage } = useAudio();
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
   const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
+  const [showBraveVoiceGame, setShowBraveVoiceGame] = React.useState(false);
 
   if (!isOpen || !game) return null;
 
@@ -48,14 +50,28 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
     );
   }
 
+  // Handle Brave Voice game specifically
+  if (showBraveVoiceGame && game.id === '3') {
+    return (
+      <BraveVoiceGameContainer 
+        onClose={() => {
+          setShowBraveVoiceGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
   const handleStartLearning = () => {
     if (game.id === '1') {
       setShowSafeTouchGame(true);
     } else if (game.id === '2') {
       setShowTrustedHeroesGame(true);
+    } else if (game.id === '3') {
+      setShowBraveVoiceGame(true);
     } else {
       // For other games, show a placeholder
-      alert('This game is coming soon! For now, enjoy Safe Touch Detective and Trusted Heroes Circle.');
+      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
     }
   };
 
