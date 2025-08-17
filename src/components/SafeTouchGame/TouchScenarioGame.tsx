@@ -161,9 +161,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                 <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl mb-6">
                   {/* Media for each scenario */}
                   {currentScenario === 0 && (
-                    <div className="flex justify-center mb-4">
-                     
-                    </div>
+                    
                   )}
                   {currentScenario === 1 && (
                     <div className="flex justify-center mb-4">
