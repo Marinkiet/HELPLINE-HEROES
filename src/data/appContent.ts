@@ -138,6 +138,89 @@ export const appContent = {
       nr: "Yonke Imisebenzi Yokuphepha",
       nso: "Mešomo ka moka ya Polokego"
     },
+    
+    // Featured games section
+    featuredGames: {
+      safeTouchDetective: {
+        title: {
+          en: "Safe Touch Detective",
+          af: "Veilige Raak Speurder",
+          zu: "Umcuphi Wokuthinta Okuphephile",
+          xh: "Umcuphi Wokuchukumisa Okukhuselekileyo",
+          st: "Mofuputsi oa Tšoaetso e Sireletsehileng",
+          tn: "Mmatlisisi wa Kgoma e e Babalesegileng",
+          ts: "Mufuputsi wa ku Kuma loku Hlayisekeke",
+          ve: "Mufuputsi wa u Khou Amba ha Vhushai",
+          nr: "Umcuphi Wokuthinta Okuphephile",
+          nso: "Mmatlisisi wa Kgoma ye e Šireletšegileng"
+        },
+        subtitle: {
+          en: "Learn about body safety",
+          af: "Leer oor liggaamsveiligheid",
+          zu: "Funda ngokuphepha komzimba",
+          xh: "Funda ngokhuseleko lomzimba",
+          st: "Ithuta ka polokeho ea 'mele",
+          tn: "Ithuta ka pabalesego ya mmele",
+          ts: "Dyondza hi vuhlayiseki bya miri",
+          ve: "Gudani nga vhushai ha muvhili",
+          nr: "Funda ngokuphepha komzimba",
+          nso: "Ithuta ka polokego ya mmele"
+        }
+      },
+      trustedHeroesCircle: {
+        title: {
+          en: "Trusted Heroes Circle",
+          af: "Vertroude Helde Kring",
+          zu: "Isiyingi Samaqhawe Athembekile",
+          xh: "Isangqa Samaqhawe Athembekileyo",
+          st: "Selikalikoe sa Liqhawe tse Tšepahalang",
+          tn: "Setlhopha sa Diqhakga tse di Ikanyegang",
+          ts: "Xirhendzevutani xa Tiqhakga leti Tshembhekaka",
+          ve: "Tshirunzi tsha Magwala a Teaho",
+          nr: "Isiyingi Samaqhawe Athembekile",
+          nso: "Selekane sa Magwala a Tšhepegago"
+        },
+        subtitle: {
+          en: "Know who to trust",
+          af: "Weet wie om te vertrou",
+          zu: "Yazi ukuthi ubani omele umthembe",
+          xh: "Yazi ukuba ngubani omele umthembe",
+          st: "Tseba hore na u ka tšepa mang",
+          tn: "Itse gore o ka ikanya mang",
+          ts: "Tiva leswaku u nga tshemba mani",
+          ve: "Divhani uri ni nga tea mani",
+          nr: "Yazi ukuthi ubani omele umthembe",
+          nso: "Tseba gore o ka tšhepa mang"
+        }
+      },
+      braveVoice: {
+        title: {
+          en: "Brave Voice",
+          af: "Dapper Stem",
+          zu: "Izwi Elinesbindi",
+          xh: "Ilizwi Elinesbindi",
+          st: "Lentsoe le Sebete",
+          tn: "Lentswe le le Pelokgale",
+          ts: "Rito ra Vutshila",
+          ve: "Ipfi ḽa Khongolose",
+          nr: "Izwi Elinesbindi",
+          nso: "Lentšu le le Pelokgale"
+        },
+        subtitle: {
+          en: "Practice speaking up",
+          af: "Oefen om uit te praat",
+          zu: "Zijwayeze ukukhuluma",
+          xh: "Ziqhelise ukuthetha",
+          st: "Itloaetse ho bua",
+          tn: "Ikatise go bua",
+          ts: "Titolovete ku vulavula",
+          ve: "Titolovetseni u amba",
+          nr: "Zijwayeze ukukhuluma",
+          nso: "Itlwaetše go bolela"
+        }
+      }
+    },
+
     noActivities: {
       title: {
         en: "No activities found!",

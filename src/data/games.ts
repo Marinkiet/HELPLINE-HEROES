@@ -11,7 +11,7 @@ export interface Game {
 export const games: Game[] = [
   {
     id: '1',
-    title: 'Safe Touch, Unsafe Touch',
+    title: 'Safe Touch Detective',
     image: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400',
     featured: true,
     description: 'Learn about appropriate and inappropriate touch in a safe, educational way.',
@@ -20,7 +20,7 @@ export const games: Game[] = [
   },
   {
     id: '2',
-    title: 'Trusted Adults Circle',
+    title: 'Trusted Heroes Circle',
     image: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400',
     description: 'Identify and connect with trusted adults who can help you.',
     ageGroup: 'early',
@@ -28,7 +28,7 @@ export const games: Game[] = [
   },
   {
     id: '3',
-    title: 'Speaking Up Heroes',
+    title: 'Brave Voice',
     image: 'https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=400',
     featured: true,
     description: 'Practice finding your voice and speaking up when something feels wrong.',
