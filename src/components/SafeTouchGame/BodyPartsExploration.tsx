@@ -103,14 +103,14 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                       onMouseEnter={() => handleBodyPartHover('chest')}
                       onMouseLeave={() => setHoveredArea('')}
                     />
-                      <img 
-                        src="/src/assets/lower.gif" 
-                        alt="Lower body safety diagram"
-                        className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
-                        onMouseEnter={() => handleBodyPartHover('private')}
-                        onMouseLeave={() => setHoveredArea('')}
-                      />
-                    </div>
+                  ) : (
+                    <img 
+                      src="/src/assets/lower.gif" 
+                      alt="Lower body safety diagram"
+                      className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
+                      onMouseEnter={() => handleBodyPartHover('private')}
+                      onMouseLeave={() => setHoveredArea('')}
+                    />
                   )}
                 </div>
               </div>
