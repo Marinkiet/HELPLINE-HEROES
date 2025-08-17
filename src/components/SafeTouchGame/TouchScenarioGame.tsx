@@ -149,43 +149,43 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
 
         {/* Main Game Area */}
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
-           <img 
-                        src="/src/assets/doctor.gif" 
-                        alt="Doctor examining patient"
-                        className="w-90 h-50 rounded-lg pb-10"
-                      />
+          {/* Media for each scenario - outside narrative box */}
+          {currentScenario === 0 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src="/src/assets/doctor.gif" 
+                alt="Doctor examining patient"
+                className="w-80 h-auto rounded-lg"
+              />
+            </div>
+          )}
+          {currentScenario === 1 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src="/src/assets/stranger.gif" 
+                alt="Stranger offering candy"
+                className="w-80 h-auto rounded-lg"
+              />
+            </div>
+          )}
+          {currentScenario === 2 && (
+            <div className="flex justify-center mb-6">
+              <video 
+                src="/src/assets/bathtime.mp4" 
+                autoPlay
+                loop
+                muted
+                className="w-80 h-auto rounded-lg"
+                aria-label="Parent helping child with bath time"
+              />
+            </div>
+          )}
+
           {!showFeedback ? (
             <>
               {/* Scenario */}
               <div className="text-center mb-8">
                 <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl mb-6">
-                  {/* Media for each scenario */}
-                  {currentScenario === 0 && (
-                    <div className="flex justify-center mb-4">
-                      
-                    </div>
-                  )}
-                  {currentScenario === 1 && (
-                    <div className="flex justify-center mb-4">
-                      <img 
-                        src="/src/assets/stranger.gif" 
-                        alt="Stranger offering candy"
-                        className="w-64 h-auto rounded-lg"
-                      />
-                    </div>
-                  )}
-                  {currentScenario === 2 && (
-                    <div className="flex justify-center mb-4">
-                      <video 
-                        src="/src/assets/bathtime.mp4" 
-                        autoPlay
-                        loop
-                        muted
-                        className="w-64 h-auto rounded-lg"
-                        aria-label="Parent helping child with bath time"
-                      />
-                    </div>
-                  )}
                   <p className="text-xl text-gray-700 leading-relaxed">
                     {currentScenarioData[selectedLanguage]}
                   </p>
