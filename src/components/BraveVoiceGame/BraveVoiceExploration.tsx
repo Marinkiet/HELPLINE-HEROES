@@ -179,6 +179,25 @@ export function BraveVoiceExploration({ onComplete }: BraveVoiceExplorationProps
               />
             </div>
 
+            {/* Image Display Area */}
+            <div className="mb-8">
+              <div className="bg-gray-50 rounded-2xl p-6 text-center">
+                <img 
+                  src="/src/assets/doctor.jpg"
+                  alt="Educational content illustration"
+                  className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
+                  onError={(e) => {
+                    // Fallback to a placeholder if image doesn't exist
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
+                  }}
+                />
+                <p className="text-sm text-gray-600 mt-3 font-semibold">
+                  {currentSectionData?.title}
+                </p>
+              </div>
+            </div>
+
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-xl mb-8">
               <p className="text-lg text-yellow-800 leading-relaxed">
                 {currentSection === 'what' && "Your voice is like a superhero power - it can protect you and others!"}
