@@ -177,7 +177,12 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
             {/* Navigation */}
             <div className="flex justify-between">
               <button
-                onClick={() => setShowTrustedAdults(false)}
+                onClick={() => {
+                  setShowTrustedAdults(false);
+                  if (currentBodyPart === 'lowerBody') {
+                    setCurrentBodyPart('upperBody');
+                  }
+                }}
                 className={`px-6 py-3 rounded-xl font-bold transition-all duration-200 ${
                   showTrustedAdults 
                     ? 'bg-gray-200 hover:bg-gray-300 text-gray-700' 
