@@ -2,20 +2,8 @@ import React from 'react';
 import { Star, Shield, Heart, Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { appContent } from '../data/appContent';
+import { games } from '../data/games';
 import kidsbg from '../assets/kidsbg.jpg';
-interface FeaturedGame {
-  id: string;
-  title: string;
-  subtitle: string;
-  icon: React.ReactNode;
-  titleKey: string;
-  // color: string;
-  image?: string;
-  to: string;
-  from: string;
-  onClick: () => void;
-}
-
 interface FeaturedSectionProps {
   onGameClick: (gameId: string) => void;
 }
@@ -23,42 +11,23 @@ interface FeaturedSectionProps {
 export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
   const { selectedLanguage } = useAudio();
   
-  const featuredGames: FeaturedGame[] = [
-      {
-        id: 'safe-touch',
-        title: appContent.featuredGames?.safeTouchDetective?.title?.[selectedLanguage] || 'Safe Touch Detective',
-        subtitle: appContent.featuredGames?.safeTouchDetective?.subtitle?.[selectedLanguage] || 'Learn about body safety',
-        titleKey: 'safeTouchDetective',
-        icon: <Shield className="w-16 h-16 text-white" />,
-        from: 'from-green-100/50',
-        to: 'to-green-600/50',
-        image: kidsbg,
-        onClick: () => onGameClick('1')
-      },
-      {
-        id: 'trusted-adults',
-        title: appContent.featuredGames?.trustedHeroesCircle?.title?.[selectedLanguage] || 'Trusted Heroes Circle',
-        subtitle: appContent.featuredGames?.trustedHeroesCircle?.subtitle?.[selectedLanguage] || 'Know who to trust',
-        titleKey: 'trustedHeroesCircle',
-        icon: <Heart className="w-16 h-16 text-white" />,
-        from: 'from-pink-100/50',
-        to: 'to-pink-600/50',
-        image: kidsbg,
-        onClick: () => onGameClick('2')
-      },
-      {
-        id: 'speak-up',
-        title: appContent.featuredGames?.braveVoice?.title?.[selectedLanguage] || 'Brave Voice',
-        subtitle: appContent.featuredGames?.braveVoice?.subtitle?.[selectedLanguage] || 'Practice speaking up',
-        titleKey: 'braveVoice',
-        icon: <Users className="w-16 h-16 text-white" />,
-        from: 'from-purple-500/50',
-        to: 'to-purple-600/50',
-        image: kidsbg,
-        onClick: () => onGameClick('3')
-      }
+  // Get the first 3 games and their translated content
+  const featuredGames = games.slice(0, 3).map((game, index) => {
+    const icons = [
+      <Shield className="w-16 h-16 text-white" />,
+      <Heart className="w-16 h-16 text-white" />,
+      <Users className="w-16 h-16 text-white" />
     ];
     
+    return {
+      id: game.id,
+      title: game.title[selectedLanguage],
+      subtitle: game.description[selectedLanguage],
+      icon: icons[index],
+      image: kidsbg,
+      onClick: () => onGameClick(game.id)
+    };
+  });
 
   return (
     <div className=" rounded-3xl p-8 my-10 shadow-2xl ">
@@ -76,14 +45,9 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
           style={{
             backgroundImage: game.image
               ? `url(${game.image})`
-              : `linear-gradient(to bottom right, var(--tw-gradient-stops))`,
+              : undefined,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            // Only apply gradient stops if no image
-            ...( !game.image && {
-              '--tw-gradient-from': `rgb(${game.from}) / 0.5`,
-              '--tw-gradient-to': `rgb(${game.to}) / 0.5`
-            })
+            backgroundPosition: 'center'
           }}
         >
             <div className="text-center">
