@@ -21,6 +21,9 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const translatedTitle = typeof title === 'object' ? title[selectedLanguage] : title;
   const translatedDescription = typeof description === 'object' ? description[selectedLanguage] : description;
 
+  // Check if game has content available
+  const hasContent = ['1', '2', '3'].includes(id); // Only Safe Touch Detective, Trusted Heroes, Brave Voice
+
   // Get background image based on game ID
   const getBackgroundImage = () => {
     switch (id) {
@@ -31,12 +34,38 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       case '3': // Brave Voice
         return shout;
       default:
-        return image; // Use original image for other games
+        return null; // No image for other games, use background color instead
     }
   };
 
+  // Get background color for games without content
+  const getBackgroundColor = () => {
+    const colors = [
+      'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // Purple-blue
+      'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', // Pink-red
+      'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', // Blue-cyan
+      'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', // Green-teal
+      'linear-gradient(135deg, #fa709a 0%, #fee140 100%)', // Pink-yellow
+      'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)', // Teal-pink
+      'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)', // Coral-pink
+      'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)', // Peach-orange
+      'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)', // Purple-pink
+    ];
+    
+    // Use game ID to consistently assign colors
+    const colorIndex = parseInt(id) % colors.length;
+    return colors[colorIndex];
+  };
+
   const backgroundImage = getBackgroundImage();
+  const backgroundColor = getBackgroundColor();
+
   const handleCardClick = async () => {
+    // Don't allow clicking on games without content
+    if (!hasContent) {
+      return;
+    }
+
     // Play narration if enabled
     if (isNarrationEnabled) {
       try {
@@ -70,7 +99,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
     <div 
       className={`
         relative bg-white rounded-2xl p-4 cursor-pointer transform transition-all duration-300 
-        hover:scale-105 hover:shadow-xl active:scale-95
+        ${hasContent ? 'hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer' : 'cursor-not-allowed opacity-75'}
         ${featured ? 'ring-3 ring-yellow-400' : ''} 
         ${isPlayingNarration ? 'ring-3 ring-blue-400 animate-pulse' : ''}
         min-h-[240px] group shadow-lg
@@ -78,10 +107,11 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       onClick={handleCardClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
+      onKeyDown={(e) => e.key === 'Enter' && hasContent && handleCardClick()}
       aria-label={`Learn about ${translatedTitle}`}
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
+        background: backgroundImage ? undefined : backgroundColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
@@ -93,7 +123,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       )}
       
       {/* Semi-transparent overlay for content */}
-      <div className="bg-black/40 backdrop-blur-sm rounded-xl p-4 h-full flex flex-col justify-center">
+      <div className={`${backgroundImage ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/20'} rounded-xl p-4 h-full flex flex-col justify-center`}>
         <div className="text-center">
           <h3 className="text-lg font-black text-white text-center leading-tight mb-2">
             {translatedTitle}
@@ -101,8 +131,12 @@ export function GameCard({ id, title, description, image, featured = false, onCl
           <p className="text-white/90 text-sm font-semibold">
             {translatedDescription}
           </p>
-          <div className="mt-3 bg-white/30 hover:bg-white/40 rounded-full px-3 py-1 inline-block transition-colors duration-200">
-            <span className="text-white font-bold text-xs">LEARN</span>
+          <div className={`mt-3 rounded-full px-3 py-1 inline-block transition-colors duration-200 ${
+            hasContent 
+              ? 'bg-white/30 hover:bg-white/40' 
+              : 'bg-gray-500/50 text-gray-300'
+          }`}>
+            <span className="text-white font-bold text-xs">{hasContent ? 'LEARN' : 'COMING SOON'}</span>
           </div>
         </div>
       </div>
