@@ -175,7 +175,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                 autoPlay
                 loop
                 muted
-                className="w-80 h-auto rounded-lg"
+                className="w-100 h-auto rounded-lg"
                 aria-label="Parent helping child with bath time"
               />
             </div>
