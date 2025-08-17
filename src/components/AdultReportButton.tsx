@@ -22,7 +22,7 @@ export function AdultReportButton({ onClick }: AdultReportButtonProps) {
       <div className="text-center">
         <Users className="w-12 h-12 text-white mx-auto mb-2" />
         <span className="text-white font-bold text-sm leading-tight">
-          Adult<br />Report
+          Suspious Behaviour<br />Report
         </span>
       </div>
     </div>
