@@ -113,7 +113,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       aria-label={`Learn about ${translatedTitle}`}
       style={{
         backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-        background: backgroundImage ? undefined : backgroundColor,
+        background: !backgroundImage ? backgroundColor : undefined,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
@@ -128,7 +128,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       <div className={`${backgroundImage ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/20'} rounded-xl p-6 h-full flex flex-col justify-center`}>
         <div className="text-center">
           <div className="mb-4 flex justify-center group-hover:animate-bounce">
-            {hasContent && backgroundImage && (
+            {hasContent && (
               <>
                 {id === '1' && <Shield className="w-16 h-16 text-white" />}
                 {id === '2' && <Heart className="w-16 h-16 text-white" />}
