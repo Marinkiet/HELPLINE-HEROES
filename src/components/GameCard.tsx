@@ -22,7 +22,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const translatedDescription = typeof description === 'object' ? description[selectedLanguage] : description;
 
   // Check if game has content available
-  const hasContent = ['1', '2', '3'].includes(id); // Only Safe Touch Detective, Trusted Heroes, Brave Voice
+  const hasContent = ['1', '2', '3'].includes(id); // Safe Touch Detective, Trusted Heroes Circle, Brave Voice
 
   // Get background image based on game ID
   const getBackgroundImage = () => {
@@ -63,6 +63,8 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const handleCardClick = async () => {
     // Don't allow clicking on games without content
     if (!hasContent) {
+      // Show a friendly message for games without content
+      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
       return;
     }
 
