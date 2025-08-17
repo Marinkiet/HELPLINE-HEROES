@@ -26,7 +26,7 @@ export const games: Game[] = [
     image: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400',
     featured: true,
     description: {
-      en: 'Learn about appropriate and inappropriate touch in a safe.',
+      en: 'Learn about good touch and bad touch on your body.',
       af: 'Leer oor gepaste en ongepaste aanraking op \'n veilige.',
       zu: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.',
       xh: 'Funda ngokuchukumisa okufanelekileyo nokungafanelekanga ngendlela ekhuselekileyo.',
