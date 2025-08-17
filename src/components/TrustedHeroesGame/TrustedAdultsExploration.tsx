@@ -226,7 +226,7 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
 
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-xl mb-8">
               <p className="text-lg text-yellow-800 leading-relaxed">
-                {currentSection === 'definition' && "Now what makes an adult trustworthy and safe to talk to."}
+                {currentSection === 'definition' && "Now what makes an adult trustworthy and safe to talk to?"}
                 {currentSection === 'types' && selectedAdultType && "Click on different types of trusted adults to learn about them!"}
                 {currentSection === 'types' && !selectedAdultType && "Click on the cards above to learn about different types of trusted adults."}
                 {currentSection === 'redFlags' && "Remember these warning signs to stay safe!"}
