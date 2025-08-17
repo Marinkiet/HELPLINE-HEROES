@@ -4,6 +4,11 @@ import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { trustedHeroesContent } from '../../data/trustedHeroesContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
+import therapist from '../../assets/therapist.jpg';
+import doctor from '../../assets/doctor.jpg';
+import teacher from '../../assets/teacher.jpg';
+import home from '../../assets/home.jpg';
+import police from '../../assets/police.jpg';
 
 interface TrustedAdultsExplorationProps {
   onComplete: () => void;
@@ -23,6 +28,24 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
     { key: 'police', icon: '👮‍♀️', title: 'Police & Community', bgColor: '#fff8e1', shadowDark: '#ffecb3', shadowLight: '#ffffff' },
     { key: 'counselors', icon: '🧑‍💼', title: 'Counselors & Therapists', bgColor: '#fce4ec', shadowDark: '#f8bbd9', shadowLight: '#ffffff' }
   ];
+
+  // Get the appropriate image for the selected adult type
+  const getAdultTypeImage = (adultType: string) => {
+    switch (adultType) {
+      case 'parents':
+        return home;
+      case 'teachers':
+        return teacher;
+      case 'doctors':
+        return doctor;
+      case 'police':
+        return police;
+      case 'counselors':
+        return therapist;
+      default:
+        return 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
+    }
+  };
 
   useEffect(() => {
     generateAudio();
@@ -254,7 +277,7 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
               <div className="mb-8">
                 <div className="bg-gray-50 rounded-2xl p-6 text-center">
                   <img 
-                    src={`/src/assets/${selectedAdultType}.jpg`}
+                    src={getAdultTypeImage(selectedAdultType)}
                     alt={`${selectedAdultType} trusted adults`}
                     className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
                     onError={(e) => {
