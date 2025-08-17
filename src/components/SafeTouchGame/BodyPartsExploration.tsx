@@ -92,108 +92,44 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
               {currentBodyPart === 'upperBody' ? 'Upper Body' : 'Lower Body'}
             </h2>
             
-            <div className="flex justify-center space-x-8">
-              {/* Boy Avatar */}
+            <div className="flex justify-center">
               <div className="text-center">
-                <h3 className="text-lg font-bold text-blue-600 mb-4">Boy</h3>
                 <div className="relative">
-                  <svg width="120" height="200" viewBox="0 0 120 200" className="border-2 border-gray-200 rounded-lg">
-                    {/* Head */}
-                    <circle cx="60" cy="30" r="20" fill="#fdbcb4" stroke="#333" strokeWidth="2"/>
-                    
-                    {currentBodyPart === 'upperBody' ? (
-                      <>
-                        {/* Upper body */}
-                        <rect 
-                          x="40" y="50" width="40" height="60" 
-                          fill="#87CEEB" 
-                          stroke="#333" 
-                          strokeWidth="2"
-                          className="cursor-pointer hover:fill-blue-300 transition-colors"
-                          onMouseEnter={() => handleBodyPartHover('chest')}
-                          onMouseLeave={() => setHoveredArea('')}
-                        />
-                        {/* Arms */}
-                        <rect x="20" y="60" width="15" height="40" fill="#fdbcb4" stroke="#333" strokeWidth="2"/>
-                        <rect x="85" y="60" width="15" height="40" fill="#fdbcb4" stroke="#333" strokeWidth="2"/>
-                      </>
-                    ) : (
-                      <>
-                        {/* Lower body */}
-                        <rect x="40" y="50" width="40" height="30" fill="#87CEEB" stroke="#333" strokeWidth="2"/>
-                        <rect 
-                          x="45" y="80" width="30" height="30" 
-                          fill="#FF6B6B" 
-                          stroke="#333" 
-                          strokeWidth="2"
-                          className="cursor-pointer hover:fill-red-400 transition-colors"
+                  {currentBodyPart === 'upperBody' ? (
+                    <img 
+                      src="/src/assets/upper.gif" 
+                      alt="Upper body safety diagram"
+                      className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
+                      onMouseEnter={() => handleBodyPartHover('chest')}
+                      onMouseLeave={() => setHoveredArea('')}
+                    />
+                  ) : (
+                    <div className="w-80 h-60 bg-gradient-to-b from-pink-100 to-purple-100 border-2 border-gray-200 rounded-lg flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-6xl mb-4">👤</div>
+                        <p className="text-lg font-bold text-gray-700">Lower Body</p>
+                        <div 
+                          className="mt-4 w-32 h-20 bg-red-200 hover:bg-red-300 rounded-lg cursor-pointer transition-colors mx-auto flex items-center justify-center"
                           onMouseEnter={() => handleBodyPartHover('private')}
                           onMouseLeave={() => setHoveredArea('')}
-                        />
-                        {/* Legs */}
-                        <rect x="45" y="110" width="12" height="60" fill="#4169E1" stroke="#333" strokeWidth="2"/>
-                        <rect x="63" y="110" width="12" height="60" fill="#4169E1" stroke="#333" strokeWidth="2"/>
-                      </>
-                    )}
-                  </svg>
-                </div>
-              </div>
-
-              {/* Girl Avatar */}
-              <div className="text-center">
-                <h3 className="text-lg font-bold text-pink-600 mb-4">Girl</h3>
-                <div className="relative">
-                  <svg width="120" height="200" viewBox="0 0 120 200" className="border-2 border-gray-200 rounded-lg">
-                    {/* Head */}
-                    <circle cx="60" cy="30" r="20" fill="#fdbcb4" stroke="#333" strokeWidth="2"/>
-                    
-                    {currentBodyPart === 'upperBody' ? (
-                      <>
-                        {/* Upper body */}
-                        <rect 
-                          x="40" y="50" width="40" height="60" 
-                          fill="#FFB6C1" 
-                          stroke="#333" 
-                          strokeWidth="2"
-                          className="cursor-pointer hover:fill-pink-300 transition-colors"
-                          onMouseEnter={() => handleBodyPartHover('chest')}
-                          onMouseLeave={() => setHoveredArea('')}
-                        />
-                        {/* Arms */}
-                        <rect x="20" y="60" width="15" height="40" fill="#fdbcb4" stroke="#333" strokeWidth="2"/>
-                        <rect x="85" y="60" width="15" height="40" fill="#fdbcb4" stroke="#333" strokeWidth="2"/>
-                      </>
-                    ) : (
-                      <>
-                        {/* Lower body */}
-                        <rect x="40" y="50" width="40" height="30" fill="#FFB6C1" stroke="#333" strokeWidth="2"/>
-                        <rect 
-                          x="45" y="80" width="30" height="30" 
-                          fill="#FF6B6B" 
-                          stroke="#333" 
-                          strokeWidth="2"
-                          className="cursor-pointer hover:fill-red-400 transition-colors"
-                          onMouseEnter={() => handleBodyPartHover('private')}
-                          onMouseLeave={() => setHoveredArea('')}
-                        />
-                        {/* Legs */}
-                        <rect x="45" y="110" width="12" height="60" fill="#9370DB" stroke="#333" strokeWidth="2"/>
-                        <rect x="63" y="110" width="12" height="60" fill="#9370DB" stroke="#333" strokeWidth="2"/>
-                      </>
-                    )}
-                  </svg>
+                        >
+                          <span className="text-sm font-bold text-red-800">Private Parts</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Sun Button */}
+            {/* Trusted Adult Button */}
             <div className="flex justify-center mt-6">
               <button
                 onClick={handleSunClick}
-                className="bg-yellow-400 hover:bg-yellow-500 text-yellow-800 p-4 rounded-full shadow-lg transform hover:scale-110 transition-all duration-200"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 font-bold text-lg"
                 aria-label="Learn about trusted adults"
               >
-                <Sun className="w-8 h-8" />
+                Trusted Adult?
               </button>
             </div>
           </div>
