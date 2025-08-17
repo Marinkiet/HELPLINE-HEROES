@@ -15,7 +15,7 @@ export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalPr
 
   const handleWhatsAppReport = () => {
     const message = encodeURIComponent("I would like to report suspicious behavior. Please provide me with the reporting guidelines.");
-    window.open(`https://wa.me/27665838648?text=${message}`, '_blank');
+    window.open(`https://wa.me/+14155238886?text=${message}`, '_blank');
   };
 
   const handleSMSReport = () => {
