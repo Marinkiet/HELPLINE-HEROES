@@ -1,5 +1,7 @@
 import React from 'react';
 import { Search, Shuffle } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 
 interface SearchBarProps {
   searchQuery: string;
@@ -8,6 +10,8 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ searchQuery, onSearchChange, onSurpriseMe }: SearchBarProps) {
+  const { selectedLanguage } = useAudio();
+  
   return (
     <div className="bg-white rounded-2xl p-4 shadow-lg mb-6">
       <div className="flex flex-col md:flex-row gap-4 items-center">
@@ -15,7 +19,7 @@ export function SearchBar({ searchQuery, onSearchChange, onSurpriseMe }: SearchB
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
-            placeholder="Search for safety activities..."
+            placeholder={appContent.search.placeholder[selectedLanguage]}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full pl-10 pr-4 py-3 text-lg font-semibold rounded-xl border-2 border-gray-200 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-200 transition-all duration-200 placeholder-gray-400"
@@ -29,7 +33,7 @@ export function SearchBar({ searchQuery, onSearchChange, onSurpriseMe }: SearchB
           aria-label="Pick a random safety activity"
         >
           <Shuffle className="w-5 h-5" />
-          <span>Learn Something New!</span>
+          <span>{appContent.search.surpriseButton[selectedLanguage]}</span>
         </button>
       </div>
     </div>

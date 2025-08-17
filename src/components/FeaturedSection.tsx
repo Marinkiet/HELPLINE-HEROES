@@ -1,5 +1,7 @@
 import React from 'react';
 import { Star, Shield, Heart, Users } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 import kidsbg from '../assets/kidsbg.jpg';
 interface FeaturedGame {
   id: string;
@@ -18,6 +20,8 @@ interface FeaturedSectionProps {
 }
 
 export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
+  const { selectedLanguage } = useAudio();
+  
   const featuredGames: FeaturedGame[] = [
       {
         id: 'safe-touch',
@@ -56,7 +60,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
     <div className=" rounded-3xl p-8 my-10 shadow-2xl ">
       <div className="flex items-center mb-6">
         <Star className="w-8 h-8 text-yellow-300 mr-3" />
-        <h2 className="text-3xl font-black text-white">Safety Adventures</h2>
+        <h2 className="text-3xl font-black text-white">{appContent.featured.title[selectedLanguage]}</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Shield, Users, Phone, BookOpen } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 
 interface Category {
   id: string;
@@ -15,10 +17,12 @@ interface CategoryCardsProps {
 }
 
 export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
+  const { selectedLanguage } = useAudio();
+  
   const categories: Category[] = [
     {
       id: 'recognition',
-      title: 'Safety Recognition',
+      title: appContent.categories.recognition[selectedLanguage],
       icon: <Shield className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-green-500 to-green-600',
@@ -26,7 +30,7 @@ export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
     },
     {
       id: 'response',
-      title: 'Response Skills',
+      title: appContent.categories.response[selectedLanguage],
       icon: <Users className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600',
@@ -34,7 +38,7 @@ export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
     },
     {
       id: 'reporting',
-      title: 'Getting Help',
+      title: appContent.categories.reporting[selectedLanguage],
       icon: <Phone className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600',
@@ -42,7 +46,7 @@ export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
     },
     {
       id: 'support',
-      title: 'Support Network',
+      title: appContent.categories.support[selectedLanguage],
       icon: <BookOpen className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-pink-500 to-pink-600',

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { Navigation } from './components/Navigation';
 import { CommunitySafetyModal } from './components/CommunitySafetyModal';
@@ -9,10 +10,12 @@ import { GameGrid } from './components/GameGrid';
 import { SearchBar } from './components/SearchBar';
 import { GameModal } from './components/GameModal';
 import { games, Game } from './data/games';
+import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './components/ReportBadTouchButton';
 import { AdultReportButton } from './components/AdultReportButton';
-function App() {
+function AppContent() {
+  const { selectedLanguage } = useAudio();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
@@ -87,10 +90,9 @@ function App() {
   };
 
   return (
-    <AudioProvider>
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <Navigation onCommunitySafetyClick={handleCommunitySafetyClick} />
+          <Navigation />
           <div className="w-full"
           style={{
                   backgroundImage: `url(${kidsbg})`, 
@@ -102,14 +104,14 @@ function App() {
                   <div className="flex items-center justify-between w-full max-w-4xl px-8 mb-4">
                     <AdultReportButton onClick={handleCommunitySafetyClick} />
                     <h1 className="text-4xl md:text-6xl font-black text-purple-800 leading-tight">
-                      You Are a
+                      {appContent.hero.title[selectedLanguage].split(' ').slice(0, 3).join(' ')}
                       <br />
-                      SUPERHERO!
+                      {appContent.hero.title[selectedLanguage].split(' ').slice(3).join(' ')}
                     </h1>
                     <ReportBadTouchButton />
                   </div>
                   <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
-                     Learn how to stay safe, help friends, and be brave! 
+                     {appContent.hero.subtitle[selectedLanguage]}
                   </p>
                 </div>
               </div>
@@ -117,12 +119,6 @@ function App() {
             </div>
           
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Hero Section */}
-            
-            
-
-            
-            
             <CategoryCards onCategoryClick={handleCategoryClick} />
 
             <SearchBar 
@@ -156,6 +152,13 @@ function App() {
           />
         </div>
       </div>
+  );
+}
+
+function App() {
+  return (
+    <AudioProvider>
+      <AppContent />
     </AudioProvider>
   );
 }

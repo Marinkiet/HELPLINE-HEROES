@@ -1,5 +1,5 @@
 export interface AudioConfig {
-  language: 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso';
+  language: 'en' | 'af' | 'zu' | 'xh' | 'st' | 'tn' | 'ts' | 've' | 'nr' | 'nso';
   text: string;
   voiceId?: string;
 }
@@ -29,5 +29,5 @@ export const LANGUAGES = {
   ts: 'Tsonga',
   ve: 'Venda',
   nr: 'South Ndebele',
-  nso: 'Northern Sotho (Sepedi)',  
+  nso: 'Northern Sotho (Sepedi)'
 } as const;

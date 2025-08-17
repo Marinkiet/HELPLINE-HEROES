@@ -31,7 +31,7 @@ export function Navigation(): NavigationProps {
               <Globe className="w-4 h-4 text-blue-600" />
               <select
                 value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value as 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso')}
+                onChange={(e) => setSelectedLanguage(e.target.value as 'en' | 'af' | 'zu' | 'xh' | 'st' | 'tn' | 'ts' | 've' | 'nr' | 'nso')}
                 className="bg-transparent border-none outline-none font-semibold text-gray-700 cursor-pointer text-sm"
                 aria-label="Select language"
               >
@@ -77,7 +77,7 @@ export function Navigation(): NavigationProps {
               <Globe className="w-4 h-4 text-blue-600" />
               <select
                 value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value as 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso')}
+                onChange={(e) => setSelectedLanguage(e.target.value as 'en' | 'af' | 'zu' | 'xh' | 'st' | 'tn' | 'ts' | 've' | 'nr' | 'nso')}
                 className="bg-transparent border-none outline-none font-semibold text-gray-700 cursor-pointer text-sm"
                 aria-label="Select language"
               >

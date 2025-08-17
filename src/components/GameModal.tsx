@@ -1,5 +1,7 @@
 import React from 'react';
 import { X, Play, Phone, Heart } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 import { Game } from '../data/games';
 import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
@@ -12,6 +14,7 @@ interface GameModalProps {
 }
 
 export function GameModal({ game, isOpen, onClose }: GameModalProps) {
+  const { selectedLanguage } = useAudio();
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
   const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
 
@@ -81,10 +84,10 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
         <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-r-xl">
           <div className="flex items-center mb-2">
             <Heart className="w-5 h-5 text-blue-500 mr-2" />
-            <h4 className="font-bold text-blue-800">Remember: You're Safe Here</h4>
+            <h4 className="font-bold text-blue-800">{appContent.safety.rememberSafe[selectedLanguage]}</h4>
           </div>
           <p className="text-blue-700 text-sm">
-            If you ever need help, call <strong>{helplineNumbers.childline}</strong> or text <strong>{helplineNumbers.textLine}</strong>
+            {appContent.safety.helpMessage[selectedLanguage].replace('116', helplineNumbers.childline).replace('741741', helplineNumbers.textLine.split(' ').pop() || '741741')}
           </p>
         </div>
         
@@ -94,13 +97,13 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
             className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2 text-lg"
           >
             <Play className="w-6 h-6" />
-            <span>Start Learning!</span>
+            <span>{appContent.buttons.startLearning[selectedLanguage]}</span>
           </button>
           <button 
             onClick={onClose}
             className="px-6 py-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-colors duration-200 text-lg"
           >
-            Back to Activities
+            {appContent.buttons.backToActivities[selectedLanguage]}
           </button>
         </div>
       </div>
