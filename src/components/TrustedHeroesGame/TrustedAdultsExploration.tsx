@@ -249,6 +249,26 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
               </p>
             </div>
 
+            {/* Image Display Area - Only show in types section when an adult type is selected */}
+            {currentSection === 'types' && selectedAdultType && (
+              <div className="mb-8">
+                <div className="bg-gray-50 rounded-2xl p-6 text-center">
+                  <img 
+                    src={`/src/assets/${selectedAdultType}.jpg`}
+                    alt={`${selectedAdultType} trusted adults`}
+                    className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
+                    onError={(e) => {
+                      // Fallback to a placeholder if image doesn't exist
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
+                    }}
+                  />
+                  <p className="text-sm text-gray-600 mt-3 font-semibold">
+                    {adultTypes.find(type => type.key === selectedAdultType)?.title}
+                  </p>
+                </div>
+              </div>
+            )}
             {/* Navigation */}
             <div className="flex justify-between">
               <button
