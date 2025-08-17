@@ -153,14 +153,30 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
                     <button
                       key={type.key}
                       onClick={() => handleAdultTypeClick(type.key)}
-                      className={`${type.color} p-4 rounded-xl text-left transition-all duration-200 transform hover:scale-105 ${
+                      className={`p-4 rounded-xl text-left transition-all duration-200 transform cursor-pointer outline-none font-bold text-gray-600 ${
                         selectedAdultType === type.key ? 'ring-3 ring-purple-400' : ''
                       }`}
+                      style={{
+                        backgroundColor: '#e0e0e0',
+                        boxShadow: selectedAdultType === type.key 
+                          ? 'inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff'
+                          : '7px 7px 15px #bebebe, -7px -7px 15px #ffffff'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedAdultType !== type.key) {
+                          e.currentTarget.style.boxShadow = 'inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedAdultType !== type.key) {
+                          e.currentTarget.style.boxShadow = '7px 7px 15px #bebebe, -7px -7px 15px #ffffff';
+                        }
+                      }}
                     >
                       <div className="flex items-center space-x-3">
                         <div className="text-3xl">{type.icon}</div>
                         <div>
-                          <h3 className="font-bold text-gray-800">{type.title}</h3>
+                          <h3 className="font-bold text-gray-700">{type.title}</h3>
                         </div>
                       </div>
                     </button>
