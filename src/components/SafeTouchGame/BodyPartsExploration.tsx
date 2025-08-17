@@ -220,24 +220,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <button
-                onClick={() => {
-                  setShowTrustedAdults(false);
-                  if (currentBodyPart === 'lowerBody') {
-                    setCurrentBodyPart('upperBody');
-                 } else if (currentBodyPart === 'upperBody') {
-                   onComplete(); // Navigate back to home screen
-                  }
-                }}
-                className={`px-6 py-3 rounded-xl font-bold transition-all duration-200 ${
-                  showTrustedAdults 
-                    ? 'bg-gray-200 hover:bg-gray-300 text-gray-700' 
-                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                }`}
-                disabled={!showTrustedAdults}
-              >
-               {currentBodyPart === 'upperBody' ? 'Back to Activities' : 'Back to Body Parts'}
-              </button>
+              <div></div>
               
               <button
                 onClick={handleNext}
