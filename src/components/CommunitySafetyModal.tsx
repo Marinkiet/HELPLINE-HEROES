@@ -1,5 +1,7 @@
 import React from 'react';
 import { X, Shield, AlertTriangle, Phone, MessageSquare, Eye, Lock, FileText, Wifi } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 
 interface CommunitySafetyModalProps {
   isOpen: boolean;
@@ -7,6 +9,8 @@ interface CommunitySafetyModalProps {
 }
 
 export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalProps) {
+  const { selectedLanguage } = useAudio();
+
   if (!isOpen) return null;
 
   const handleWhatsAppReport = () => {
@@ -20,18 +24,18 @@ export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalPr
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-4xl w-full my-8 shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-3xl">
+        <div className="bg-white border-b border-gray-200 p-6 rounded-t-3xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="bg-orange-500 rounded-full p-3">
                 <Shield className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h2 className="text-3xl font-black text-gray-800">Adult Report System</h2>
-                <p className="text-orange-600 text-lg font-bold">Community Safety Network</p>
+                <h2 className="text-3xl font-black text-gray-800">{appContent.safety.adultReportModal.title[selectedLanguage]}</h2>
+                <p className="text-orange-600 text-lg font-bold">{appContent.safety.adultReportModal.subtitle[selectedLanguage]}</p>
               </div>
             </div>
             <button
@@ -50,15 +54,14 @@ export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalPr
               <div>
                 <h3 className="text-lg font-bold text-yellow-800">Important Notice for Children</h3>
                 <p className="text-yellow-700">
-                  This area is designed for adults only. If you're a child, please ask a grown-up to help you, 
-                  or return to the fun safety games! 🎮
+                  {appContent.safety.adultReportModal.childWarning[selectedLanguage]} 🎮
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="p-6 space-y-8">
+        <div className="p-6 space-y-8 max-h-[70vh] overflow-y-auto">
           {/* Introduction */}
           <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl">
             <h3 className="text-xl font-bold text-blue-800 mb-3">Building a Safer Community Together</h3>

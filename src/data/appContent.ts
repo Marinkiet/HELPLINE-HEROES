@@ -315,6 +315,45 @@ export const appContent = {
       nr: "Udinga Usizo?",
       nso: "O nyaka Thušo?"
     },
+    reportBadTouchModal: {
+      title: {
+        en: "Need Help?",
+        af: "Het jy hulp nodig?",
+        zu: "Udinga Usizo?",
+        xh: "Ufuna Uncedo?",
+        st: "U hloka Thuso?",
+        tn: "O tlhoka Thuso?",
+        ts: "U lava Mpfuno?",
+        ve: "Ni ṱoḓa Thuso?",
+        nr: "Udinga Usizo?",
+        nso: "O nyaka Thušo?"
+      },
+      message: {
+        en: "If someone touched you in a way that made you feel scared or uncomfortable which is a bad touch, you can call 116 to talk to a kind adult who will help you.",
+        af: "As iemand jou geraak het op 'n manier wat jou bang of ongemaklik laat voel het, wat 'n slegte raak is, kan jy 116 bel om met 'n vriendelike volwassene te praat wat jou sal help.",
+        zu: "Uma umuntu ekuthinte ngendlela eyakwenza wazizwa wesaba noma ungakhululekile okuyikuthinta okubi, ungashayela u-116 ukukhuluma nomuntu omdala onobubele ozokusiza."
+      },
+      warning: {
+        en: "Only call if you really need help. Don't call for fun!",
+        af: "Bel net as jy regtig hulp nodig het. Moenie bel vir pret nie!",
+        zu: "Shayela kuphela uma udinga usizo ngempela. Ungashayeli ukudlala!"
+      },
+      callButton: {
+        en: "Call 116 - I Need Help",
+        af: "Bel 116 - Ek het hulp nodig",
+        zu: "Shayela u-116 - Ngidinga Usizo"
+      },
+      backButton: {
+        en: "I'm OK - Go Back",
+        af: "Ek is reg - Gaan terug",
+        zu: "Ngiright - Buyela emuva"
+      },
+      reassurance: {
+        en: "You are brave and important!",
+        af: "Jy is dapper en belangrik!",
+        zu: "Unesibindi futhi ubalulekile!"
+      }
+    },
     suspiciousBehaviorReporting: {
       en: "Suspicious Behaviour Reporting",
       af: "Verdagte Gedrag Rapportering",
@@ -326,6 +365,23 @@ export const appContent = {
       ve: "U Pfi Maitele a Khongolosaho",
       nr: "Ukubika Ukuziphatha Okusolisayo",
       nso: "Go Begela Boitshwaro bjo bo Belaetšago"
+    },
+    adultReportModal: {
+      title: {
+        en: "Adult Report System",
+        af: "Volwasse Rapportstelsel",
+        zu: "Uhlelo Lokubika Lwabantu Abadala"
+      },
+      subtitle: {
+        en: "Community Safety Network",
+        af: "Gemeenskapsveiligheidsnetwerk",
+        zu: "Inethiwekhi Yokuphepha Komphakathi"
+      },
+      childWarning: {
+        en: "This area is designed for adults only. If you're a child, please ask a grown-up to help you, or return to the fun safety games!",
+        af: "Hierdie area is slegs vir volwassenes ontwerp. As jy 'n kind is, vra asseblief 'n volwassene om jou te help, of gaan terug na die prettige veiligheidsspeletjies!",
+        zu: "Lendawo yenzelwe abantu abadala kuphela. Uma uyingane, sicela ucele umuntu omdala akusize, noma ubuyele emidlalweni yokuphepha ejabulisayo!"
+      }
     }
   }
 };

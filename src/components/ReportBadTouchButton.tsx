@@ -18,7 +18,7 @@ export function ReportBadTouchButton() {
 
   const generateModalAudio = async () => {
     try {
-      const modalText = getModalText();
+      const modalText = appContent.safety.reportBadTouchModal.message[selectedLanguage];
       console.log('🎵 Generating Report Bad Touch modal audio...');
       
       const url = await elevenLabsService.generateSpeech({
@@ -47,31 +47,6 @@ export function ReportBadTouchButton() {
     }
   };
 
-  const getModalText = () => {
-    const texts = {
-      en: "Hi there! If someone touched you in a way that made you feel scared or uncomfortable, you can call 116 to talk to a kind adult who will help you. Only call if you really need help. Don't call for fun.",
-      af: "Hallo daar! As iemand jou geraak het op 'n manier wat jou bang of ongemaklik laat voel het, kan jy 116 bel om met 'n vriendelike volwassene te praat wat jou sal help. Bel net as jy regtig hulp nodig het. Moenie bel om speletjies te speel nie.",
-      zu: "Sawubona! Uma umuntu ekuthinte ngendlela eyakwenza wazizwa wesaba noma ungakhululekile, ungashayela u-116 ukukhuluma nomuntu omdala onobubele ozokusiza. Shayela kuphela uma udinga usizo ngempela. Ungashayeli ukudlala imidlalo."
-    };
-    return texts[selectedLanguage];
-  };
-
-  const getButtonTitle = () => {
-    const titles = {
-      en: "Need Help?",
-      af: "Het jy hulp nodig?",
-      zu: "Udinga Usizo?",
-      xh: "Ufuna Uncedo?",
-      st: "U hloka Thuso?",
-      tn: "O tlhoka Thuso?",
-      ts: "U lava Mpfuno?",
-      ve: "Ni ṱoḓa Thuso?",
-      nr: "Udinga Usizo?",
-      nso: "O nyaka Thušo?"
-    };
-    return titles[selectedLanguage] || titles.en;
-  };
-
   const handleCall = () => {
     // Show additional confirmation before making the call
     const confirmed = window.confirm(
@@ -97,7 +72,7 @@ export function ReportBadTouchButton() {
       <div
         className="relative flex items-center justify-center w-32 h-32 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
         onClick={() => setIsModalOpen(true)}
-        aria-label={getButtonTitle()}
+        aria-label={appContent.safety.needHelpButton[selectedLanguage]}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -129,9 +104,9 @@ export function ReportBadTouchButton() {
               <div className="bg-red-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Phone className="w-8 h-8 text-red-600" />
               </div>
-              <h2 className="text-xl font-black text-gray-800 mb-3">{getButtonTitle()} 🤗</h2>
+              <h2 className="text-xl font-black text-gray-800 mb-3">{appContent.safety.reportBadTouchModal.title[selectedLanguage]} 🤗</h2>
               <p className="text-base text-gray-700 leading-relaxed mb-4">
-                If someone touched you in a way that made you feel scared or uncomfortable which is a bad touch, you can call <strong>116</strong> to talk to a kind adult who will help you.
+                {appContent.safety.reportBadTouchModal.message[selectedLanguage]}
               </p>
             </div>
 
@@ -142,7 +117,7 @@ export function ReportBadTouchButton() {
                 <span className="font-bold text-yellow-800 text-sm">Important!</span>
               </div>
               <p className="text-yellow-700 text-sm text-center">
-                Only call if you really need help. Don't call to for fun! 🚫
+                {appContent.safety.reportBadTouchModal.warning[selectedLanguage]} 🚫
               </p>
             </div>
 
@@ -153,13 +128,13 @@ export function ReportBadTouchButton() {
                 className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black py-3 px-4 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2"
               >
                 <Phone className="w-5 h-5" />
-                <span>Call 116 - I Need Help</span>
+                <span>{appContent.safety.reportBadTouchModal.callButton[selectedLanguage]}</span>
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition-colors duration-200"
               >
-                I'm OK - Go Back
+                {appContent.safety.reportBadTouchModal.backButton[selectedLanguage]}
               </button>
             </div>
 
@@ -176,7 +151,7 @@ export function ReportBadTouchButton() {
             {/* Simple reassurance */}
             <div className="mt-4 text-center">
               <p className="text-xs text-gray-500">
-                You are brave and important! 💙
+                {appContent.safety.reportBadTouchModal.reassurance[selectedLanguage]} 💙
               </p>
             </div>
           </div>
