@@ -138,7 +138,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
           <div className="bg-white rounded-3xl p-8 shadow-2xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800">
-                {showTrustedAdults ? 'Trusted Adults' : 'Body Safety Information'}
+                {showTrustedAdults}
               </h2>
               <AudioPlayer
                 audioUrl={audioUrl}
