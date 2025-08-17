@@ -126,7 +126,7 @@ export function ReportBadTouchButton() {
                 <span className="font-bold text-yellow-800 text-sm">Important!</span>
               </div>
               <p className="text-yellow-700 text-sm text-center">
-                Only call if you really need help. Don't call to play games! 🚫
+                Only call if you really need help. Don't call to for fun! 🚫
               </p>
             </div>
 
