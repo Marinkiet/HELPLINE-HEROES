@@ -26,16 +26,16 @@ export const games: Game[] = [
     image: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400',
     featured: true,
     description: {
-      en: 'Learn about appropriate and inappropriate touch in a safe, educational way.',
-      af: 'Leer oor gepaste en ongepaste aanraking op \'n veilige, opvoedkundige manier.',
-      zu: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile, efundisayo.',
-      xh: 'Funda ngokuchukumisa okufanelekileyo nokungafanelekanga ngendlela ekhuselekileyo, efundisayo.',
-      st: 'Ithuta ka tšoaetso e nepahetseng le e sa nepahetseng ka tsela e sireletsehileng, e rutang.',
-      tn: 'Ithuta ka kgoma e e siameng le e e sa siamang ka tsela e e babalesegileng, e e rutang.',
-      ts: 'Dyondza hi ku kuma loku faneleke na loku nga faneleki hi ndlela ya vuhlayiseki, ya vudyondzisi.',
-      ve: 'Gudani nga u khou amba ha vhushai na ha vhusina vhushai nga ndila ya vhushai, ya pfunzo.',
-      nr: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile, efundisayo.',
-      nso: 'Ithuta ka kgoma ye e nepagetšego le ye e sa nepagetšego ka tsela ye e šireletšegileng, ye e rutago.'
+      en: 'Learn about appropriate and inappropriate touch in a safe.',
+      af: 'Leer oor gepaste en ongepaste aanraking op \'n veilige.',
+      zu: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.',
+      xh: 'Funda ngokuchukumisa okufanelekileyo nokungafanelekanga ngendlela ekhuselekileyo.',
+      st: 'Ithuta ka tšoaetso e nepahetseng le e sa nepahetseng ka tsela e sireletsehileng.',
+      tn: 'Ithuta ka kgoma e e siameng le e e sa siamang ka tsela e e babalesegileng.',
+      ts: 'Dyondza hi ku kuma loku faneleke na loku nga faneleki hi ndlela ya vuhlayiseki.',
+      ve: 'Gudani nga u khou amba ha vhushai na ha vhusina vhushai nga ndila ya vhushai.',
+      nr: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.',
+      nso: 'Ithuta ka kgoma ye e nepagetšego le ye e sa nepagetšego ka tsela ye e šireletšegileng.'
     },
     ageGroup: 'early',
     category: 'recognition'
