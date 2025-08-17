@@ -17,7 +17,7 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
   const [isPlaying, setIsPlaying] = useState(false);
 
   const adultTypes = [
-    { key: 'parents', icon: '👨‍👩‍👧‍👦', title: 'Parents & Family', bgColor: '#e3f2fd', shadowDark: '#bbdefb', shadowLight: '#ffffff' },
+    { key: 'parents', icon: '👨‍👩‍👧‍👦', title: 'Parents & Family', bgColor: '#e3f2fd', shadowDark: '#bbdefb',  },
     { key: 'teachers', icon: '👩‍🏫', title: 'Teachers & School', bgColor: '#e8f5e8', shadowDark: '#c8e6c9', shadowLight: '#ffffff' },
     { key: 'doctors', icon: '👨‍⚕️', title: 'Doctors & Healthcare', bgColor: '#f3e5f5', shadowDark: '#e1bee7', shadowLight: '#ffffff' },
     { key: 'police', icon: '👮‍♀️', title: 'Police & Community', bgColor: '#fff8e1', shadowDark: '#ffecb3', shadowLight: '#ffffff' },
