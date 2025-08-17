@@ -302,6 +302,30 @@ export const appContent = {
       ve: "Arali ni tshi ṱoḓa thuso, fonelani 116 kana rumelani HOME kha 741741",
       nr: "Uma udinga usizo, shayela u-116 noma thumela u-HOME ku-741741",
       nso: "Ge o nyaka thušo, letša 116 goba romela HOME go 741741"
+    },
+    needHelpButton: {
+      en: "Need Help?",
+      af: "Het jy hulp nodig?",
+      zu: "Udinga Usizo?",
+      xh: "Ufuna Uncedo?",
+      st: "U hloka Thuso?",
+      tn: "O tlhoka Thuso?",
+      ts: "U lava Mpfuno?",
+      ve: "Ni ṱoḓa Thuso?",
+      nr: "Udinga Usizo?",
+      nso: "O nyaka Thušo?"
+    },
+    suspiciousBehaviorReporting: {
+      en: "Suspicious Behaviour Reporting",
+      af: "Verdagte Gedrag Rapportering",
+      zu: "Ukubika Ukuziphatha Okusolisayo",
+      xh: "Ukuxela Ukuziphatha Okukrokrelayo",
+      st: "Ho Bega Boitšoaro bo Belaetsang",
+      tn: "Go Begela Maitsholo a a Belaelang",
+      ts: "Ku Vika Mahanyelo ya Ku Solela",
+      ve: "U Pfi Maitele a Khongolosaho",
+      nr: "Ukubika Ukuziphatha Okusolisayo",
+      nso: "Go Begela Boitshwaro bjo bo Belaetšago"
     }
   }
 };
