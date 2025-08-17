@@ -2,11 +2,9 @@ import React from 'react';
 import { Star, Shield } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { elevenLabsService } from '../services/elevenLabsService';
+import { Game } from '../data/games';
 
-interface GameCardProps {
-  id: string;
-  title: string;
-  description: string;
+interface GameCardProps extends Omit<Game, 'ageGroup' | 'category'> {
   image: string;
   featured?: boolean;
   onClick: () => void;
@@ -16,12 +14,16 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [isPlayingNarration, setIsPlayingNarration] = React.useState(false);
 
+  // Get translated content
+  const translatedTitle = typeof title === 'object' ? title[selectedLanguage] : title;
+  const translatedDescription = typeof description === 'object' ? description[selectedLanguage] : description;
+
   const handleCardClick = async () => {
     // Play narration if enabled
     if (isNarrationEnabled) {
       try {
         setIsPlayingNarration(true);
-        const narrationText = `${title}. ${description}`;
+        const narrationText = `${translatedTitle}. ${translatedDescription}`;
         console.log('🎵 Playing card narration:', narrationText.substring(0, 50) + '...');
         
         const audioUrl = await elevenLabsService.generateSpeech({
@@ -59,7 +61,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
-      aria-label={`Learn about ${title}`}
+      aria-label={`Learn about ${translatedTitle}`}
     >
       {isPlayingNarration && (
         <div className="absolute -top-2 -left-2 bg-blue-500 rounded-full p-2 border-2 border-white shadow-lg animate-bounce">
@@ -70,7 +72,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       <div className="relative overflow-hidden rounded-xl mb-3 bg-gradient-to-br from-blue-100 to-purple-100">
         <img 
           src={image}
-          alt={`${title} safety activity`}
+          alt={`${translatedTitle} safety activity`}
           className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110"
           loading="lazy"
         />
@@ -78,7 +80,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       </div>
       
       <h3 className="text-lg font-black text-gray-800 text-center leading-tight">
-        {title}
+        {translatedTitle}
       </h3>
       
       <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300" />

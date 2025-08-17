@@ -20,6 +20,10 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
 
   if (!isOpen || !game) return null;
 
+  // Get translated content
+  const translatedTitle = typeof game.title === 'object' ? game.title[selectedLanguage] : game.title;
+  const translatedDescription = typeof game.description === 'object' ? game.description[selectedLanguage] : game.description;
+
   // Handle Safe Touch Detective game specifically
   if (showSafeTouchGame && game.id === '1') {
     return (
@@ -59,7 +63,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl transform animate-bounce-in">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-black text-gray-800">{game.title}</h2>
+          <h2 className="text-3xl font-black text-gray-800">{translatedTitle}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
@@ -72,13 +76,13 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
         <div className="mb-6">
           <img 
             src={game.image}
-            alt={`${game.title} safety activity`}
+            alt={`${translatedTitle} safety activity`}
             className="w-full h-48 object-cover rounded-2xl"
           />
         </div>
         
         <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-          {game.description}
+          {translatedDescription}
         </p>
         
         <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-r-xl">
