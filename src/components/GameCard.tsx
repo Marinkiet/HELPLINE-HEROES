@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Shield } from 'lucide-react';
+import { Star, Shield, Heart, Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { elevenLabsService } from '../services/elevenLabsService';
 import { Game } from '../data/games';
