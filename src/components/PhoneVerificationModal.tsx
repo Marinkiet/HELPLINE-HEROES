@@ -95,11 +95,14 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
         {/* Header */}
-        <div className="bg-orange-500 text-white p-6 rounded-t-3xl">
+        <div className="bg-orange-500 text-white p-6 rounded-t-3xl relative">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Shield className="w-8 h-8" />
-              <h2 className="text-2xl font-black">Adult Verification</h2>
+              <div>
+                <h2 className="text-2xl font-black">Adult Report</h2>
+                <p className="text-orange-100 text-sm font-semibold">For Grown-ups Only</p>
+              </div>
             </div>
             <button
               onClick={onClose}
@@ -108,6 +111,21 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
             >
               <X className="w-6 h-6" />
             </button>
+          </div>
+          
+          {/* Child Warning Message */}
+          <div className="mt-4 bg-orange-600 rounded-xl p-4 border-2 border-orange-300">
+            <div className="flex items-center space-x-3">
+              <div className="text-3xl">👨‍👩‍👧‍👦</div>
+              <div>
+                <h3 className="text-lg font-black text-white mb-1">Hey Kids! 👋</h3>
+                <p className="text-orange-100 text-sm leading-relaxed">
+                  This special button is only for grown-ups like your parents, teachers, or other adults. 
+                  If you're a child, please ask a grown-up to help you with this part! 
+                  You can continue playing the safety games instead. 🎮
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -29,11 +29,11 @@ export function Navigation({ onCommunitySafetyClick }: NavigationProps) {
             {/* Community Safety Button */}
             <button
               onClick={onCommunitySafetyClick}
-              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
-              aria-label="Community Safety for Adults"
+              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-4 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
+              aria-label="Adult Report - For Grown-ups Only"
             >
               <Users className="w-4 h-4" />
-              <span>Community Safety</span>
+              <span>Adult Report</span>
             </button>
 
             {/* Language Selector */}
@@ -85,11 +85,11 @@ export function Navigation({ onCommunitySafetyClick }: NavigationProps) {
             {/* Mobile Community Safety Button */}
             <button
               onClick={onCommunitySafetyClick}
-              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
-              aria-label="Community Safety for Adults"
+              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-3 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
+              aria-label="Adult Report - For Grown-ups Only"
             >
               <Users className="w-4 h-4" />
-              <span>Safety</span>
+              <span>Adult Report</span>
             </button>
 
             {/* Mobile Language Selector */}

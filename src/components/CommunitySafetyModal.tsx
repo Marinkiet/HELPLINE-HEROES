@@ -29,15 +29,32 @@ export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalPr
               <div className="bg-orange-500 rounded-full p-3">
                 <Shield className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-3xl font-black text-gray-800">Community Safety Network</h2>
+              <div>
+                <h2 className="text-3xl font-black text-gray-800">Adult Report System</h2>
+                <p className="text-orange-600 text-lg font-bold">Community Safety Network</p>
+              </div>
             </div>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-              aria-label="Close community safety"
+              aria-label="Close adult report"
             >
               <X className="w-8 h-8" />
             </button>
+          </div>
+          
+          {/* Child Warning Banner */}
+          <div className="mt-4 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-r-xl">
+            <div className="flex items-center space-x-3">
+              <div className="text-2xl">⚠️</div>
+              <div>
+                <h3 className="text-lg font-bold text-yellow-800">Important Notice for Children</h3>
+                <p className="text-yellow-700">
+                  This area is designed for adults only. If you're a child, please ask a grown-up to help you, 
+                  or return to the fun safety games! 🎮
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
