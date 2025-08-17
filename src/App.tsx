@@ -11,6 +11,7 @@ import { GameModal } from './components/GameModal';
 import { games, Game } from './data/games';
 import kidsbg from './assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './components/ReportBadTouchButton';
+import { AdultReportButton } from './components/AdultReportButton';
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe, Users } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
 interface NavigationProps {
-  onCommunitySafetyClick?: () => void;
+  // Remove the onCommunitySafetyClick prop since it's no longer needed
 }
 
-export function Navigation({ onCommunitySafetyClick }: NavigationProps) {
+export function Navigation(): NavigationProps {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -26,16 +26,6 @@ export function Navigation({ onCommunitySafetyClick }: NavigationProps) {
 
           {/* Narration Controls */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Community Safety Button */}
-            <button
-              onClick={onCommunitySafetyClick}
-              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-4 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
-              aria-label="Adult Report - For Grown-ups Only"
-            >
-              <Users className="w-4 h-4" />
-              <span>Adult Report</span>
-            </button>
-
             {/* Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
@@ -82,16 +72,6 @@ export function Navigation({ onCommunitySafetyClick }: NavigationProps) {
         {/* Mobile Narration Controls */}
         <div className="md:hidden pb-3">
           <div className="flex items-center justify-center space-x-4">
-            {/* Mobile Community Safety Button */}
-            <button
-              onClick={onCommunitySafetyClick}
-              className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-3 rounded-lg font-bold transition-all duration-200 text-sm shadow-md"
-              aria-label="Adult Report - For Grown-ups Only"
-            >
-              <Users className="w-4 h-4" />
-              <span>Adult Report</span>
-            </button>
-
             {/* Mobile Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
