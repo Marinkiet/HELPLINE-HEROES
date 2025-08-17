@@ -29,16 +29,5 @@ export const LANGUAGES = {
   ts: 'Tsonga',
   ve: 'Venda',
   nr: 'South Ndebele',
-  nso: 'Northern Sotho (Sepedi)',
-  sw: 'Swahili',
-  fr: 'French',
-  de: 'German',
-  es: 'Spanish',
-  pt: 'Portuguese',
-  ar: 'Arabic',
-  hi: 'Hindi',
-  ur: 'Urdu',
-  zh: 'Chinese',
-  ja: 'Japanese',
-  ru: 'Russian'
+  nso: 'Northern Sotho (Sepedi)',  
 } as const;
