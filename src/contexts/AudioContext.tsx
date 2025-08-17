@@ -3,8 +3,8 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface AudioContextType {
   isNarrationEnabled: boolean;
   toggleNarration: () => void;
-  selectedLanguage: 'en' | 'af' | 'zu';
-  setSelectedLanguage: (language: 'en' | 'af' | 'zu') => void;
+  selectedLanguage: 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso';
+  setSelectedLanguage: (language: 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso') => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -15,7 +15,7 @@ interface AudioProviderProps {
 
 export function AudioProvider({ children }: AudioProviderProps) {
   const [isNarrationEnabled, setIsNarrationEnabled] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'af' | 'zu'>('en');
+  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso'>('en');
 
   const toggleNarration = () => {
     setIsNarrationEnabled(prev => !prev);

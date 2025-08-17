@@ -1,5 +1,5 @@
 export interface AudioConfig {
-  language: 'en' | 'af' | 'zu';
+  language: 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso';
   text: string;
   voiceId?: string;
 }

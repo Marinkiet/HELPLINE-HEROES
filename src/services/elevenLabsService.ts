@@ -18,6 +18,14 @@ class ElevenLabsService {
     // Simulate API call delay for demo
     await new Promise(resolve => setTimeout(resolve, 200));
     
+    // Handle unsupported languages by falling back to English
+    const supportedLanguages = ['en', 'af', 'zu'];
+    const fallbackLanguage = supportedLanguages.includes(config.language) ? config.language : 'en';
+    
+    if (config.language !== fallbackLanguage) {
+      console.log(`⚠️ Language ${config.language} not fully supported by TTS, using ${fallbackLanguage} voice`);
+    }
+    
     // REAL ELEVEN LABS API IMPLEMENTATION
     if (this.apiKey && this.apiKey !== 'demo-key') {
       try {

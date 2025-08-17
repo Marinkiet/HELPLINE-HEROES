@@ -2,13 +2,27 @@ export const trustedHeroesContent = {
   welcome: {
     en: "Welcome to the Trusted Heroes Circle! You're going to learn about the special people in your life who keep you safe and help you when you need it. These are your trusted heroes! Click the 3 golden hearts to start your adventure.",
     af: "Welkom by die Vertroude Helde Kring! Jy gaan leer oor die spesiale mense in jou lewe wat jou veilig hou en jou help wanneer jy dit nodig het. Dit is jou vertroude helde! Klik op die 3 goue harte om jou avontuur te begin.",
-    zu: "Wamukelekile ku-Trusted Heroes Circle! Uzofunda ngabantu abakhethekile empilweni yakho abakugcina uphephile futhi bakusize uma udinga usizo. Laba ngamaqhawe akho athembekile! Chofoza izinhliziyo ezingu-3 zegolide ukuze uqale uhambo lwakho."
+    zu: "Wamukelekile ku-Trusted Heroes Circle! Uzofunda ngabantu abakhethekile empilweni yakho abakugcina uphephile futhi bakusize uma udinga usizo. Laba ngamaqhawe akho athembekile! Chofoza izinhliziyo ezingu-3 zegolide ukuze uqale uhambo lwakho.",
+    st: "Rea u amohela ho Trusted Heroes Circle! U tla ithuta ka batho ba khethehileng bophelong ba hao ba u bolokang u sireletsehile 'me ba u thusa ha u hloka thuso. Bana ke liqhawe tsa hao tse tšepahalang! Tobetsa dipelo tse 3 tsa khauta ho qala leeto la hao.",
+    xh: "Wamkelekile kwi-Trusted Heroes Circle! Uza kufunda ngabantu abakhethekileyo ebomini bakho abakugcinayo ukhuselekile kwaye bakuncedayo xa ufuna uncedo. Aba ngamaqhawe akho athembekileyo! Cofa iintliziyo ezi-3 zegolide ukuze uqalise uhambo lwakho.",
+    tn: "Re go amogela mo Trusted Heroes Circle! O tla ithuta ka batho ba ba kgethegileng mo botshelong jwa gago ba go bolokang o sireletsegile mme ba go thusa fa o tlhoka thuso. Bano ke diqhakga tsa gago tse di ikanyegang! Tobetsa dipelo tse 3 tsa gauta go simolola loeto lwa gago.",
+    ts: "Hi ku amukela eka Trusted Heroes Circle! U ta dyondza hi vanhu va nkoka eka vutomi bya wena lava ku hlayisaka u hlayisekile naswona va ku pfuna loko u lava mpfuno. Lava i tiqhakga ta wena leti tshembhekaka! Tirhisa tinhliziyo ta 3 ta nsuku-nkulu ku sungula riendzo ra wena.",
+    ve: "Ri a ni amukela kha Trusted Heroes Circle! Ni do guda nga vhathu vha ndeme vhukuma ha vhutshilo haṋu vha ṋu dzudzanyaho vha ṋu thusaho musi ni tshi ṱoḓa thuso. Avha ndi magwala aṋu a teaho! Tirisani miṅwe ya goḽide ya 3 u thoma lwendo lwaṋu.",
+    nr: "Lamukelekile ku-Trusted Heroes Circle! Lizofunda ngabantu abakhethekile empilweni yenu abakugcina liphephile futhi balikusize uma lidinga usizo. Laba ngamaqhawe enu athembekile! Cindezela izinhliziyo ezi-3 zegolide ukuze liqale uhambo lwenu.",
+    nso: "Re go amogela go Trusted Heroes Circle! O tla ithuta ka batho ba bohlokwa bophelong bja gago ba go bolokago o šireletšegile gomme ba go thuša ge o nyaka thušo. Ba ke magwala a gago a tšhepegago! Tobetša dipelo tše 3 tša gauta go thoma leeto la gago."
   },
 
   whatIsTrustedAdult: {
     en: "A trusted adult is someone who cares about you, keeps you safe, and always tells you the truth. They respect your feelings and never ask you to keep secrets that make you uncomfortable.",
     af: "'n Vertroude volwassene is iemand wat omgee vir jou, jou veilig hou, en altyd die waarheid vir jou sê. Hulle respekteer jou gevoelens en vra jou nooit om geheime te hou wat jou ongemaklik maak nie.",
-    zu: "Umuntu omdala othembekile ngumuntu okunakekela, okugcina uphephile, futhi ohlala ekutshela iqiniso. Bayazihlonipha izimizwa zakho futhi abakuceli ukuthi ugcine izimfihlo ezikwenza ungakhululeki."
+    zu: "Umuntu omdala othembekile ngumuntu okunakekela, okugcina uphephile, futhi ohlala ekutshela iqiniso. Bayazihlonipha izimizwa zakho futhi abakuceli ukuthi ugcine izimfihlo ezikwenza ungakhululeki.",
+    st: "Motho ea moholo ea tšepahalang ke motho ea u tsotellang, a u bolokang u sireletsehile, 'me a lula a u bolella 'nete. Ba hlompha maikutlo a hao 'me ha ba ke ba u kopa ho boloka liphiri tse u etsang hore u se phutholohe.",
+    xh: "Umntu omdala othembekileyo ngumntu okhathalayo, okugcinayo ukhuselekile, kwaye osoloko ekuxelela inyaniso. Bayazihlonipha iimvakalelo zakho kwaye abakaze bakucele ukuba ugcine iimfihlo ezikwenza ungakhululeki.",
+    tn: "Motho yo mogolo yo o ikanyegang ke motho yo o go ratang, yo o go bolokang o sireletsegile, mme yo o go bolelang boammaaruri ka nako yotlhe. Ba tlotla maikutlo a gago mme ga ba kitla ba go kopa go boloka diphiri tse di go dirang gore o se ikutlwe o gololesegile.",
+    ts: "Munhu wa vadala loyi a tshembhekaka i munhu loyi a ku rhandza, loyi a ku hlayisa u hlayisekile, naswona loyi a ku byela ntiyiso nkarhi hinkwawo. Va hlonipha mintlhaveko ya wena naswona a va nge va ku kombeli ku hlayisa swifihla leswi ku endlaka leswaku u nga titwa u olova.",
+    ve: "Muthu muhulwane a teaho ndi muthu a ṋu funaho, a ṋu dzudzanyaho, nahone a ṋu ṱalutshedziaho nnyi nṅwalwa. Vha a funa mivhavhelo yaṋu nahone a vha ngo ṋu ṱoḓisi u vhiga zwiṅwe zwo fhiraho zwi ṋu itisaho uri ni sa vhe na khongolose.",
+    nr: "Umuntu omdala othembekile ngumuntu okunakekela, okugcina uphephile, futhi ohlala ekutshela iqiniso. Bayazihlonipha imizwa yakho futhi abakuceli ukuthi ugcine izimfihlo ezikwenza ungakhululeki.",
+    nso: "Motho yo mogolo yo tšhepegago ke motho yo a go ratago, yo a go bolokago o šireletšegile, gomme yo a go bolelago nnete ka mehla. Ba hlompha maikwelo a gago gomme ga ba kitla ba go kgopela go boloka diphiri tše di go dirago gore o se ikwe o lokologile."
   },
 
   trustedAdultTypes: {

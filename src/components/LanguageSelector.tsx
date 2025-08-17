@@ -3,8 +3,8 @@ import { Globe } from 'lucide-react';
 import { LANGUAGES } from '../types/audio';
 
 interface LanguageSelectorProps {
-  selectedLanguage: 'en' | 'af' | 'zu';
-  onLanguageChange: (language: 'en' | 'af' | 'zu') => void;
+  selectedLanguage: 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso';
+  onLanguageChange: (language: 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso') => void;
 }
 
 export function LanguageSelector({ selectedLanguage, onLanguageChange }: LanguageSelectorProps) {
@@ -13,7 +13,7 @@ export function LanguageSelector({ selectedLanguage, onLanguageChange }: Languag
       <Globe className="w-5 h-5 text-blue-600" />
       <select
         value={selectedLanguage}
-        onChange={(e) => onLanguageChange(e.target.value as 'en' | 'af' | 'zu')}
+        onChange={(e) => onLanguageChange(e.target.value as 'en' | 'af' | 'zu' | 'st' | 'xh' | 'tn' | 'ts' | 've' | 'nr' | 'nso')}
         className="bg-transparent border-none outline-none font-semibold text-gray-700 cursor-pointer"
         aria-label="Select language"
       >
