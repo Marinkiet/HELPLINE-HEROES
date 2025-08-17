@@ -56,6 +56,22 @@ export function ReportBadTouchButton() {
     return texts[selectedLanguage];
   };
 
+  const getButtonTitle = () => {
+    const titles = {
+      en: "Need Help?",
+      af: "Het jy hulp nodig?",
+      zu: "Udinga Usizo?",
+      xh: "Ufuna Uncedo?",
+      st: "U hloka Thuso?",
+      tn: "O tlhoka Thuso?",
+      ts: "U lava Mpfuno?",
+      ve: "Ni ṱoḓa Thuso?",
+      nr: "Udinga Usizo?",
+      nso: "O nyaka Thušo?"
+    };
+    return titles[selectedLanguage] || titles.en;
+  };
+
   const handleCall = () => {
     // Show additional confirmation before making the call
     const confirmed = window.confirm(
@@ -81,7 +97,7 @@ export function ReportBadTouchButton() {
       <div
         className="relative flex items-center justify-center w-32 h-32 rounded-full bg-red-500 hover:bg-red-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group animate-pulse hover:animate-none"
         onClick={() => setIsModalOpen(true)}
-        aria-label="Report Bad Touch - Call for help"
+        aria-label={getButtonTitle()}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -113,7 +129,7 @@ export function ReportBadTouchButton() {
               <div className="bg-red-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <Phone className="w-8 h-8 text-red-600" />
               </div>
-              <h2 className="text-xl font-black text-gray-800 mb-3">Need Help? 🤗</h2>
+              <h2 className="text-xl font-black text-gray-800 mb-3">{getButtonTitle()} 🤗</h2>
               <p className="text-base text-gray-700 leading-relaxed mb-4">
                 If someone touched you in a way that made you feel scared or uncomfortable which is a bad touch, you can call <strong>116</strong> to talk to a kind adult who will help you.
               </p>
