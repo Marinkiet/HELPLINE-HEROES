@@ -120,10 +120,54 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
             <div className="flex justify-center mt-6">
               <button
                 onClick={handleSunClick}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 font-bold text-lg"
+                className="relative bg-gradient-to-br from-blue-400 to-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transform transition-all duration-300 hover:scale-105 active:scale-95 animate-pulse hover:animate-none shadow-neomorphism hover:shadow-neomorphism-hover"
                 aria-label="Learn about trusted adults"
+                style={{
+                  boxShadow: `
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+                    0 8px 16px rgba(59, 130, 246, 0.3),
+                    0 4px 8px rgba(59, 130, 246, 0.2),
+                    0 2px 4px rgba(0, 0, 0, 0.1)
+                  `
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = `
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+                    0 12px 24px rgba(59, 130, 246, 0.4),
+                    0 6px 12px rgba(59, 130, 246, 0.3),
+                    0 3px 6px rgba(0, 0, 0, 0.15)
+                  `;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = `
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+                    0 8px 16px rgba(59, 130, 246, 0.3),
+                    0 4px 8px rgba(59, 130, 246, 0.2),
+                    0 2px 4px rgba(0, 0, 0, 0.1)
+                  `;
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.boxShadow = `
+                    inset 0 2px 4px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 2px rgba(0, 0, 0, 0.1),
+                    0 2px 4px rgba(59, 130, 246, 0.2)
+                  `;
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.boxShadow = `
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+                    0 12px 24px rgba(59, 130, 246, 0.4),
+                    0 6px 12px rgba(59, 130, 246, 0.3),
+                    0 3px 6px rgba(0, 0, 0, 0.15)
+                  `;
+                }}
               >
-                Trusted Adult?
+                <span className="relative z-10">Trusted Adult?</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
               </button>
             </div>
           </div>
