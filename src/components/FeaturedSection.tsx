@@ -8,6 +8,7 @@ interface FeaturedGame {
   title: string;
   subtitle: string;
   icon: React.ReactNode;
+  titleKey: string;
   // color: string;
   image?: string;
   to: string;
@@ -27,6 +28,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
         id: 'safe-touch',
         title: 'Safe Touch Detective',
         subtitle: 'Learn about body safety',
+        titleKey: 'safeTouchDetective',
         icon: <Shield className="w-16 h-16 text-white" />,
         from: 'from-green-100/50',
         to: 'to-green-600/50',
@@ -37,6 +39,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
         id: 'trusted-adults',
         title: 'Trusted Heroes Circle',
         subtitle: 'Know who to trust',
+        titleKey: 'trustedHeroesCircle',
         icon: <Heart className="w-16 h-16 text-white" />,
         from: 'from-pink-100/50',
         to: 'to-pink-600/50',
@@ -47,6 +50,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
         id: 'speak-up',
         title: 'Brave Voice',
         subtitle: 'Practice speaking up',
+        titleKey: 'braveVoice',
         icon: <Users className="w-16 h-16 text-white" />,
         from: 'from-purple-500/50',
         to: 'to-purple-600/50',
