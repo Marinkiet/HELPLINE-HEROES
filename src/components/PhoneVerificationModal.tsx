@@ -102,6 +102,7 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
               <div>
                 <h2 className="text-2xl font-black">Adult Report</h2>
                 <p className="text-orange-100 text-sm font-semibold">For Grown-ups Only</p>
+                <p className="text-orange-100 text-sm font-semibold">This is for reporting suspicious behavior</p>
               </div>
             </div>
             <button
