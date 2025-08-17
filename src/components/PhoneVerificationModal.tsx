@@ -122,7 +122,7 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
                 <p className="text-orange-100 text-sm leading-relaxed">
                   This special button is only for grown-ups like your parents, teachers, or other adults. 
                   If you're a child, please ask a grown-up to help you with this part! 
-                  You can continue playing the safety games instead. 🎮
+                  You can continue playing the safety games instead or click on the big red button if you want to call for help. 🎮
                 </p>
               </div>
             </div>
