@@ -13,9 +13,11 @@ interface GameGridProps {
 export function GameGrid({ games, onGameClick, filteredCategory }: GameGridProps) {
   const { selectedLanguage } = useAudio();
   
+  // Filter out the main games (1, 2, 3) from the "All Safety Activities" section
+  // but keep them when filtering by category
   const filteredGames = filteredCategory 
     ? games.filter(game => game.category === filteredCategory)
-    : games;
+    : games.filter(game => !['1', '2', '3'].includes(game.id));
 
   return (
     <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-3xl p-8 shadow-2xl">
