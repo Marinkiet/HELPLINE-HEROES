@@ -104,7 +104,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
         ${hasContent ? 'hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer' : 'cursor-not-allowed opacity-75'}
         ${featured ? 'ring-3 ring-yellow-400' : ''} 
         ${isPlayingNarration ? 'ring-3 ring-blue-400 animate-pulse' : ''}
-        min-h-[240px] group shadow-lg
+        min-h-[280px] group shadow-lg
       `}
       onClick={handleCardClick}
       role="button"
@@ -125,20 +125,29 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       )}
       
       {/* Semi-transparent overlay for content */}
-      <div className={`${backgroundImage ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/20'} rounded-xl p-4 h-full flex flex-col justify-center`}>
+      <div className={`${backgroundImage ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/20'} rounded-xl p-6 h-full flex flex-col justify-center`}>
         <div className="text-center">
-          <h3 className="text-lg font-black text-white text-center leading-tight mb-2">
+          <div className="mb-4 flex justify-center group-hover:animate-bounce">
+            {hasContent && backgroundImage && (
+              <>
+                {id === '1' && <Shield className="w-16 h-16 text-white" />}
+                {id === '2' && <Heart className="w-16 h-16 text-white" />}
+                {id === '3' && <Users className="w-16 h-16 text-white" />}
+              </>
+            )}
+          </div>
+          <h3 className="text-xl font-black text-white text-center leading-tight mb-2">
             {translatedTitle}
           </h3>
           <p className="text-white/90 text-sm font-semibold">
             {translatedDescription}
           </p>
-          <div className={`mt-3 rounded-full px-3 py-1 inline-block transition-colors duration-200 ${
+          <div className={`mt-4 rounded-full px-4 py-2 inline-block transition-colors duration-200 ${
             hasContent 
               ? 'bg-white/30 hover:bg-white/40' 
               : 'bg-gray-500/50 text-gray-300'
           }`}>
-            <span className="text-white font-bold text-xs">{hasContent ? 'LEARN' : 'COMING SOON'}</span>
+            <span className="text-white font-bold text-sm">{hasContent ? 'PLAY' : 'COMING SOON'}</span>
           </div>
         </div>
       </div>
