@@ -181,6 +181,8 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                   setShowTrustedAdults(false);
                   if (currentBodyPart === 'lowerBody') {
                     setCurrentBodyPart('upperBody');
+                 } else if (currentBodyPart === 'upperBody') {
+                   onComplete(); // Navigate back to home screen
                   }
                 }}
                 className={`px-6 py-3 rounded-xl font-bold transition-all duration-200 ${
@@ -190,7 +192,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                 }`}
                 disabled={!showTrustedAdults}
               >
-                Back to Body Parts
+               {currentBodyPart === 'upperBody' ? 'Back to Activities' : 'Back to Body Parts'}
               </button>
               
               <button
