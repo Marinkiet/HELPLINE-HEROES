@@ -3,6 +3,9 @@ import { Star, Shield } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { elevenLabsService } from '../services/elevenLabsService';
 import { Game } from '../data/games';
+import hug from '../assets/hug.jpg';
+import frontl from '../assets/frontl.png';
+import shout from '../assets/shout.jpg';
 
 interface GameCardProps extends Omit<Game, 'ageGroup' | 'category'> {
   image: string;
@@ -18,6 +21,21 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const translatedTitle = typeof title === 'object' ? title[selectedLanguage] : title;
   const translatedDescription = typeof description === 'object' ? description[selectedLanguage] : description;
 
+  // Get background image based on game ID
+  const getBackgroundImage = () => {
+    switch (id) {
+      case '1': // Safe Touch Detective
+        return hug;
+      case '2': // Trusted Heroes Circle
+        return frontl;
+      case '3': // Brave Voice
+        return shout;
+      default:
+        return image; // Use original image for other games
+    }
+  };
+
+  const backgroundImage = getBackgroundImage();
   const handleCardClick = async () => {
     // Play narration if enabled
     if (isNarrationEnabled) {
@@ -62,6 +80,11 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
       aria-label={`Learn about ${translatedTitle}`}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
     >
       {isPlayingNarration && (
         <div className="absolute -top-2 -left-2 bg-blue-500 rounded-full p-2 border-2 border-white shadow-lg animate-bounce">
@@ -69,19 +92,20 @@ export function GameCard({ id, title, description, image, featured = false, onCl
         </div>
       )}
       
-      <div className="relative overflow-hidden rounded-xl mb-3 bg-gradient-to-br from-blue-100 to-purple-100">
-        <img 
-          src={image}
-          alt={`${translatedTitle} safety activity`}
-          className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-purple-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Semi-transparent overlay for content */}
+      <div className="bg-black/40 backdrop-blur-sm rounded-xl p-4 h-full flex flex-col justify-center">
+        <div className="text-center">
+          <h3 className="text-lg font-black text-white text-center leading-tight mb-2">
+            {translatedTitle}
+          </h3>
+          <p className="text-white/90 text-sm font-semibold">
+            {translatedDescription}
+          </p>
+          <div className="mt-3 bg-white/30 hover:bg-white/40 rounded-full px-3 py-1 inline-block transition-colors duration-200">
+            <span className="text-white font-bold text-xs">LEARN</span>
+          </div>
+        </div>
       </div>
-      
-      <h3 className="text-lg font-black text-gray-800 text-center leading-tight">
-        {translatedTitle}
-      </h3>
       
       <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300" />
     </div>
