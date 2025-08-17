@@ -7,6 +7,9 @@ import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
 import { BraveVoiceGameContainer } from './BraveVoiceGame/BraveVoiceGameContainer';
+import hug from '../assets/hug.jpg';
+import frontl from '../assets/frontl.png';
+import shout from '../assets/shout.jpg';
 
 interface GameModalProps {
   game: Game | null;
@@ -25,6 +28,22 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   // Get translated content
   const translatedTitle = typeof game.title === 'object' ? game.title[selectedLanguage] : game.title;
   const translatedDescription = typeof game.description === 'object' ? game.description[selectedLanguage] : game.description;
+
+  // Get background image based on game ID to match card backgrounds
+  const getModalImage = () => {
+    switch (game.id) {
+      case '1': // Safe Touch Detective
+        return hug;
+      case '2': // Trusted Heroes Circle
+        return frontl;
+      case '3': // Brave Voice
+        return shout;
+      default:
+        return game.image; // Use original image for other games
+    }
+  };
+
+  const modalImage = getModalImage();
 
   // Handle Safe Touch Detective game specifically
   if (showSafeTouchGame && game.id === '1') {
@@ -91,7 +110,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
         
         <div className="mb-6">
           <img 
-            src={game.image}
+            src={modalImage}
             alt={`${translatedTitle} safety activity`}
             className="w-full h-48 object-cover rounded-2xl"
           />
