@@ -26,8 +26,8 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
   const featuredGames: FeaturedGame[] = [
       {
         id: 'safe-touch',
-        title: 'Safe Touch Detective',
-        subtitle: 'Learn about body safety',
+        title: appContent.featuredGames?.safeTouchDetective?.title?.[selectedLanguage] || 'Safe Touch Detective',
+        subtitle: appContent.featuredGames?.safeTouchDetective?.subtitle?.[selectedLanguage] || 'Learn about body safety',
         titleKey: 'safeTouchDetective',
         icon: <Shield className="w-16 h-16 text-white" />,
         from: 'from-green-100/50',
@@ -37,8 +37,8 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       },
       {
         id: 'trusted-adults',
-        title: 'Trusted Heroes Circle',
-        subtitle: 'Know who to trust',
+        title: appContent.featuredGames?.trustedHeroesCircle?.title?.[selectedLanguage] || 'Trusted Heroes Circle',
+        subtitle: appContent.featuredGames?.trustedHeroesCircle?.subtitle?.[selectedLanguage] || 'Know who to trust',
         titleKey: 'trustedHeroesCircle',
         icon: <Heart className="w-16 h-16 text-white" />,
         from: 'from-pink-100/50',
@@ -48,8 +48,8 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       },
       {
         id: 'speak-up',
-        title: 'Brave Voice',
-        subtitle: 'Practice speaking up',
+        title: appContent.featuredGames?.braveVoice?.title?.[selectedLanguage] || 'Brave Voice',
+        subtitle: appContent.featuredGames?.braveVoice?.subtitle?.[selectedLanguage] || 'Practice speaking up',
         titleKey: 'braveVoice',
         icon: <Users className="w-16 h-16 text-white" />,
         from: 'from-purple-500/50',
@@ -91,10 +91,10 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
                 {game.icon}
               </div>
               <h3 className="text-xl font-black text-white mb-2">
-                {appContent.featuredGames?.[game.titleKey]?.title?.[selectedLanguage] || game.title}
+                {game.title}
               </h3>
               <p className="text-white/90 font-semibold">
-                {appContent.featuredGames?.[game.titleKey]?.subtitle?.[selectedLanguage] || game.subtitle}
+                {game.subtitle}
               </p>
               <div className="mt-4 bg-white/20 rounded-full px-4 py-2 inline-block">
                 <span className="text-white font-bold text-sm">PLAY</span>
