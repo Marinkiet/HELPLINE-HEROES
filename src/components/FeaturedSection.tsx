@@ -4,6 +4,7 @@ import { useAudio } from '../contexts/AudioContext';
 import { appContent } from '../data/appContent';
 import { games } from '../data/games';
 import shout from '../assets/shout.jpg';
+import hug from '../assets/hug.jpg';
 interface FeaturedSectionProps {
   onGameClick: (gameId: string) => void;
 }
@@ -19,12 +20,18 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       <Users className="w-16 h-16 text-white" />
     ];
     
+    const images = [
+      hug, // Safe Touch Detective
+      shout, // Trusted Heroes Circle  
+      shout  // Brave Voice
+    ];
+    
     return {
       id: game.id,
       title: game.title[selectedLanguage],
       subtitle: game.description[selectedLanguage],
       icon: icons[index],
-      image: shout,
+      image: images[index],
       onClick: () => onGameClick(game.id)
     };
   });
