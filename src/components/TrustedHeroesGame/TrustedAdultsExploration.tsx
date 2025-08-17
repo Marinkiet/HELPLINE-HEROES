@@ -253,23 +253,14 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
             {currentSection === 'types' && selectedAdultType && (
               <div className="mb-8">
                 <div className="bg-gray-50 rounded-2xl p-6 text-center">
-                  <video 
-                    src={`/src/assets/${selectedAdultType}.mp4`}
-                    autoPlay
-                    loop
-                    muted
+                  <img 
+                    src={`/src/assets/${selectedAdultType}.jpg`}
+                    alt={`${selectedAdultType} trusted adults`}
                     className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
-                    aria-label={`${selectedAdultType} trusted adults video`}
                     onError={(e) => {
-                      // Fallback to a placeholder if video doesn't exist
-                      const target = e.target as HTMLVideoElement;
-                      target.style.display = 'none';
-                      // Create fallback image element
-                      const fallbackImg = document.createElement('img');
-                      fallbackImg.src = 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
-                      fallbackImg.className = 'w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg';
-                      fallbackImg.alt = `${selectedAdultType} trusted adults`;
-                      target.parentNode?.appendChild(fallbackImg);
+                      // Fallback to a placeholder if image doesn't exist
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
                     }}
                   />
                   <p className="text-sm text-gray-600 mt-3 font-semibold">
