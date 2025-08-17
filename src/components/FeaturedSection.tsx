@@ -5,6 +5,7 @@ import { appContent } from '../data/appContent';
 import { games } from '../data/games';
 import shout from '../assets/shout.jpg';
 import hug from '../assets/hug.jpg';
+import frontl from '../assets/frontl.png';
 interface FeaturedSectionProps {
   onGameClick: (gameId: string) => void;
 }
@@ -22,7 +23,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
     
     const images = [
       hug, // Safe Touch Detective
-      shout, // Trusted Heroes Circle  
+      frontl, // Trusted Heroes Circle  
       shout  // Brave Voice
     ];
     
