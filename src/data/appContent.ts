@@ -127,7 +127,7 @@ export const appContent = {
   // Game grid
   gameGrid: {
     allActivities: {
-      en: "Upcoming games",
+      en: "All Safety Activities",
       af: "Alle Veiligheidsaktiwiteite",
       zu: "Yonke Imisebenzi Yokuphepha",
       xh: "Yonke Imisebenzi Yokhuseleko",

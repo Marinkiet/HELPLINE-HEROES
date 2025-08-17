@@ -10,6 +10,98 @@ export interface Game {
 
 export const games: Game[] = [
   {
+    id: '1',
+    title: {
+      en: 'Safe Touch Detective',
+      af: 'Veilige Raak Speurder',
+      zu: 'Umcuphi Wokuthinta Okuphephile',
+      xh: 'Umcuphi Wokuchukumisa Okukhuselekileyo',
+      st: 'Mofuputsi oa Tšoaetso e Sireletsehileng',
+      tn: 'Mmatlisisi wa Kgoma e e Babalesegileng',
+      ts: 'Mufuputsi wa ku Kuma loku Hlayisekeke',
+      ve: 'Mufuputsi wa u Khou Amba ha Vhushai',
+      nr: 'Umcuphi Wokuthinta Okuphephile',
+      nso: 'Mmatlisisi wa Kgoma ye e Šireletšegileng'
+    },
+    image: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400',
+    featured: true,
+    description: {
+      en: 'Learn about good touch and bad touch on your body.',
+      af: 'Leer oor gepaste en ongepaste aanraking op \'n veilige.',
+      zu: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.',
+      xh: 'Funda ngokuchukumisa okufanelekileyo nokungafanelekanga ngendlela ekhuselekileyo.',
+      st: 'Ithuta ka tšoaetso e nepahetseng le e sa nepahetseng ka tsela e sireletsehileng.',
+      tn: 'Ithuta ka kgoma e e siameng le e e sa siamang ka tsela e e babalesegileng.',
+      ts: 'Dyondza hi ku kuma loku faneleke na loku nga faneleki hi ndlela ya vuhlayiseki.',
+      ve: 'Gudani nga u khou amba ha vhushai na ha vhusina vhushai nga ndila ya vhushai.',
+      nr: 'Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.',
+      nso: 'Ithuta ka kgoma ye e nepagetšego le ye e sa nepagetšego ka tsela ye e šireletšegileng.'
+    },
+    ageGroup: 'early',
+    category: 'recognition'
+  },
+  {
+    id: '2',
+    title: {
+      en: 'Trusted Heroes Circle',
+      af: 'Vertroude Helde Kring',
+      zu: 'Isiyingi Samaqhawe Athembekile',
+      xh: 'Isangqa Samaqhawe Athembekileyo',
+      st: 'Selikalikoe sa Liqhawe tse Tšepahalang',
+      tn: 'Setlhopha sa Diqhakga tse di Ikanyegang',
+      ts: 'Xirhendzevutani xa Tiqhakga leti Tshembhekaka',
+      ve: 'Tshirunzi tsha Magwala a Teaho',
+      nr: 'Isiyingi Samaqhawe Athembekile',
+      nso: 'Selekane sa Magwala a Tšhepegago'
+    },
+    image: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400',
+    description: {
+      en: 'Identify and connect with trusted adults who can help you.',
+      af: 'Identifiseer en verbind met vertroude volwassenes wat jou kan help.',
+      zu: 'Khomba futhi uxhumane nabantu abadala abathembekile abangakusiza.',
+      xh: 'Chonga kwaye unxibelelane nabantu abadala abathembekileyo abanokukunceda.',
+      st: 'Tseba \'me u hokahane le batho ba baholo ba tšepahalang ba ka u thusang.',
+      tn: 'Lemoga mme o golagane le bagolo ba ba ikanyegang ba ba ka go thusang.',
+      ts: 'Vona naswona u hlanganisa na vanhu va vadala lava tshembhekaka lava nga ku pfunaka.',
+      ve: 'Divhani nahone ni ṱanganyane na vhathu vhahulwane vho teaho vha nga ni thusaho.',
+      nr: 'Khomba futhi uxhumane nabantu abadala abathembekile abangakusiza.',
+      nso: 'Lemoga gomme o kgokagane le bagolo ba tšhepegago ba ka go thušago.'
+    },
+    ageGroup: 'early',
+    category: 'support'
+  },
+  {
+    id: '3',
+    title: {
+      en: 'Brave Voice',
+      af: 'Dapper Stem',
+      zu: 'Izwi Elinesbindi',
+      xh: 'Ilizwi Elinesbindi',
+      st: 'Lentsoe le Sebete',
+      tn: 'Lentswe le le Pelokgale',
+      ts: 'Rito ra Vutshila',
+      ve: 'Ipfi ḽa Khongolose',
+      nr: 'Izwi Elinesbindi',
+      nso: 'Lentšu le le Pelokgale'
+    },
+    image: 'https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=400',
+    featured: true,
+    description: {
+      en: 'Practice finding your voice and speaking up when something feels wrong.',
+      af: 'Oefen om jou stem te vind en uit te praat wanneer iets verkeerd voel.',
+      zu: 'Zijwayeze ukuthola izwi lakho futhi ukhulume uma into izwakala ingalungile.',
+      xh: 'Ziqhelise ukufumana ilizwi lakho kwaye uthethe xa into iziva ingalunganga.',
+      st: 'Itloaetse ho fumana lentsoe la hao le ho bua ha ntho e utlwahala e sa nepahala.',
+      tn: 'Ikatise go bona lentswe la gago le go bua fa sengwe se utlwala se sa siama.',
+      ts: 'Titolovete ku kuma rito ra wena na ku vulavula loko swin\'wana swi vonaka swi nga lulamanga.',
+      ve: 'Titolovetseni u wana ipfi ḽaṋu na u amba musi tshithu tshi tshi vhonala tshi si khou ita zwavhuḓi.',
+      nr: 'Zijwayeze ukuthola izwi lakho futhi ukhulume uma into izwakala ingalungile.',
+      nso: 'Itlwaetše go hwetša lentšu la gago le go bolela ge selo se bonala se sa lokala.'
+    },
+    ageGroup: 'middle',
+    category: 'response'
+  },
+  {
     id: '4',
     title: {
       en: 'Secret vs. Surprise',
