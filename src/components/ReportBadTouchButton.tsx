@@ -49,7 +49,7 @@ export function ReportBadTouchButton() {
 
   const getModalText = () => {
     const texts = {
-      en: "Hi there! If someone touched you in a way that made you feel scared or uncomfortable, you can call 116 to talk to a kind adult who will help you. Only call if you really need help. Don't call to play games.",
+      en: "Hi there! If someone touched you in a way that made you feel scared or uncomfortable, you can call 116 to talk to a kind adult who will help you. Only call if you really need help. Don't call for fun.",
       af: "Hallo daar! As iemand jou geraak het op 'n manier wat jou bang of ongemaklik laat voel het, kan jy 116 bel om met 'n vriendelike volwassene te praat wat jou sal help. Bel net as jy regtig hulp nodig het. Moenie bel om speletjies te speel nie.",
       zu: "Sawubona! Uma umuntu ekuthinte ngendlela eyakwenza wazizwa wesaba noma ungakhululekile, ungashayela u-116 ukukhuluma nomuntu omdala onobubele ozokusiza. Shayela kuphela uma udinga usizo ngempela. Ungashayeli ukudlala imidlalo."
     };
