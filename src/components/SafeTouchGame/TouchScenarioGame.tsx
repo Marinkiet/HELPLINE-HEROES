@@ -152,16 +152,17 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {!showFeedback ? (
             <>
               {/* Scenario */}
-              <div className="text-center mb-8">
-                <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl mb-6">
-                  {currentScenario === 0 && (
-                    <div className="flex justify-center mb-4">
+              <div className="flex justify-center mb-4">
                       <img 
                         src="/src/assets/doctor.gif" 
                         alt="Doctor examining patient"
                         className="w-64 h-auto rounded-lg"
                       />
                     </div>
+              <div className="text-center mb-8">
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl mb-6">
+                  {currentScenario === 0 && (
+                    
                   )}
                   <p className="text-xl text-gray-700 leading-relaxed">
                     {currentScenarioData[selectedLanguage]}
