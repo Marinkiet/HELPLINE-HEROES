@@ -45,7 +45,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       },
       {
         id: 'speak-up',
-        title: 'Brave Voice Academy',
+        title: 'Brave Voice',
         subtitle: 'Practice speaking up',
         icon: <Users className="w-16 h-16 text-white" />,
         from: 'from-purple-500/50',
