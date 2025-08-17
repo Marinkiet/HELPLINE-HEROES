@@ -162,11 +162,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
                   {/* Media for each scenario */}
                   {currentScenario === 0 && (
                     <div className="flex justify-center mb-4">
-                      <img 
-                        src="/src/assets/doctor.gif" 
-                        alt="Doctor examining patient"
-                        className="w-64 h-auto rounded-lg"
-                      />
+                     
                     </div>
                   )}
                   {currentScenario === 1 && (
