@@ -34,7 +34,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       case '3': // Brave Voice
         return shout;
       default:
-        return image; // Use original image for other games
+        return null; // No image for other games, use background color instead
     }
   };
 
@@ -113,10 +113,9 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       aria-label={`Learn about ${translatedTitle}`}
       style={{
         backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-          : `url(${image})`,
+        background: backgroundImage ? undefined : backgroundColor,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        background: !backgroundImage && !hasContent ? backgroundColor : undefined
+        backgroundPosition: 'center'
       }}
     >
       {isPlayingNarration && (
@@ -126,10 +125,10 @@ export function GameCard({ id, title, description, image, featured = false, onCl
       )}
       
       {/* Semi-transparent overlay for content */}
-      <div className={`${hasContent ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/20'} rounded-xl p-6 h-full flex flex-col justify-center`}>
+      <div className={`${backgroundImage ? 'bg-black/40 backdrop-blur-sm' : 'bg-black/20'} rounded-xl p-6 h-full flex flex-col justify-center`}>
         <div className="text-center">
           <div className="mb-4 flex justify-center group-hover:animate-bounce">
-            {hasContent && (
+            {hasContent && backgroundImage && (
               <>
                 {id === '1' && <Shield className="w-16 h-16 text-white" />}
                 {id === '2' && <Heart className="w-16 h-16 text-white" />}
