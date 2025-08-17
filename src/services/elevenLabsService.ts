@@ -5,8 +5,8 @@ class ElevenLabsService {
   private baseUrl = 'https://api.elevenlabs.io/v1';
   
   constructor() {
-    // Real Eleven Labs API key - replace with your actual key from https://elevenlabs.io/
-    this.apiKey = 'sk_8bf03898286bfe228254410a9b3251d00cb8383132b37287';
+    // Get API key from environment variables
+    this.apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY || '';
   }
 
   async generateSpeech(config: AudioConfig): Promise<string> {
@@ -27,7 +27,7 @@ class ElevenLabsService {
     }
     
     // REAL ELEVEN LABS API IMPLEMENTATION
-    if (this.apiKey && this.apiKey !== 'demo-key') {
+    if (this.apiKey && this.apiKey.trim() !== '') {
       try {
         console.log('🔗 Attempting real Eleven Labs API call...');
         const response = await fetch(`${this.baseUrl}/text-to-speech/${voiceId}`, {
