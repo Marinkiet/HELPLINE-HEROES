@@ -32,7 +32,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       {
         id: 'trusted-adults',
         title: 'Trusted Heroes Circle',
-        subtitle: 'Find your support team',
+        subtitle: 'Know who to trust',
         icon: <Heart className="w-16 h-16 text-white" />,
         from: 'from-pink-100/50',
         to: 'to-pink-600/50',
