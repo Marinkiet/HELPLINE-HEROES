@@ -156,6 +156,11 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
             {showTrustedAdults && (
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-green-100 p-4 rounded-xl text-center">
+                  <img 
+                    src="/src/assets/doctor.gif" 
+                    alt="Doctor helping children"
+                    className="w-16 h-16 mx-auto mb-2 rounded-lg"
+                  />
                   <div className="text-3xl mb-2">👨‍⚕️</div>
                   <p className="font-semibold text-green-800">Doctors</p>
                 </div>
