@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Phone, Shield, X, AlertTriangle } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { elevenLabsService } from '../services/elevenLabsService';
+import { appContent } from '../data/appContent';
 
 export function ReportBadTouchButton() {
   const { isNarrationEnabled, selectedLanguage } = useAudio();
