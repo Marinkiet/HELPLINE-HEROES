@@ -382,17 +382,62 @@ export const appContent = {
       title: {
         en: "Adult Report System",
         af: "Volwasse Rapportstelsel",
-        zu: "Uhlelo Lokubika Lwabantu Abadala"
+        zu: "Uhlelo Lokubika Lwabantu Abadala",
+        xh: "Inkqubo Yengxelo Yabantu Abadala",
+        st: "Tsamaiso ea Tlaleho ea Batho ba Baholo",
+        tn: "Thulaganyo ya Pegelo ya Bagolo",
+        ts: "Sisiteme ya Miviko ya Vanhu va Vadala",
+        ve: "Maitele a Ripoto ya Vhathu Vhahulwane",
+        nr: "Uhlelo Lokubika Lwabantu Abadala",
+        nso: "Tshepedišo ya Pegelo ya Bagolo"
       },
       subtitle: {
         en: "Community Safety Network",
         af: "Gemeenskapsveiligheidsnetwerk",
-        zu: "Inethiwekhi Yokuphepha Komphakathi"
+        zu: "Inethiwekhi Yokuphepha Komphakathi",
+        xh: "Uthungelwano Lokhuseleko Loluntu",
+        st: "Marang-rang a Polokeho ea Sechaba",
+        tn: "Mafaratlhatlha a Pabalesego ya Setšhaba",
+        ts: "Netiweke ya Vuhlayiseki bya Vaaki",
+        ve: "Netiweke ya Vhushai ha Tshitshavha",
+        nr: "Inethiwekhi Yokuphepha Komphakathi",
+        nso: "Netiweke ya Polokego ya Setšhaba"
+      },
+      description: {
+        en: "This is for reporting suspicious behavior (e.g Stranger giving out candy in the park, then add details about this)",
+        af: "Dit is vir die rapportering van verdagte gedrag (bv. Vreemdeling wat lekkers in die park uitdeel, voeg dan besonderhede hieroor by)",
+        zu: "Lokhu kungokubika ukuziphatha okusolisayo (isb. Umuntu ongamaziyo opha amaswidi epaki, bese ufaka imininingwane ngalokhu)",
+        xh: "Oku kukuxela ukuziphatha okukrokrelayo (umz. Umntu ongamaziyo opha amaswiti epakini, uze ongeze iinkcukacha ngoku)",
+        st: "Ena ke bakeng sa ho bega boitšoaro bo belaetsang (mohlala Motho ea sa tsejoeng a fana ka lijo tse monate serapeng, ebe a eketsa lintlha mabapi le sena)",
+        tn: "Se ke sa go begela maitsholo a a belaelang (sekai Motho yo o sa itsegeng a naya dijana mo phakeng, mme a oketse dintlha ka ga se)",
+        ts: "Leswi i swa ku vika mahanyelo ya ku solela (xik. Munhu loyi nga tivekangiki a nyika swiswi eka phaka, kutani a engetela vuxokoxoko hi leswi)",
+        ve: "Izwi ndi zwa u pfi maitele a khongolosaho (sa tsumbo Muthu a sa divhaho a tshi nea zwiswi kha phaka, a dovha a engedza vhubvumisi nga ha izwi)",
+        nr: "Lokhu kungokubika ukuziphatha okusolisayo (isb. Umuntu ongamaziyo opha amaswidi epaki, bese ufaka imininingwane ngalokhu)",
+        nso: "Se ke sa go begela boitshwaro bjo bo belaetšago (mohlala Motho yo a sa tsebjwego a fa dijana mo phakeng, gomme a oketše dintlha ka ga se)"
       },
       childWarning: {
         en: "This area is designed for adults only. If you're a child, please ask a grown-up to help you, or return to the fun safety games!",
         af: "Hierdie area is slegs vir volwassenes ontwerp. As jy 'n kind is, vra asseblief 'n volwassene om jou te help, of gaan terug na die prettige veiligheidsspeletjies!",
-        zu: "Lendawo yenzelwe abantu abadala kuphela. Uma uyingane, sicela ucele umuntu omdala akusize, noma ubuyele emidlalweni yokuphepha ejabulisayo!"
+        zu: "Lendawo yenzelwe abantu abadala kuphela. Uma uyingane, sicela ucele umuntu omdala akusize, noma ubuyele emidlalweni yokuphepha ejabulisayo!",
+        xh: "Esi siza senzelwe abantu abadala kuphela. Ukuba uyumntwana, nceda ucele umntu omdala akuncede, okanye ubuyele kwimidlalo yokhuseleko emnandi!",
+        st: "Sebaka sena se entsoe batho ba baholo feela. Haeba u le ngwana, ka kopo kopa motho ea moholo ho u thusa, kapa kgutlela ho lipapali tse monate tsa polokeho!",
+        tn: "Lefelo le le diretsweng bagolo fela. Fa o le ngwana, ka kopo kopa yo mogolo go go thusa, kgotsa boela kwa metshamekong e e monate ya pabalesego!",
+        ts: "Ndhawu leyi yi endleriwile vanhu va vadala ntsena. Loko u ri n'wana, kombela munhu wa vadala ku ku pfuna, kumbe vuya eka mintlangu ya vuhlayiseki leyi tsakisaka!",
+        ve: "Fhethu heḽi ḽi itirwe vhathu vhahulwane fhedzi. Arali ni munwana, kombelelani muthu muhulwane u ni thusa, kana vhuyani kha mitambo ya vhushai ine ya tsakisa!",
+        nr: "Lendawo yenzelwe abantu abadala kuphela. Uma uyingane, sicela ucele umuntu omdala akusize, noma ubuyele emidlalweni yokuphepha ejabulisayo!",
+        nso: "Lefelo le le diretšwe bagolo fela. Ge o le ngwana, ka kgopelo kgopela motho yo mogolo go go thuša, goba boela go metshameko ye mebotse ya polokego!"
+      },
+      childWarningTitle: {
+        en: "Hey Kids! 👋",
+        af: "Hallo Kinders! 👋",
+        zu: "Sawubona Zingane! 👋",
+        xh: "Molo Bantwana! 👋",
+        st: "Lumela Bana! 👋",
+        tn: "Dumelang Bana! 👋",
+        ts: "Avuxeni Vana! 👋",
+        ve: "Ndaa Vhana! 👋",
+        nr: "Sawubona Zingane! 👋",
+        nso: "Thobela Bana! 👋"
       }
     }
   }

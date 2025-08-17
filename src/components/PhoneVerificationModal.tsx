@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Phone, Shield, AlertTriangle, Ambulance, Car } from 'lucide-react';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 
 interface PhoneVerificationModalProps {
   isOpen: boolean;
@@ -8,6 +10,7 @@ interface PhoneVerificationModalProps {
 }
 
 export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVerificationModalProps) {
+  const { selectedLanguage } = useAudio();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
@@ -100,9 +103,9 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
             <div className="flex items-center space-x-3">
               <Shield className="w-8 h-8" />
               <div>
-                <h2 className="text-2xl font-black">Adult Report</h2>
-                <p className="text-orange-100 text-sm font-semibold">For Grown-ups Only</p>
-                <p className="text-orange-100 text-sm font-semibold">This is for reporting suspicious behavior (e.g Stranger giving out candy in the park, then add details about this)</p>
+                <h2 className="text-2xl font-black">{appContent.safety.adultReportModal.title[selectedLanguage]}</h2>
+                <p className="text-orange-100 text-sm font-semibold">{appContent.safety.adultReportModal.subtitle[selectedLanguage]}</p>
+                <p className="text-orange-100 text-sm font-semibold">{appContent.safety.adultReportModal.description[selectedLanguage]}</p>
               </div>
             </div>
             <button
@@ -119,11 +122,9 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
             <div className="flex items-center space-x-3">
               <div className="text-3xl">👨‍👩‍👧‍👦</div>
               <div>
-                <h3 className="text-lg font-black text-white mb-1">Hey Kids! 👋</h3>
+                <h3 className="text-lg font-black text-white mb-1">{appContent.safety.adultReportModal.childWarningTitle[selectedLanguage]}</h3>
                 <p className="text-orange-100 text-sm leading-relaxed">
-                  This special button is only for grown-ups like your parents, teachers, or other adults. 
-                  If you're a child, please ask a grown-up to help you with this part! 
-                  You can continue playing the safety games instead or click on the big red button if you want to call for help. 🎮
+                  {appContent.safety.adultReportModal.childWarning[selectedLanguage]} 🎮
                 </p>
               </div>
             </div>
