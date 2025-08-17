@@ -152,7 +152,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
            <img 
                         src="/src/assets/doctor.gif" 
                         alt="Doctor examining patient"
-                        className="w-100 h-50 rounded-lg pb-10"
+                        className="w-80 h-50 rounded-lg pb-10"
                       />
           {!showFeedback ? (
             <>
