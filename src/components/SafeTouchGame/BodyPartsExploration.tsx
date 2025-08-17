@@ -154,7 +154,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                   ? gameContent.trustedAdults[selectedLanguage]
                   : hoveredArea 
                     ? gameContent.bodyParts[currentBodyPart][selectedLanguage]
-                    : `Hover over the colored areas to learn about body safety.`
+                    : ""
                 }
               </p>
             </div>
