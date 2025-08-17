@@ -17,11 +17,11 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
   const [isPlaying, setIsPlaying] = useState(false);
 
   const adultTypes = [
-    { key: 'parents', icon: '👨‍👩‍👧‍👦', title: 'Parents & Family', color: 'bg-blue-100 hover:bg-blue-200' },
-    { key: 'teachers', icon: '👩‍🏫', title: 'Teachers & School', color: 'bg-green-100 hover:bg-green-200' },
-    { key: 'doctors', icon: '👨‍⚕️', title: 'Doctors & Healthcare', color: 'bg-purple-100 hover:bg-purple-200' },
-    { key: 'police', icon: '👮‍♀️', title: 'Police & Community', color: 'bg-yellow-100 hover:bg-yellow-200' },
-    { key: 'counselors', icon: '🧑‍💼', title: 'Counselors & Therapists', color: 'bg-pink-100 hover:bg-pink-200' }
+    { key: 'parents', icon: '👨‍👩‍👧‍👦', title: 'Parents & Family', bgColor: '#e3f2fd', shadowDark: '#bbdefb', shadowLight: '#ffffff' },
+    { key: 'teachers', icon: '👩‍🏫', title: 'Teachers & School', bgColor: '#e8f5e8', shadowDark: '#c8e6c9', shadowLight: '#ffffff' },
+    { key: 'doctors', icon: '👨‍⚕️', title: 'Doctors & Healthcare', bgColor: '#f3e5f5', shadowDark: '#e1bee7', shadowLight: '#ffffff' },
+    { key: 'police', icon: '👮‍♀️', title: 'Police & Community', bgColor: '#fff8e1', shadowDark: '#ffecb3', shadowLight: '#ffffff' },
+    { key: 'counselors', icon: '🧑‍💼', title: 'Counselors & Therapists', bgColor: '#fce4ec', shadowDark: '#f8bbd9', shadowLight: '#ffffff' }
   ];
 
   useEffect(() => {
@@ -153,23 +153,23 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
                     <button
                       key={type.key}
                       onClick={() => handleAdultTypeClick(type.key)}
-                      className={`p-4 rounded-xl text-left transition-all duration-200 transform cursor-pointer outline-none font-bold text-gray-600 ${
+                      className={`p-4 rounded-xl text-left transition-all duration-200 transform cursor-pointer outline-none font-bold text-gray-700 ${
                         selectedAdultType === type.key ? 'ring-3 ring-purple-400' : ''
                       }`}
                       style={{
-                        backgroundColor: '#e0e0e0',
+                        backgroundColor: type.bgColor,
                         boxShadow: selectedAdultType === type.key 
-                          ? 'inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff'
-                          : '7px 7px 15px #bebebe, -7px -7px 15px #ffffff'
+                          ? `inset 5px 5px 10px ${type.shadowDark}, inset -5px -5px 10px ${type.shadowLight}`
+                          : `7px 7px 15px ${type.shadowDark}, -7px -7px 15px ${type.shadowLight}`
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAdultType !== type.key) {
-                          e.currentTarget.style.boxShadow = 'inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff';
+                          e.currentTarget.style.boxShadow = `inset 5px 5px 10px ${type.shadowDark}, inset -5px -5px 10px ${type.shadowLight}`;
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAdultType !== type.key) {
-                          e.currentTarget.style.boxShadow = '7px 7px 15px #bebebe, -7px -7px 15px #ffffff';
+                          e.currentTarget.style.boxShadow = `7px 7px 15px ${type.shadowDark}, -7px -7px 15px ${type.shadowLight}`;
                         }
                       }}
                     >
