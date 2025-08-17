@@ -164,7 +164,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
               <img 
                 src="/src/assets/stranger.gif" 
                 alt="Stranger offering candy"
-                className="w-80 h-auto rounded-lg"
+                className="w-100 h-auto rounded-lg"
               />
             </div>
           )}
