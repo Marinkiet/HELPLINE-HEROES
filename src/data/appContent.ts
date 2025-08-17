@@ -315,6 +315,18 @@ export const appContent = {
       nr: "Udinga Usizo?",
       nso: "O nyaka Thušo?"
     },
+    adultReportButton: {
+      en: "Report\nSuspicious\nBehavior",
+      af: "Rapporteer\nVerdagte\nGedrag",
+      zu: "Bika\nUkuziphatha\nOkusolisayo",
+      xh: "Xela\nUkuziphatha\nOkukrokrelayo",
+      st: "Bega\nBoitšoaro\nbo Belaetsang",
+      tn: "Begela\nMaitsholo\na Belaelang",
+      ts: "Vika\nMahanyelo\nya Ku Solela",
+      ve: "Pfi\nMaitele\na Khongolosaho",
+      nr: "Bika\nUkuziphatha\nOkusolisayo",
+      nso: "Begela\nBoitshwaro\nbjo Belaetšago"
+    },
     reportBadTouchModal: {
       title: {
         en: "Need Help?",

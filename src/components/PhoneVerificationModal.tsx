@@ -92,8 +92,8 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="bg-orange-500 text-white p-6 rounded-t-3xl relative">
           <div className="flex items-center justify-between">
@@ -129,7 +129,7 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-6 overflow-y-auto">
           {/* Emergency Contacts - Always Visible */}
           <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-6">
             <div className="flex items-center mb-3">
