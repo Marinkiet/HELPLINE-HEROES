@@ -13,10 +13,10 @@ interface GameGridProps {
 export function GameGrid({ games, onGameClick, filteredCategory }: GameGridProps) {
   const { selectedLanguage } = useAudio();
   
-  // Filter out the main games (1, 2, 3) from the "All Safety Activities" section
-  // but keep them when filtering by category
+  // Always filter out the main games (1, 2, 3) from the GameGrid
+  // They are only shown in the FeaturedSection (Safety Adventures)
   const filteredGames = filteredCategory 
-    ? games.filter(game => game.category === filteredCategory)
+    ? games.filter(game => game.category === filteredCategory && !['1', '2', '3'].includes(game.id))
     : games.filter(game => !['1', '2', '3'].includes(game.id));
 
   return (
