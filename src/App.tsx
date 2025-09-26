@@ -35,6 +35,7 @@ function AppContent() {
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [isInitializingSession, setIsInitializingSession] = useState(false);
 
   // Track language changes
   useEffect(() => {
@@ -128,17 +129,29 @@ function AppContent() {
     setIsCommunitySafetyOpen(true);
   };
 
-  const handleAgeSelect = (ageGroup: AgeGroup) => {
+  const handleAgeSelect = async (ageGroup: AgeGroup) => {
     const isFirstTimeSelection = selectedAgeGroup === null;
-    setSelectedAgeGroup(ageGroup);
     if (ageGroup) {
       if (isFirstTimeSelection) {
-        // Initialize session only on first age group selection
-        engagementService.initializeSession(ageGroup, selectedLanguage);
+        setIsInitializingSession(true);
+        try {
+          // Initialize session only on first age group selection
+          await engagementService.initializeSession(ageGroup, selectedLanguage);
+          setSelectedAgeGroup(ageGroup);
+        } catch (error) {
+          console.error('Failed to initialize session:', error);
+          // Still set the age group to allow the app to continue
+          setSelectedAgeGroup(ageGroup);
+        } finally {
+          setIsInitializingSession(false);
+        }
       } else {
         // Update existing session for subsequent changes
+        setSelectedAgeGroup(ageGroup);
         updateAgeGroup(ageGroup);
       }
+    } else {
+      setSelectedAgeGroup(ageGroup);
     }
   };
 
@@ -158,28 +171,23 @@ function AppContent() {
     setShowDashboard(false);
   };
 
-  // Show dashboard if requested
+  // Determine which content to render
+  let content;
+  
   if (showDashboard) {
-    return <EngagementDashboard />;
-  }
-
-  // Show age selection if no age group is selected
-  if (!selectedAgeGroup) {
-    return <AgeSelection onAgeSelect={handleAgeSelect} />;
-  }
-
-  // Show dedicated page for 5-7 age group
-  if (selectedAgeGroup === 'early') {
-    return (
+    content = <EngagementDashboard />;
+  } else if (!selectedAgeGroup || isInitializingSession) {
+    content = <AgeSelection onAgeSelect={handleAgeSelect} />;
+  } else if (selectedAgeGroup === 'early') {
+    content = (
       <Age5to7Page 
         onBackToAgeSelection={handleBackToAgeSelection}
         onCommunitySafetyClick={handleCommunitySafetyClick}
         onShowDashboard={handleShowDashboard}
       />
     );
-  }
-
-  return (
+  } else {
+    content = (
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
           <Navigation 
@@ -245,6 +253,32 @@ function AppContent() {
           />
         </div>
       </div>
+    );
+  }
+
+  return (
+    <>
+      {content}
+      {/* Always render modals to avoid hook count changes */}
+      {!showDashboard && selectedAgeGroup && selectedAgeGroup !== 'early' && (
+        <>
+          <GameModal 
+            game={selectedGame}
+            isOpen={isModalOpen}
+            onClose={closeModal}
+          />
+          <CommunitySafetyModal 
+            isOpen={isCommunitySafetyOpen}
+            onClose={closeCommunitySafety}
+          />
+          <PhoneVerificationModal 
+            isOpen={isPhoneVerificationOpen}
+            onClose={closePhoneVerification}
+            onVerified={handlePhoneVerified}
+          />
+        </>
+      )}
+    </>
   );
 }
 

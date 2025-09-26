@@ -225,6 +225,12 @@ class EngagementService {
 
   // Track user interactions
   async trackInteraction(type: string, data: Record<string, any> = {}): Promise<void> {
+    // Don't track interactions if session is not initialized
+    if (!this.isSessionInitialized) {
+      console.warn('Cannot track interaction: session not initialized');
+      return;
+    }
+
     try {
       const interactionData: Partial<UserInteraction> = {
         session_id: this.sessionId,
@@ -246,12 +252,20 @@ class EngagementService {
 
   // Update language
   async updateLanguage(language: string): Promise<void> {
+    if (!this.isSessionInitialized) {
+      console.warn('Cannot update language: session not initialized');
+      return;
+    }
     await this.updateSession({ language });
     await this.trackInteraction('language_change', { language });
   }
 
   // Update age group
   async updateAgeGroup(ageGroup: 'early' | 'middle' | 'teen'): Promise<void> {
+    if (!this.isSessionInitialized) {
+      console.warn('Cannot update age group: session not initialized');
+      return;
+    }
     await this.updateSession({ age_group: ageGroup });
     await this.trackInteraction('age_group_change', { age_group: ageGroup });
   }
