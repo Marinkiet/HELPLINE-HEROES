@@ -258,6 +258,7 @@ export function EngagementDashboard() {
               { id: 'users', label: 'User Sessions', icon: Users },
               { id: 'games', label: 'Game Sessions', icon: GamepadIcon },
               { id: 'interactions', label: 'Interactions', icon: Clock }
+
             ].map(({ id, label, icon: Icon }) => (
               <button
                 key={id}

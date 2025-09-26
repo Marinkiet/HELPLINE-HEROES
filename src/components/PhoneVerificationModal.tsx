@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Phone, Shield, AlertTriangle, Ambulance, Car } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
+import { useEngagement } from '../contexts/EngagementContext';
 import { appContent } from '../data/appContent';
 
 interface PhoneVerificationModalProps {
@@ -11,6 +12,7 @@ interface PhoneVerificationModalProps {
 
 export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVerificationModalProps) {
   const { selectedLanguage } = useAudio();
+  const { trackInteraction } = useEngagement();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
@@ -33,6 +35,12 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
       return;
     }
 
+    // Track OTP request
+    trackInteraction('adult_verification_otp_requested', {
+      phone_number_length: phoneNumber.length,
+      phone_prefix: phoneNumber.substring(0, 3)
+    });
+
     setIsLoading(true);
     setError('');
     
@@ -52,6 +60,12 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
       return;
     }
 
+    // Track OTP verification attempt
+    trackInteraction('adult_verification_otp_attempted', {
+      otp_length: otp.length,
+      phone_number_length: phoneNumber.length
+    });
+
     setIsLoading(true);
     setError('');
     
@@ -59,14 +73,32 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
     setTimeout(() => {
       setIsLoading(false);
       if (otp === '123456') { // Demo OTP for testing
+        // Track successful verification
+        trackInteraction('adult_verification_successful', {
+          phone_number_length: phoneNumber.length,
+          verification_method: 'otp'
+        });
         onVerified();
       } else {
+        // Track failed verification
+        trackInteraction('adult_verification_failed', {
+          otp_entered: otp,
+          phone_number_length: phoneNumber.length
+        });
         setError('Invalid OTP. Please try again.');
       }
     }, 1500);
   };
 
   const handleEmergencyCall = (number: string, service: string) => {
+    // Track emergency contact selection
+    trackInteraction('emergency_contact_selected', {
+      contact_type: service,
+      phone_number: number,
+      verification_step: step,
+      user_phone: phoneNumber || 'not_provided'
+    });
+
     const confirmed = window.confirm(
       `⚠️ EMERGENCY CALL WARNING ⚠️\n\n` +
       `You are about to call ${service} (${number}).\n\n` +
@@ -82,16 +114,53 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
     );
     
     if (confirmed) {
+      // Track confirmed emergency call
+      trackInteraction('emergency_call_confirmed', {
+        contact_type: service,
+        phone_number: number,
+        verification_step: step,
+        user_phone: phoneNumber || 'not_provided'
+      });
       window.location.href = `tel:${number}`;
+    } else {
+      // Track cancelled emergency call
+      trackInteraction('emergency_call_cancelled', {
+        contact_type: service,
+        phone_number: number,
+        verification_step: step,
+        user_phone: phoneNumber || 'not_provided'
+      });
     }
   };
 
   const handleResendOTP = () => {
     if (countdown === 0) {
+      // Track OTP resend
+      trackInteraction('adult_verification_otp_resent', {
+        phone_number_length: phoneNumber.length
+      });
       setCountdown(60);
       // Resend OTP logic here
       console.log(`Resending OTP to ${phoneNumber}`);
     }
+  };
+
+  // Track modal open/close
+  useEffect(() => {
+    if (isOpen) {
+      trackInteraction('adult_report_modal_opened', {
+        step: step
+      });
+    }
+  }, [isOpen, trackInteraction, step]);
+
+  const handleClose = () => {
+    trackInteraction('adult_report_modal_closed', {
+      step: step,
+      phone_entered: phoneNumber ? 'yes' : 'no',
+      otp_entered: otp ? 'yes' : 'no'
+    });
+    onClose();
   };
 
   return (
@@ -109,7 +178,7 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
               </div>
             </div>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="text-white hover:text-orange-200 p-2 hover:bg-orange-600 rounded-full transition-colors duration-200"
               aria-label="Close verification"
             >

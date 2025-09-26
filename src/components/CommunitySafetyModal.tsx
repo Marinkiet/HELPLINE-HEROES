@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Shield, AlertTriangle, Phone, MessageSquare, Eye, Lock, FileText, Wifi } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
+import { useEngagement } from '../contexts/EngagementContext';
 import { appContent } from '../data/appContent';
 
 interface CommunitySafetyModalProps {
@@ -10,17 +11,58 @@ interface CommunitySafetyModalProps {
 
 export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalProps) {
   const { selectedLanguage } = useAudio();
+  const { trackInteraction } = useEngagement();
 
   if (!isOpen) return null;
 
   const handleWhatsAppReport = () => {
+    // Track WhatsApp report selection
+    trackInteraction('suspicious_behavior_report_method_selected', {
+      method: 'whatsapp',
+      platform: 'web'
+    });
+
     const message = encodeURIComponent("I would like to report suspicious behavior. Please provide me with the reporting guidelines.");
     window.open(`https://wa.me/+14155238886?text=${message}`, '_blank');
+    
+    // Track WhatsApp report initiated
+    trackInteraction('suspicious_behavior_report_initiated', {
+      method: 'whatsapp',
+      message_type: 'suspicious_behavior'
+    });
   };
 
   const handleSMSReport = () => {
+    // Track SMS report selection
+    trackInteraction('suspicious_behavior_report_method_selected', {
+      method: 'sms',
+      platform: 'web'
+    });
+
     const message = encodeURIComponent("REPORT: Suspicious behavior");
     window.open(`sms:32312?body=${message}`, '_blank');
+    
+    // Track SMS report initiated
+    trackInteraction('suspicious_behavior_report_initiated', {
+      method: 'sms',
+      message_type: 'suspicious_behavior'
+    });
+  };
+
+  // Track modal interactions
+  React.useEffect(() => {
+    if (isOpen) {
+      trackInteraction('community_safety_modal_opened', {
+        source: 'adult_report_button'
+      });
+    }
+  }, [isOpen, trackInteraction]);
+
+  const handleClose = () => {
+    trackInteraction('community_safety_modal_closed', {
+      interaction_type: 'close_button'
+    });
+    onClose();
   };
 
   return (
@@ -39,7 +81,7 @@ export function CommunitySafetyModal({ isOpen, onClose }: CommunitySafetyModalPr
               </div>
             </div>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
               aria-label="Close adult report"
             >
