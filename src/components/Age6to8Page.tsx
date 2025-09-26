@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAudio } from '../contexts/AudioContext';
 import { GameGrid } from './GameGrid';
 import { GameModal } from './GameModal';
 import { VideoUploadModal } from './VideoUploadModal';
@@ -16,7 +15,6 @@ interface Age6to8PageProps {
 }
 
 export function Age6to8Page({ onBackToAgeSelection, onCommunitySafetyClick }: Age6to8PageProps) {
-  const { selectedLanguage } = useAudio();
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,8 +27,8 @@ export function Age6to8Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
   // Filter games based on category and search
   const filteredGames = ageAppropriateGames.filter(game => {
     const matchesCategory = selectedCategory === 'all' || game.category === selectedCategory;
-    const matchesSearch = game.title[selectedLanguage].toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         game.description[selectedLanguage].toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         game.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
