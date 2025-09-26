@@ -1,7 +1,9 @@
 import React from 'react';
-import { Star, Book, Backpack } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import kidsbg from '../assets/kidsbg.jpg';
+import starImg from '../assets/star.jpg';
+import bookImg from '../assets/book.jpg';
+import backpackImg from '../assets/backpack.jpg';
 
 interface AgeSelectionProps {
   onAgeSelect: (ageGroup: 'early' | 'middle' | 'teen') => void;
@@ -38,7 +40,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         nr: 'Imisebenzi ejabulisayo yezingane ezincane',
         nso: 'Mešomo ye mebotse ya bana ba bannye'
       },
-      icon: Star,
+      image: starImg,
       bgColor: 'from-yellow-400 to-orange-500',
       iconColor: 'text-yellow-600'
     },
@@ -69,7 +71,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         nr: 'Izigigaba zokufunda zezingane zasesikoleni',
         nso: 'Dipalangwa tša go ithuta tša bana ba sekolo'
       },
-      icon: Book,
+      image: bookImg,
       bgColor: 'from-blue-400 to-purple-500',
       iconColor: 'text-blue-600'
     },
@@ -100,7 +102,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         nr: 'Amakhono okuphepha aphakeme entsheni',
         nso: 'Bokgoni bjo bo phagamego bja polokego bja baša'
       },
-      icon: Backpack,
+      image: backpackImg,
       bgColor: 'from-purple-400 to-pink-500',
       iconColor: 'text-purple-600'
     }
@@ -159,9 +161,13 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
               onClick={() => onAgeSelect(group.id)}
               className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group flex flex-col items-center justify-center"
             >
-              {/* Large Icon */}
+              {/* Large Image */}
               <div className="mb-4 group-hover:animate-bounce">
-                <group.icon className="w-12 h-12 md:w-20 md:h-20 text-white" />
+                <img 
+                  src={group.image} 
+                  alt={group.title[selectedLanguage]}
+                  className="w-12 h-12 md:w-20 md:h-20 object-cover rounded-full"
+                />
               </div>
               
               {/* Age Range */}
