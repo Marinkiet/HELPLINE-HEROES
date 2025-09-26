@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { AgeSelection } from './components/AgeSelection';
-import { Age6to8Page } from './components/Age6to8Page';
+import { Age6to8Page } from './components/Age5to7Page';
 import { Navigation } from './components/Navigation';
 import { CommunitySafetyModal } from './components/CommunitySafetyModal';
 import { PhoneVerificationModal } from './components/PhoneVerificationModal';
