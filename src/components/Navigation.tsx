@@ -1,13 +1,14 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe, ArrowLeft } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe, ArrowLeft, BarChart3 } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
 interface NavigationProps {
   onBackToAgeSelection?: () => void;
+  onShowDashboard?: () => void;
 }
 
-export function Navigation({ onBackToAgeSelection }: NavigationProps) {
+export function Navigation({ onBackToAgeSelection, onShowDashboard }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -35,6 +36,18 @@ export function Navigation({ onBackToAgeSelection }: NavigationProps) {
 
           {/* Narration Controls */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Dashboard Button */}
+            {onShowDashboard && (
+              <button
+                onClick={onShowDashboard}
+                className="flex items-center space-x-2 bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm"
+                aria-label="View engagement dashboard"
+              >
+                <BarChart3 className="w-4 h-4" />
+                <span>Dashboard</span>
+              </button>
+            )}
+
             {/* Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
@@ -81,6 +94,18 @@ export function Navigation({ onBackToAgeSelection }: NavigationProps) {
         {/* Mobile Narration Controls */}
         <div className="md:hidden pb-3">
           <div className="flex items-center justify-center space-x-4">
+            {/* Mobile Dashboard Button */}
+            {onShowDashboard && (
+              <button
+                onClick={onShowDashboard}
+                className="flex items-center space-x-2 bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm"
+                aria-label="View engagement dashboard"
+              >
+                <BarChart3 className="w-4 h-4" />
+                <span>Dashboard</span>
+              </button>
+            )}
+
             {/* Mobile Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
