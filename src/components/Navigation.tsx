@@ -1,13 +1,13 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe, ArrowLeft } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
 interface NavigationProps {
-  // Remove the onCommunitySafetyClick prop since it's no longer needed
+  onBackToAgeSelection?: () => void;
 }
 
-export function Navigation(): NavigationProps {
+export function Navigation({ onBackToAgeSelection }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -16,6 +16,15 @@ export function Navigation(): NavigationProps {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
+            {onBackToAgeSelection && (
+              <button
+                onClick={onBackToAgeSelection}
+                className="bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors duration-200"
+                aria-label="Back to age selection"
+              >
+                <ArrowLeft className="w-6 h-6 text-blue-600" />
+              </button>
+            )}
             <div className="bg-white rounded-full p-2 shadow-lg">
               <Shield className="w-8 h-8 text-blue-600" />
             </div>

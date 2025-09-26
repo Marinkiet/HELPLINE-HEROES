@@ -13,16 +13,17 @@ interface GameGridProps {
 export function GameGrid({ games, onGameClick, filteredCategory }: GameGridProps) {
   const { selectedLanguage } = useAudio();
   
-  // Filter out the main games (1, 2, 3) from the "All Safety Activities" section
-  // but keep them when filtering by category
-  const filteredGames = filteredCategory 
-    ? games.filter(game => game.category === filteredCategory)
-    : games.filter(game => !['1', '2', '3'].includes(game.id));
+  // Always filter out the main games (1, 2, 3) from this section
+  // since they appear in the Featured Section
+  const filteredGames = games.filter(game => !['1', '2', '3'].includes(game.id));
 
   return (
     <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-3xl p-8 shadow-2xl">
       <h2 className="text-3xl font-black text-white mb-6 text-center">
-        {filteredCategory ? `${appContent.categories[filteredCategory as keyof typeof appContent.categories][selectedLanguage]} Activities` : appContent.gameGrid.allActivities[selectedLanguage]}
+        {filteredCategory 
+          ? `${appContent.categories[filteredCategory as keyof typeof appContent.categories][selectedLanguage]} Activities` 
+          : appContent.gameGrid.allActivities[selectedLanguage]
+        }
       </h2>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

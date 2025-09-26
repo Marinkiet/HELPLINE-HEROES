@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
+import { AgeSelection } from './components/AgeSelection';
 import { Navigation } from './components/Navigation';
 import { CommunitySafetyModal } from './components/CommunitySafetyModal';
 import { PhoneVerificationModal } from './components/PhoneVerificationModal';
@@ -14,8 +15,12 @@ import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './components/ReportBadTouchButton';
 import { AdultReportButton } from './components/AdultReportButton';
+
+type AgeGroup = 'early' | 'middle' | 'teen' | null;
+
 function AppContent() {
   const { selectedLanguage } = useAudio();
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<AgeGroup>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
@@ -24,8 +29,14 @@ function AppContent() {
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
+  // Filter games based on selected age group
   const filteredGames = useMemo(() => {
     let filtered = games;
+    
+    // Filter by age group if selected
+    if (selectedAgeGroup) {
+      filtered = filtered.filter(game => game.ageGroup === selectedAgeGroup);
+    }
     
     if (selectedCategory) {
       filtered = filtered.filter(game => game.category === selectedCategory);
@@ -39,7 +50,7 @@ function AppContent() {
     }
     
     return filtered;
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, selectedAgeGroup]);
 
   const handleGameClick = (game: Game) => {
     setSelectedGame(game);
@@ -89,10 +100,25 @@ function AppContent() {
     setIsCommunitySafetyOpen(true);
   };
 
+  const handleAgeSelect = (ageGroup: AgeGroup) => {
+    setSelectedAgeGroup(ageGroup);
+  };
+
+  const handleBackToAgeSelection = () => {
+    setSelectedAgeGroup(null);
+    setSearchQuery('');
+    setSelectedCategory('');
+  };
+
+  // Show age selection if no age group is selected
+  if (!selectedAgeGroup) {
+    return <AgeSelection onAgeSelect={handleAgeSelect} />;
+  }
+
   return (
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <Navigation />
+          <Navigation onBackToAgeSelection={handleBackToAgeSelection} />
           <div className="w-full"
           style={{
                   backgroundImage: `url(${kidsbg})`, 

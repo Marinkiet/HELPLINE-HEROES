@@ -13,8 +13,9 @@ interface FeaturedSectionProps {
 export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
   const { selectedLanguage } = useAudio();
   
-  // Get the first 3 games and their translated content
-  const featuredGames = games.slice(0, 3).map((game, index) => {
+  // Get the first 3 games (which should always be the main games regardless of age filtering)
+  const mainGames = games.filter(game => ['1', '2', '3'].includes(game.id));
+  const featuredGames = mainGames.map((game, index) => {
     const icons = [
       <Shield className="w-16 h-16 text-white" />,
       <Heart className="w-16 h-16 text-white" />,
