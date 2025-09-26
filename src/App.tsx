@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { AgeSelection } from './components/AgeSelection';
-import { Age5to7Page } from './components/Age5to7Page';
+import { Age6to8Page } from './components/Age5to7Page';
 import { Navigation } from './components/Navigation';
 import { CommunitySafetyModal } from './components/CommunitySafetyModal';
 import { PhoneVerificationModal } from './components/PhoneVerificationModal';
@@ -119,7 +119,7 @@ function AppContent() {
   // Show dedicated page for 5-7 age group
   if (selectedAgeGroup === 'early') {
     return (
-      <Age5to7Page 
+      <Age6to8Page 
         onBackToAgeSelection={handleBackToAgeSelection}
         onCommunitySafetyClick={handleCommunitySafetyClick}
       />

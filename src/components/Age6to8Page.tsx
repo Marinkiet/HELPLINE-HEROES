@@ -18,7 +18,7 @@ interface Age5to7PageProps {
   onCommunitySafetyClick: () => void;
 }
 
-export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Age5to7PageProps) {
+export function Age6to8Page({ onBackToAgeSelection, onCommunitySafetyClick }: Age5to7PageProps) {
   const { selectedLanguage } = useAudio();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -27,7 +27,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [currentVideoGame, setCurrentVideoGame] = useState<string>('');
 
-  // Filter games for 5-7 age group (early)
+  // Filter games for 6-8 age group (early)
   const filteredGames = useMemo(() => {
     let filtered = games.filter(game => game.ageGroup === 'early');
     
