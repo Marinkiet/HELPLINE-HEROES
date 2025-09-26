@@ -63,10 +63,10 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle }: VideoUploadModa
               {/* Video Title Overlay */}
               <div className="absolute bottom-6 left-6 right-6">
                 <h3 className="text-white text-2xl font-bold mb-2">
-                  🕵️ Safe Touch Detective Adventure
+                  🕵️ Safe Touch Detective: Good Touch vs Bad Touch
                 </h3>
                 <p className="text-white/90 text-lg">
-                  Learn about body safety in a fun and age-appropriate way!
+                  Learn the difference between safe touches and unsafe touches to keep your body safe!
                 </p>
               </div>
               
@@ -94,26 +94,14 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle }: VideoUploadModa
         <div className="mt-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-xl">
           <div className="flex items-center mb-2">
             <Volume2 className="w-5 h-5 text-blue-600 mr-2" />
-            <h4 className="font-bold text-blue-800">Safety Learning Video</h4>
+            <h4 className="font-bold text-blue-800">Safe Touch Education Video</h4>
           </div>
           <p className="text-blue-700">
-            This educational video teaches children about body safety in an age-appropriate, 
-            fun way. Perfect for ages 5-7 with simple language and engaging visuals.
+            This educational video teaches children about the difference between good touches and bad touches. 
+            Learn about private parts, trusted adults, and how to say "NO" to unsafe touches. Perfect for ages 5-7 
+            with simple language and engaging detective story format.
           </p>
         </div>
-
-        {/* Action Button */}
-        {!isPlaying && (
-          <div className="flex justify-center mt-6">
-            <button 
-              onClick={handlePlayClick}
-              className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-3 text-xl"
-            >
-              <Play className="w-6 h-6" />
-              <span>Watch Safety Video</span>
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
