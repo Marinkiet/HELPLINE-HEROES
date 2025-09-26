@@ -152,16 +152,12 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         </div>
 
         {/* Age Group Cards */}
-        <div className="relative flex justify-center items-center min-h-[400px]">
-          {ageGroups.map((group, index) => (
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 py-8">
+          {ageGroups.map((group) => (
             <button
               key={group.id}
               onClick={() => onAgeSelect(group.id)}
-              className={`absolute w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group flex flex-col items-center justify-center ${
-                index === 0 ? 'top-0 left-0 md:top-8 md:left-16' :
-                index === 1 ? 'top-20 left-1/2 transform -translate-x-1/2 md:top-32 md:left-1/2 md:-translate-x-1/2' :
-                'top-40 right-0 md:top-56 md:right-16'
-              }`}
+              className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group flex flex-col items-center justify-center"
             >
               {/* Large Icon */}
               <div className="mb-4 group-hover:animate-bounce">
