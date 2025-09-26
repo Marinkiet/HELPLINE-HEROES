@@ -34,13 +34,6 @@ function AppContent() {
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
-  // Initialize engagement tracking when age group is selected
-  useEffect(() => {
-    if (selectedAgeGroup) {
-      engagementService.initializeSession(selectedAgeGroup, selectedLanguage);
-    }
-  }, [selectedAgeGroup, selectedLanguage]);
-
   // Track language changes
   useEffect(() => {
     if (selectedAgeGroup) {
@@ -134,9 +127,16 @@ function AppContent() {
   };
 
   const handleAgeSelect = (ageGroup: AgeGroup) => {
+    const isFirstTimeSelection = selectedAgeGroup === null;
     setSelectedAgeGroup(ageGroup);
     if (ageGroup) {
-      updateAgeGroup(ageGroup);
+      if (isFirstTimeSelection) {
+        // Initialize session only on first age group selection
+        engagementService.initializeSession(ageGroup, selectedLanguage);
+      } else {
+        // Update existing session for subsequent changes
+        updateAgeGroup(ageGroup);
+      }
     }
   };
 
