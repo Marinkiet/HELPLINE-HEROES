@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, RotateCcw, Trophy } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
+import { useEngagement } from '../../contexts/EngagementContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
@@ -11,6 +12,7 @@ interface TouchScenarioGameProps {
 
 export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
   const { selectedLanguage, isNarrationEnabled } = useAudio();
+  const { trackGameEnd, trackInteraction } = useEngagement();
   const [currentScenario, setCurrentScenario] = useState(0);
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -76,6 +78,15 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
     if (isCorrect) {
       setScore(score + 1);
     }
+
+    // Track answer
+    trackInteraction('game_answer', {
+      game_id: 'safe_touch_detective',
+      scenario_id: currentScenario,
+      answer: answer,
+      correct: isCorrect,
+      current_score: isCorrect ? score + 1 : score
+    });
   };
 
   const handleNext = () => {
@@ -84,6 +95,10 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
       setShowFeedback(false);
     } else {
       setGameComplete(true);
+      // Track game completion
+      const finalScore = score;
+      const pointsEarned = finalScore * 10; // 10 points per correct answer
+      trackGameEnd(pointsEarned, true);
     }
   };
 

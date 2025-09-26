@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Play, Phone, Heart } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
+import { useEngagement } from '../contexts/EngagementContext';
 import { appContent } from '../data/appContent';
 import { Game } from '../data/games';
 import { helplineNumbers } from '../data/games';
@@ -19,6 +20,7 @@ interface GameModalProps {
 
 export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const { selectedLanguage } = useAudio();
+  const { trackGameStart, trackInteraction } = useEngagement();
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
   const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
   const [showBraveVoiceGame, setShowBraveVoiceGame] = React.useState(false);
@@ -84,13 +86,20 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const handleStartLearning = () => {
     if (game.id === '1') {
       setShowSafeTouchGame(true);
+      trackGameStart('1', game.title[selectedLanguage]);
     } else if (game.id === '2') {
       setShowTrustedHeroesGame(true);
+      trackGameStart('2', game.title[selectedLanguage]);
     } else if (game.id === '3') {
       setShowBraveVoiceGame(true);
+      trackGameStart('3', game.title[selectedLanguage]);
     } else {
       // For other games, show a placeholder
       alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
+      trackInteraction('coming_soon_game_click', {
+        game_id: game.id,
+        game_title: game.title[selectedLanguage]
+      });
     }
   };
 

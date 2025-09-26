@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThumbsUp, ThumbsDown, RotateCcw, Trophy, Shield } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
+import { useEngagement } from '../../contexts/EngagementContext';
 import { trustedHeroesContent } from '../../data/trustedHeroesContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
@@ -11,6 +12,7 @@ interface TrustedAdultsScenarioProps {
 
 export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps) {
   const { selectedLanguage, isNarrationEnabled } = useAudio();
+  const { trackGameEnd, trackInteraction } = useEngagement();
   const [currentScenario, setCurrentScenario] = useState(0);
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -76,6 +78,15 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
     if (isCorrect) {
       setScore(score + 1);
     }
+
+    // Track answer
+    trackInteraction('game_answer', {
+      game_id: 'trusted_heroes_circle',
+      scenario_id: currentScenario,
+      answer: answer,
+      correct: isCorrect,
+      current_score: isCorrect ? score + 1 : score
+    });
   };
 
   const handleNext = () => {
@@ -84,6 +95,10 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
       setShowFeedback(false);
     } else {
       setGameComplete(true);
+      // Track game completion
+      const finalScore = score;
+      const pointsEarned = finalScore * 15; // 15 points per correct answer
+      trackGameEnd(pointsEarned, true);
     }
   };
 

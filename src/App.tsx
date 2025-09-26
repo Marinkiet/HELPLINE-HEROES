@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
+import { EngagementProvider } from './contexts/EngagementContext';
+import { useEngagement } from './contexts/EngagementContext';
 import { AgeSelection } from './components/AgeSelection';
 import { Age5to7Page } from './components/Age5to7Page';
 import { Navigation } from './components/Navigation';
@@ -16,11 +18,13 @@ import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './components/ReportBadTouchButton';
 import { AdultReportButton } from './components/AdultReportButton';
+import { engagementService } from './services/engagementService';
 
 type AgeGroup = 'early' | 'middle' | 'teen' | null;
 
 function AppContent() {
   const { selectedLanguage } = useAudio();
+  const { trackInteraction, updateLanguage, updateAgeGroup } = useEngagement();
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<AgeGroup>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -29,6 +33,20 @@ function AppContent() {
   const [isCommunitySafetyOpen, setIsCommunitySafetyOpen] = useState(false);
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+
+  // Initialize engagement tracking when age group is selected
+  useEffect(() => {
+    if (selectedAgeGroup) {
+      engagementService.initializeSession(selectedAgeGroup, selectedLanguage);
+    }
+  }, [selectedAgeGroup, selectedLanguage]);
+
+  // Track language changes
+  useEffect(() => {
+    if (selectedAgeGroup) {
+      updateLanguage(selectedLanguage);
+    }
+  }, [selectedLanguage, selectedAgeGroup, updateLanguage]);
 
   // Filter games based on selected age group
   const filteredGames = useMemo(() => {
@@ -56,6 +74,11 @@ function AppContent() {
   const handleGameClick = (game: Game) => {
     setSelectedGame(game);
     setIsModalOpen(true);
+    // Track game modal open
+    trackInteraction('game_modal_open', {
+      game_id: game.id,
+      game_title: game.title[selectedLanguage]
+    });
   };
 
   const handleGameClickById = (gameId: string) => {
@@ -67,11 +90,20 @@ function AppContent() {
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(selectedCategory === category ? '' : category);
+    // Track category selection
+    trackInteraction('category_click', {
+      category: category,
+      selected: selectedCategory !== category
+    });
   };
 
   const handleSurpriseMe = () => {
     const randomGame = games[Math.floor(Math.random() * games.length)];
     handleGameClick(randomGame);
+    // Track surprise me usage
+    trackInteraction('surprise_me_click', {
+      selected_game_id: randomGame.id
+    });
   };
 
   const closeModal = () => {
@@ -103,12 +135,17 @@ function AppContent() {
 
   const handleAgeSelect = (ageGroup: AgeGroup) => {
     setSelectedAgeGroup(ageGroup);
+    if (ageGroup) {
+      updateAgeGroup(ageGroup);
+    }
   };
 
   const handleBackToAgeSelection = () => {
     setSelectedAgeGroup(null);
     setSearchQuery('');
     setSelectedCategory('');
+    // Track back to age selection
+    trackInteraction('back_to_age_selection');
   };
 
   // Show age selection if no age group is selected
@@ -195,7 +232,9 @@ function AppContent() {
 function App() {
   return (
     <AudioProvider>
-      <AppContent />
+      <EngagementProvider>
+        <AppContent />
+      </EngagementProvider>
     </AudioProvider>
   );
 }

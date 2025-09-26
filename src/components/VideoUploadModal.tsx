@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Play, Volume2, Maximize } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
+import { useEngagement } from '../contexts/EngagementContext';
 
 interface VideoUploadModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface VideoUploadModalProps {
 
 export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUploadModalProps) {
   const { selectedLanguage } = useAudio();
+  const { trackGameStart, trackGameEnd, trackInteraction } = useEngagement();
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
@@ -63,11 +65,30 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUp
   const handlePlayClick = () => {
     setIsPlaying(true);
     setShowControls(false);
+    
+    // Track video start
+    if (gameId) {
+      trackGameStart(gameId, gameTitle);
+      trackInteraction('video_play', {
+        game_id: gameId,
+        game_title: gameTitle
+      });
+    }
   };
 
   const handleClose = () => {
     setIsPlaying(false);
     setShowControls(true);
+    
+    // Track video completion (assuming they watched it if they close)
+    if (gameId && isPlaying) {
+      trackGameEnd(50, true); // 50 points for watching video
+      trackInteraction('video_complete', {
+        game_id: gameId,
+        game_title: gameTitle
+      });
+    }
+    
     onClose();
   };
 
