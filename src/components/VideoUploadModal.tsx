@@ -6,17 +6,59 @@ interface VideoUploadModalProps {
   isOpen: boolean;
   onClose: () => void;
   gameTitle: string;
+  gameId?: string;
 }
 
-export function VideoUploadModal({ isOpen, onClose, gameTitle }: VideoUploadModalProps) {
+export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUploadModalProps) {
   const { selectedLanguage } = useAudio();
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
   if (!isOpen) return null;
 
-  // This would come from the backend in a real implementation
-  const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0";
+  // Get video content based on game ID
+  const getVideoContent = () => {
+    switch (gameId) {
+      case '1': // Safe Touch Detective
+        return {
+          url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0",
+          title: "🕵️ Safe Touch Detective: Good Touch vs Bad Touch",
+          description: "Learn the difference between safe touches and unsafe touches to keep your body safe!",
+          duration: "4:32",
+          infoTitle: "Safe Touch Education Video",
+          infoDescription: "This educational video teaches children about the difference between good touches and bad touches. Learn about private parts, trusted adults, and how to say \"NO\" to unsafe touches."
+        };
+      case '2': // Trusted Heroes Circle
+        return {
+          url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0",
+          title: "💖 Trusted Heroes Circle: Who Can You Trust?",
+          description: "Meet your trusted heroes and learn who you can talk to when you need help!",
+          duration: "3:45",
+          infoTitle: "Trusted Adults Education Video",
+          infoDescription: "This educational video helps children identify trusted adults in their lives. Learn about parents, teachers, doctors, and other safe adults who can help you."
+        };
+      case '3': // Brave Voice
+        return {
+          url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0",
+          title: "🎤 Brave Voice: Speaking Up for Safety",
+          description: "Learn how to use your brave voice to stay safe and help others!",
+          duration: "4:15",
+          infoTitle: "Brave Voice Education Video",
+          infoDescription: "This educational video teaches children how to use their voice to speak up when something doesn't feel right. Learn when and how to tell trusted adults about unsafe situations."
+        };
+      default:
+        return {
+          url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0",
+          title: gameTitle,
+          description: "Educational safety video for children.",
+          duration: "4:00",
+          infoTitle: "Safety Education Video",
+          infoDescription: "This educational video teaches important safety concepts to help keep children safe."
+        };
+    }
+  };
+
+  const videoContent = getVideoContent();
   
   const handlePlayClick = () => {
     setIsPlaying(true);
@@ -63,23 +105,23 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle }: VideoUploadModa
               {/* Video Title Overlay */}
               <div className="absolute bottom-6 left-6 right-6">
                 <h3 className="text-white text-2xl font-bold mb-2">
-                  🕵️ Safe Touch Detective: Good Touch vs Bad Touch
+                  {videoContent.title}
                 </h3>
                 <p className="text-white/90 text-lg">
-                  Learn the difference between safe touches and unsafe touches to keep your body safe!
+                  {videoContent.description}
                 </p>
               </div>
               
               {/* Duration Badge */}
               <div className="absolute top-6 right-6 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                ⏱️ 4:32
+                ⏱️ {videoContent.duration}
               </div>
             </div>
           ) : (
             // Actual Video Player
             <div className="w-full h-full">
               <iframe
-                src={videoUrl}
+                src={videoContent.url}
                 className="w-full h-full"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -94,11 +136,10 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle }: VideoUploadModa
         <div className="mt-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-xl">
           <div className="flex items-center mb-2">
             <Volume2 className="w-5 h-5 text-blue-600 mr-2" />
-            <h4 className="font-bold text-blue-800">Safe Touch Education Video</h4>
+            <h4 className="font-bold text-blue-800">{videoContent.infoTitle}</h4>
           </div>
           <p className="text-blue-700">
-            This educational video teaches children about the difference between good touches and bad touches. 
-            Learn about private parts, trusted adults, and how to say "NO" to unsafe touches.
+            {videoContent.infoDescription}
           </p>
         </div>
       </div>

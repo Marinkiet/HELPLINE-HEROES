@@ -25,6 +25,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [currentVideoGame, setCurrentVideoGame] = useState<string>('');
 
   // Filter games for 5-7 age group (early)
   const filteredGames = useMemo(() => {
@@ -45,8 +46,9 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
   }, [searchQuery, selectedCategory, selectedLanguage]);
 
   const handleGameClick = (game: Game) => {
-    // Check if it's Safe Touch Detective (game ID '1')
-    if (game.id === '1') {
+    // Check if it's one of the main games (Safe Touch Detective, Trusted Heroes Circle, Brave Voice)
+    if (['1', '2', '3'].includes(game.id)) {
+      setCurrentVideoGame(game.id);
       setIsVideoModalOpen(true);
     } else {
       setSelectedGame(game);
@@ -78,8 +80,14 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
 
   const closeVideoModal = () => {
     setIsVideoModalOpen(false);
+    setCurrentVideoGame('');
   };
 
+  // Get game title for video modal
+  const getVideoGameTitle = (gameId: string) => {
+    const game = games.find(g => g.id === gameId);
+    return game ? game.title[selectedLanguage] : '';
+  };
   return (
     <div className="min-h-screen bg-yellow-300">
       <div className="relative z-10">
@@ -134,7 +142,8 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
         <VideoUploadModal 
           isOpen={isVideoModalOpen}
           onClose={closeVideoModal}
-          gameTitle="Safe Touch Detective"
+          gameTitle={getVideoGameTitle(currentVideoGame)}
+          gameId={currentVideoGame}
         />
       </div>
     </div>
