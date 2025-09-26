@@ -99,7 +99,6 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle }: VideoUploadModa
           <p className="text-blue-700">
             This educational video teaches children about the difference between good touches and bad touches. 
             Learn about private parts, trusted adults, and how to say "NO" to unsafe touches. Perfect for ages 5-7 
-            with simple language and engaging detective story format.
           </p>
         </div>
       </div>
