@@ -121,7 +121,8 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black/10"></div>
       
-      <div className="bg-white rounded-3xl p-8 max-w-4xl w-full shadow-2xl">
+     <div className="bg-white/80 rounded-3xl p-8 max-w-4xl w-full shadow-2xl">
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-black text-gray-800 mb-4">
