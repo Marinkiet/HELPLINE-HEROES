@@ -29,7 +29,7 @@ export function Navigation({ onBackToAgeSelection }: NavigationProps) {
               <Shield className="w-8 h-8 text-blue-600" />
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight">
-              Helpline Heroes
+              Trustline Heroes
             </h1>
           </div>
 

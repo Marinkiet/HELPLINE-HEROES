@@ -12,8 +12,8 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}']
       },
       manifest: {
-        name: 'Helpline Heroes',
-        short_name: 'Helpline Heroes',
+        name: 'Trustline Heroes',
+        short_name: 'Trustline Heroes',
         description: 'Mental health support helpline application',
         theme_color: '#ffffff',
         background_color: '#ffffff',

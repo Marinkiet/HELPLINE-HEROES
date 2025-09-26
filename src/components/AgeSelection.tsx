@@ -111,7 +111,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-black text-gray-800 mb-4">
-            🛡️ Helpline Heroes 🛡️
+            🛡️ Trustline Heroes 🛡️
           </h1>
           <p className="text-2xl text-gray-600 font-bold mb-2">
             {selectedLanguage === 'en' && 'Choose Your Age Group'}
