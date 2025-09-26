@@ -140,51 +140,26 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         </div>
 
         {/* Age Group Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16">
           {ageGroups.map((group) => (
             <button
               key={group.id}
               onClick={() => onAgeSelect(group.id)}
-              className={`bg-gradient-to-br ${group.bgColor} rounded-3xl p-8 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl active:scale-95 group`}
+              className="w-64 h-64 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group flex flex-col items-center justify-center"
             >
+              {/* Large Icon */}
+              <div className="mb-4 group-hover:animate-bounce">
+                <group.icon className="w-20 h-20 text-white" />
+              </div>
+              
+              {/* Age Range */}
               <div className="text-center">
-                {/* Icon */}
-                <div className="mb-6 flex justify-center">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-6 group-hover:animate-bounce">
-                    <group.icon className="w-16 h-16 text-white" />
-                  </div>
-                </div>
-
-                {/* Age Range */}
-                <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-4">
-                  <span className="text-2xl font-black">Ages {group.ageRange}</span>
-                </div>
-
-                {/* Title */}
-                <h2 className="text-3xl font-black mb-4">
+                <span className="text-3xl font-black text-white">
+                  {group.ageRange}
+                </span>
+                <p className="text-lg font-bold text-white/90 mt-1">
                   {group.title[selectedLanguage]}
-                </h2>
-
-                {/* Description */}
-                <p className="text-lg font-semibold opacity-90">
-                  {group.description[selectedLanguage]}
                 </p>
-
-                {/* Call to Action */}
-                <div className="mt-6 bg-white/30 hover:bg-white/40 rounded-full px-6 py-3 inline-block transition-colors duration-200">
-                  <span className="font-black text-lg">
-                    {selectedLanguage === 'en' && 'START LEARNING'}
-                    {selectedLanguage === 'af' && 'BEGIN LEER'}
-                    {selectedLanguage === 'zu' && 'QALA UKUFUNDA'}
-                    {selectedLanguage === 'xh' && 'QALA UKUFUNDA'}
-                    {selectedLanguage === 'st' && 'QALA HO ITHUTA'}
-                    {selectedLanguage === 'tn' && 'SIMOLOLA GO ITHUTA'}
-                    {selectedLanguage === 'ts' && 'SUNGULA KU DYONDZA'}
-                    {selectedLanguage === 've' && 'THOMANI U GUDA'}
-                    {selectedLanguage === 'nr' && 'QALA UKUFUNDA'}
-                    {selectedLanguage === 'nso' && 'THOMA GO ITHUTA'}
-                  </span>
-                </div>
               </div>
             </button>
           ))}
