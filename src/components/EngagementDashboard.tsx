@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Users, Globe, Clock, Trophy, GamepadIcon, TrendingUp, MapPin, Languages, Calendar } from 'lucide-react';
+import { BarChart3, Users, Globe, Clock, Trophy, Gamepad as GamepadIcon, TrendingUp, MapPin, Languages, Calendar } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
