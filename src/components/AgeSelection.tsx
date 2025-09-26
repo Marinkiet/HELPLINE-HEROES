@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star, Book, Backpack } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
+import kidsbg from '../assets/kidsbg.jpg';
 
 interface AgeSelectionProps {
   onAgeSelect: (ageGroup: 'early' | 'middle' | 'teen') => void;
@@ -106,7 +107,18 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 flex items-center justify-center p-4">
+    <div 
+      className="min-h-screen flex items-center justify-center p-4 relative"
+      style={{
+        backgroundImage: `url(${kidsbg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/20"></div>
+      
       <div className="bg-white rounded-3xl p-8 max-w-4xl w-full shadow-2xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -140,24 +152,28 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         </div>
 
         {/* Age Group Cards */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16">
-          {ageGroups.map((group) => (
+        <div className="relative flex justify-center items-center min-h-[400px]">
+          {ageGroups.map((group, index) => (
             <button
               key={group.id}
               onClick={() => onAgeSelect(group.id)}
-              className="w-64 h-64 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group flex flex-col items-center justify-center"
+              className={`absolute w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group flex flex-col items-center justify-center ${
+                index === 0 ? 'top-0 left-0 md:top-8 md:left-16' :
+                index === 1 ? 'top-20 left-1/2 transform -translate-x-1/2 md:top-32 md:left-1/2 md:-translate-x-1/2' :
+                'top-40 right-0 md:top-56 md:right-16'
+              }`}
             >
               {/* Large Icon */}
               <div className="mb-4 group-hover:animate-bounce">
-                <group.icon className="w-20 h-20 text-white" />
+                <group.icon className="w-12 h-12 md:w-20 md:h-20 text-white" />
               </div>
               
               {/* Age Range */}
               <div className="text-center">
-                <span className="text-3xl font-black text-white">
+                <span className="text-2xl md:text-3xl font-black text-white">
                   {group.ageRange}
                 </span>
-                <p className="text-lg font-bold text-white/90 mt-1">
+                <p className="text-sm md:text-lg font-bold text-white/90 mt-1">
                   {group.title[selectedLanguage]}
                 </p>
               </div>
