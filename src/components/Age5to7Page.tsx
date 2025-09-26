@@ -27,7 +27,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [currentVideoGame, setCurrentVideoGame] = useState<string>('');
 
-  // Filter games for 5-7 age group (early)
+  // Filter games for 6-8 age group (early)
   const filteredGames = useMemo(() => {
     let filtered = games.filter(game => game.ageGroup === 'early');
     

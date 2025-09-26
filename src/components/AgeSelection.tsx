@@ -15,7 +15,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
   const ageGroups = [
     {
       id: 'early' as const,
-      ageRange: '5-7',
+      ageRange: '6-8',
       title: {
         en: 'Little Heroes',
         af: 'Klein Helde',
@@ -46,7 +46,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
     },
     {
       id: 'middle' as const,
-      ageRange: '8-11',
+      ageRange: '9-11',
       title: {
         en: 'Smart Explorers',
         af: 'Slim Ontdekkers',
