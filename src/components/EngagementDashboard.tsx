@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Users, Globe, Clock, Trophy, Gamepad as GamepadIcon, TrendingUp, MapPin, Languages, Calendar, Shield } from 'lucide-react';
+import { BarChart3, Users, Globe, Clock, Trophy, Gamepad as GamepadIcon, TrendingUp, MapPin, Languages, Calendar } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -258,7 +258,6 @@ export function EngagementDashboard() {
               { id: 'users', label: 'User Sessions', icon: Users },
               { id: 'games', label: 'Game Sessions', icon: GamepadIcon },
               { id: 'interactions', label: 'Interactions', icon: Clock }
-
             ].map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
@@ -403,100 +402,6 @@ export function EngagementDashboard() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Adult Report System Analytics */}
-            <div className="bg-white rounded-lg shadow p-6 mt-8">
-              <div className="flex items-center mb-4">
-                <Shield className="w-5 h-5 text-gray-600 mr-2" />
-                <h3 className="text-lg font-semibold text-gray-900">Adult Report System Usage</h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Emergency Contacts */}
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">Emergency Contacts Selected</h4>
-                  <div className="space-y-2">
-                    {['Emergency Services', 'Ambulance', 'Police', 'Childline'].map((service) => {
-                      const contactInteractions = interactions.filter(i => 
-                        i.interaction_type === 'emergency_contact_selected' && 
-                        i.interaction_data?.contact_type === service
-                      ).length;
-                      const confirmedCalls = interactions.filter(i => 
-                        i.interaction_type === 'emergency_call_confirmed' && 
-                        i.interaction_data?.contact_type === service
-                      ).length;
-                      
-                      return (
-                        <div key={service} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                          <span className="text-sm font-medium text-gray-700">{service}</span>
-                          <div className="text-sm text-gray-600">
-                            <span className="mr-2">Selected: {contactInteractions}</span>
-                            <span className="text-green-600">Called: {confirmedCalls}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                
-                {/* Reporting Methods */}
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-3">Suspicious Behavior Reports</h4>
-                  <div className="space-y-2">
-                    {['whatsapp', 'sms'].map((method) => {
-                      const methodSelections = interactions.filter(i => 
-                        i.interaction_type === 'suspicious_behavior_report_method_selected' && 
-                        i.interaction_data?.method === method
-                      ).length;
-                      const reportsInitiated = interactions.filter(i => 
-                        i.interaction_type === 'suspicious_behavior_report_initiated' && 
-                        i.interaction_data?.method === method
-                      ).length;
-                      
-                      return (
-                        <div key={method} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                          <span className="text-sm font-medium text-gray-700 capitalize">{method}</span>
-                          <div className="text-sm text-gray-600">
-                            <span className="mr-2">Selected: {methodSelections}</span>
-                            <span className="text-blue-600">Initiated: {reportsInitiated}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Verification Stats */}
-              <div className="mt-6 pt-6 border-t">
-                <h4 className="font-medium text-gray-800 mb-3">Adult Verification Statistics</h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-3 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
-                      {interactions.filter(i => i.interaction_type === 'adult_verification_otp_requested').length}
-                    </div>
-                    <div className="text-sm text-blue-800">OTP Requested</div>
-                  </div>
-                  <div className="text-center p-3 bg-green-50 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">
-                      {interactions.filter(i => i.interaction_type === 'adult_verification_successful').length}
-                    </div>
-                    <div className="text-sm text-green-800">Verified</div>
-                  </div>
-                  <div className="text-center p-3 bg-red-50 rounded-lg">
-                    <div className="text-2xl font-bold text-red-600">
-                      {interactions.filter(i => i.interaction_type === 'adult_verification_failed').length}
-                    </div>
-                    <div className="text-sm text-red-800">Failed</div>
-                  </div>
-                  <div className="text-center p-3 bg-yellow-50 rounded-lg">
-                    <div className="text-2xl font-bold text-yellow-600">
-                      {interactions.filter(i => i.interaction_type === 'adult_verification_otp_resent').length}
-                    </div>
-                    <div className="text-sm text-yellow-800">OTP Resent</div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

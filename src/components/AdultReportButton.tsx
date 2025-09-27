@@ -1,7 +1,6 @@
 import React from 'react';
 import { Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
-import { useEngagement } from '../contexts/EngagementContext';
 import { appContent } from '../data/appContent';
 
 interface AdultReportButtonProps {
@@ -10,32 +9,21 @@ interface AdultReportButtonProps {
 
 export function AdultReportButton({ onClick }: AdultReportButtonProps) {
   const { selectedLanguage } = useAudio();
-  const { trackInteraction } = useEngagement();
 
   // Get translated button text and split into lines
   const buttonText = appContent.safety.adultReportButton[selectedLanguage];
   const textLines = buttonText.split('\n');
 
-  const handleClick = () => {
-    // Track adult report button click
-    trackInteraction('adult_report_button_clicked', {
-      button_text: buttonText,
-      language: selectedLanguage,
-      source: 'main_interface'
-    });
-    onClick();
-  };
-
   return (
     <div
       className="relative flex items-center justify-center w-32 h-32 rounded-lg bg-orange-500 hover:bg-orange-600 shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-110 group"
-      onClick={handleClick}
+      onClick={onClick}
       aria-label={`${buttonText.replace(/\n/g, ' ')} - For grown-ups only`}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
-          handleClick();
+          onClick();
         }
       }}
     >
