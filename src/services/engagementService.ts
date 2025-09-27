@@ -67,7 +67,7 @@ class EngagementService {
   }
 
   // Initialize user session
-  async initializeSession(ageGroup: 'early' | 'middle' | 'teen', language: string): Promise<void> {
+  async initializeSession(ageGroup: 'early' | 'middle' | 'teen', language: string): Promise<boolean> {
     try {
       // Check if Supabase is available
       if (!supabase) {
@@ -75,7 +75,7 @@ class EngagementService {
         if (this.sessionInitializedResolver) {
           this.sessionInitializedResolver(false);
         }
-        return;
+        return false;
       }
 
       // Get user location (optional)
@@ -104,6 +104,7 @@ class EngagementService {
         if (this.sessionInitializedResolver) {
           this.sessionInitializedResolver(false);
         }
+        return false;
       } else {
         console.log('✅ User session initialized:', this.sessionId);
         // Resolve with true to indicate success
@@ -112,15 +113,15 @@ class EngagementService {
         }
         // Start screen time tracking only after successful initialization
         this.startScreenTimeTracking();
-      }
-
-      // Track session start interaction
-      if (!error) {
+        
+        // Track session start interaction
         await this.trackInteraction('session_start', {
           age_group: ageGroup,
           language: language,
           location: location
         });
+        
+        return true;
       }
     } catch (error) {
       console.error('Error in initializeSession:', error);
@@ -128,6 +129,7 @@ class EngagementService {
       if (this.sessionInitializedResolver) {
         this.sessionInitializedResolver(false);
       }
+      return false;
     }
   }
 

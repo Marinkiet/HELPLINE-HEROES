@@ -35,20 +35,26 @@ function AppContent() {
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [hasSessionBeenInitialized, setHasSessionBeenInitialized] = useState(false);
 
   // Initialize engagement tracking when age group is selected
   useEffect(() => {
-    if (selectedAgeGroup) {
-      engagementService.initializeSession(selectedAgeGroup, selectedLanguage);
+    if (selectedAgeGroup && !hasSessionBeenInitialized) {
+      engagementService.initializeSession(selectedAgeGroup, selectedLanguage)
+        .then((success) => {
+          if (success) {
+            setHasSessionBeenInitialized(true);
+          }
+        });
     }
-  }, [selectedAgeGroup, selectedLanguage]);
+  }, [selectedAgeGroup, selectedLanguage, hasSessionBeenInitialized]);
 
   // Track language changes
   useEffect(() => {
-    if (selectedAgeGroup) {
+    if (selectedAgeGroup && hasSessionBeenInitialized) {
       updateLanguage(selectedLanguage);
     }
-  }, [selectedLanguage, selectedAgeGroup, updateLanguage]);
+  }, [selectedLanguage, selectedAgeGroup, hasSessionBeenInitialized, updateLanguage]);
 
   // Filter games based on selected age group
   const filteredGames = useMemo(() => {
