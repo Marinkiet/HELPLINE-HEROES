@@ -1017,8 +1017,8 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Top Provinces */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg max-h-96 overflow-y-auto">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">All Provinces & Cities</h3>
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div className="flex items-center mb-4">
               <MapPin className="w-5 h-5 text-gray-600 mr-2" />
               <h3 className="text-lg font-semibold text-gray-900">Top Provinces</h3>
             </div>
@@ -1055,11 +1055,11 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
             <div className="space-y-4">
               {data.gameCompletionRates.slice(0, 6).map((game) => (
                 <div key={game.game_id} className="flex items-center justify-between">
-                {Object.entries(provincesData).map(([province, data], index) => (
+                  <span className="text-sm font-medium text-gray-700">
                     {game.game_name}
                   </span>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ml-4 mb-3">
-                      {Object.entries(data.cities).map(([city, count]) => (
+                  <div className="flex items-center space-x-3">
+                    <div className="w-32 bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-purple-600 h-2 rounded-full"
                         style={{ width: `${game.completion_rate}%` }}
