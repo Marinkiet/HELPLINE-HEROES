@@ -1020,7 +1020,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
           <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
             <div className="flex items-center mb-4">
               <MapPin className="w-5 h-5 text-gray-600 mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Provinces</h3>
+              <h3 className="text-lg font-semibold text-gray-900">City Distribution</h3>
             </div>
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {data.topProvinces.slice(0, 8).map((province, index) => (
