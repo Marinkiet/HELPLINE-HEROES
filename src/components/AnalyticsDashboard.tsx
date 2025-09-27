@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { Users, Globe, Clock, Trophy, TrendingUp, MapPin, Languages, Gamepad as GamepadIcon, BarChart3, PieChart, Activity, Calendar, ArrowLeft, Brain, Lightbulb } from 'lucide-react';
+import { Users, Globe, Clock, Trophy, TrendingUp, MapPin, Languages, Gamepad as GamepadIcon, BarChart3, PieChart, Activity, Calendar, ArrowLeft, Brain, Lightbulb, Database, Shield, Eye, Settings } from 'lucide-react';
 
 // Initialize Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -36,6 +36,7 @@ export function AnalyticsDashboard() {
   const [showAISuggestions, setShowAISuggestions] = useState(false);
   const [aiSuggestions, setAiSuggestions] = useState<string>('');
   const [loadingAI, setLoadingAI] = useState(false);
+  const [showTrackingInfo, setShowTrackingInfo] = useState(false);
 
   useEffect(() => {
     fetchAnalyticsData();
