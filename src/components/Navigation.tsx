@@ -6,9 +6,10 @@ import { LANGUAGES } from '../types/audio';
 interface NavigationProps {
   onBackToAgeSelection?: () => void;
   onShowDashboard?: () => void;
+  onHelpServicesClick?: () => void;
 }
 
-export function Navigation({ onBackToAgeSelection, onShowDashboard }: NavigationProps) {
+export function Navigation({ onBackToAgeSelection, onShowDashboard, onHelpServicesClick }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
