@@ -439,6 +439,11 @@ export const appContent = {
         nr: "Sawubona Zingane! 👋",
         nso: "Thobela Bana! 👋"
       }
+    },
+    helplineNumbers: {
+      childline: '116',
+      emergency: '911',
+      textLine: 'Text HOME to 741741'
     }
   }
 };

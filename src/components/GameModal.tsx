@@ -4,7 +4,6 @@ import { useAudio } from '../contexts/AudioContext';
 import { useEngagement } from '../contexts/EngagementContext';
 import { appContent } from '../data/appContent';
 import { Game } from '../data/games';
-import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
 import { BraveVoiceGameContainer } from './BraveVoiceGame/BraveVoiceGameContainer';
@@ -33,22 +32,23 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
 
   // Get background image based on game ID to match card backgrounds
   const getModalImage = () => {
-    switch (game.id) {
-      case '1': // Safe Touch Detective
-        return hug;
-      case '2': // Trusted Heroes Circle
-        return frontl;
-      case '3': // Brave Voice
-        return shout;
-      default:
-        return game.image; // Use original image for other games
-    }
+    return game.image_url
+    // switch (game.id) {
+    //   case '1': // Safe Touch Detective
+    //     return hug;
+    //   case '2': // Trusted Heroes Circle
+    //     return frontl;
+    //   case '3': // Brave Voice
+    //     return shout;
+    //   default:
+    //     return game.image_url; // Use original image for other games
+    // }
   };
 
   const modalImage = getModalImage();
 
   // Handle Safe Touch Detective game specifically
-  if (showSafeTouchGame && game.id === '1') {
+  if (showSafeTouchGame && game.game_identifier === '1') {
     return (
       <SafeTouchGameContainer 
         onClose={() => {
@@ -60,7 +60,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   }
 
   // Handle Trusted Heroes Circle game specifically
-  if (showTrustedHeroesGame && game.id === '2') {
+  if (showTrustedHeroesGame && game.game_identifier === '2') {
     return (
       <TrustedHeroesGameContainer 
         onClose={() => {
@@ -72,7 +72,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   }
 
   // Handle Brave Voice game specifically
-  if (showBraveVoiceGame && game.id === '3') {
+  if (showBraveVoiceGame && game.game_identifier === '3') {
     return (
       <BraveVoiceGameContainer 
         onClose={() => {
@@ -84,13 +84,13 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   }
 
   const handleStartLearning = () => {
-    if (game.id === '1') {
+    if (game.game_identifier === '1') {
       setShowSafeTouchGame(true);
       trackGameStart('1', game.title[selectedLanguage]);
-    } else if (game.id === '2') {
+    } else if (game.game_identifier === '2') {
       setShowTrustedHeroesGame(true);
       trackGameStart('2', game.title[selectedLanguage]);
-    } else if (game.id === '3') {
+    } else if (game.game_identifier === '3') {
       setShowBraveVoiceGame(true);
       trackGameStart('3', game.title[selectedLanguage]);
     } else {
@@ -135,7 +135,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
             <h4 className="font-bold text-blue-800">{appContent.safety.rememberSafe[selectedLanguage]}</h4>
           </div>
           <p className="text-blue-700 text-sm">
-            {appContent.safety.helpMessage[selectedLanguage].replace('116', helplineNumbers.childline).replace('741741', helplineNumbers.textLine.split(' ').pop() || '741741')}
+            {appContent.safety.helpMessage[selectedLanguage].replace('116', appContent.safety.helplineNumbers.childline).replace('741741', appContent.safety.helplineNumbers.textLine.split(' ').pop() || '741741')}
           </p>
         </div>
         

@@ -6,6 +6,7 @@ export interface Game {
   age_group_id: string;
   topic_id: string;
   sections: Section[];
+  game_identifier: string;
 }
 
 export interface Section {
