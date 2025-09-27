@@ -145,32 +145,6 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
       trackGameEnd(pointsEarned, true);
     }
   };
-      'safe_touch_detective',
-      `scenario_${currentScenario + 1}`,
-      currentScenarioData[selectedLanguage],
-      answer,
-      currentScenarioData.correctAnswer,
-      isCorrect,
-      Math.floor((Date.now() - startTime) / 1000)
-    );
-  };
-
-  const handleNext = () => {
-    if (currentScenario < scenarios.length - 1) {
-      setCurrentScenario(currentScenario + 1);
-      setShowFeedback(false);
-    } else {
-      setGameComplete(true);
-      // Track game completion
-      const finalScore = score;
-      const pointsEarned = finalScore * 10; // 10 points per correct answer
-      trackGameEnd(pointsEarned, true);
-    }
-  };
-
-  const handleReplay = () => {
-    setShowFeedback(false);
-  };
 
   const handleBack = () => {
     if (currentScenario > 0) {
