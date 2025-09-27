@@ -23,6 +23,8 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameComplete, setGameComplete] = useState(false);
+  const [questionRetries, setQuestionRetries] = useState<Record<number, number>>({});
+  const [firstAttempts, setFirstAttempts] = useState<Record<number, boolean>>({});
 
   const scenarios = gameContent.scenarios;
   const currentScenarioData = scenarios[currentScenario];
@@ -76,15 +78,73 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
   const handleAnswer = (answer: 'good' | 'bad') => {
     const startTime = Date.now();
     const isCorrect = answer === currentScenarioData.correctAnswer;
+    const retryCount = questionRetries[currentScenario] || 0;
+    const isFirstAttempt = firstAttempts[currentScenario] !== false; // Default to true if not set
+    
     setLastAnswerCorrect(isCorrect);
     setShowFeedback(true);
     
-    if (isCorrect) {
-      setScore(score + 1);
+    // Only award points on first correct attempt
+    if (isCorrect && isFirstAttempt) {
+      setScore(score + 1); // 1 point per correct answer on first attempt
+    }
+
+    // Track if this is not the first attempt for this question
+    if (!isFirstAttempt) {
+      setQuestionRetries(prev => ({
+        ...prev,
+        [currentScenario]: retryCount + 1
+      }));
     }
 
     // Track detailed question response
-    trackQuestionResponse(
+    const trackResponse = async () => {
+      if (typeof trackQuestionResponse === 'function') {
+        await trackQuestionResponse(
+          'safe_touch_detective',
+          `scenario_${currentScenario + 1}`,
+          currentScenarioData[selectedLanguage],
+          answer,
+          currentScenarioData.correctAnswer,
+          isCorrect,
+          Math.floor((Date.now() - startTime) / 1000),
+          retryCount,
+          isFirstAttempt
+        );
+      }
+    };
+    
+    trackResponse();
+  };
+
+  const handleReplay = () => {
+    // Mark this question as having been attempted before
+    setFirstAttempts(prev => ({
+      ...prev,
+      [currentScenario]: false
+    }));
+    
+    // Increment retry count
+    setQuestionRetries(prev => ({
+      ...prev,
+      [currentScenario]: (prev[currentScenario] || 0) + 1
+    }));
+    
+    setShowFeedback(false);
+  };
+
+  const handleNext = () => {
+    if (currentScenario < scenarios.length - 1) {
+      setCurrentScenario(currentScenario + 1);
+      setShowFeedback(false);
+    } else {
+      setGameComplete(true);
+      // Track game completion - only award points for first-attempt correct answers
+      const finalScore = score;
+      const pointsEarned = finalScore; // 1 point per correct first attempt
+      trackGameEnd(pointsEarned, true);
+    }
+  };
       'safe_touch_detective',
       `scenario_${currentScenario + 1}`,
       currentScenarioData[selectedLanguage],
