@@ -20,7 +20,7 @@ export function useAppContent(contentKey: string): string {
 }
 
 // Hook for getting game content
-export function useGameContent(gameId: string, contentKey: string): string {
+function useGameContent(gameId: string, contentKey: string): string {
   const { selectedLanguage } = useAudio();
   const [content, setContent] = useState<string>(contentKey);
 
@@ -37,7 +37,7 @@ export function useGameContent(gameId: string, contentKey: string): string {
 }
 
 // Hook for getting all app content (useful for components that need multiple content items)
-export function useAllAppContent(): Record<string, string> {
+function useAllAppContent(): Record<string, string> {
   const { selectedLanguage } = useAudio();
   const [content, setContent] = useState<Record<string, string>>({});
 
@@ -54,7 +54,7 @@ export function useAllAppContent(): Record<string, string> {
 }
 
 // Hook for getting all game content
-export function useAllGameContent(gameId: string): Record<string, string> {
+function useAllGameContent(gameId: string): Record<string, string> {
   const { selectedLanguage } = useAudio();
   const [content, setContent] = useState<Record<string, string>>({});
 
