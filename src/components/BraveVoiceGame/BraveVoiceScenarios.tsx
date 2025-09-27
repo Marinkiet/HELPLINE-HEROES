@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, RotateCcw, Trophy, Volume2 } from 'lucide-react';
+import { MessageCircle, RotateCcw, Trophy, Volume2, ArrowLeft } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
@@ -109,6 +109,13 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
     setShowFeedback(false);
   };
 
+  const handleBack = () => {
+    if (currentScenario > 0) {
+      setCurrentScenario(currentScenario - 1);
+      setShowFeedback(false);
+    }
+  };
+
   if (gameComplete) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 flex items-center justify-center p-4">
@@ -142,6 +149,19 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-indigo-500 to-blue-500 p-4">
       <div className="max-w-4xl mx-auto">
+        {/* Back Button */}
+        {currentScenario > 0 && (
+          <div className="mb-4">
+            <button
+              onClick={handleBack}
+              className="bg-white/20 hover:bg-white/30 text-white font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
+              aria-label="Go back to previous question"
+            >
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex justify-center items-center mb-6">
           <div className="flex items-center space-x-4">
