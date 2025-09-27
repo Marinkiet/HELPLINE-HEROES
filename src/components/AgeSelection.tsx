@@ -156,7 +156,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
 
         {/* Age Group Cards */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 py-8">
-          {ageGroups.slice(1).map((group) => (
+          {ageGroups.map((group) => (
             <button
               key={group.id}
               onClick={() => onAgeSelect(group.id)}

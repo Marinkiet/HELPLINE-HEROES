@@ -97,7 +97,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                 <div className="relative">
                   {currentBodyPart === 'upperBody' ? (
                     <img 
-                      src="../../assets/upper.gif" 
+                      src="/src/assets/upper.gif" 
                       alt="Upper body safety diagram"
                       className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
                       onMouseEnter={() => handleBodyPartHover('chest')}
@@ -105,7 +105,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                     />
                   ) : (
                     <img 
-                      src="../../assets/lower.gif" 
+                      src="/src/assets/lower.gif" 
                       alt="Lower body safety diagram"
                       className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
                       onMouseEnter={() => handleBodyPartHover('private')}
