@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Shield, X, AlertTriangle } from 'lucide-react';
+import { Phone, Shield, X, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { elevenLabsService } from '../services/elevenLabsService';
 import { appContent } from '../data/appContent';
@@ -89,6 +89,17 @@ export function ReportBadTouchButton() {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl transform animate-bounce-in">
+            {/* Back Button */}
+            <div className="absolute top-4 left-4">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-white/20 hover:bg-white/30 text-gray-600 hover:text-gray-800 font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
+                aria-label="Go back"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+            </div>
+
             {/* Close button */}
             <div className="flex justify-end mb-2">
               <button
