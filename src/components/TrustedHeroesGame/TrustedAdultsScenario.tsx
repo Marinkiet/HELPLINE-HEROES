@@ -142,32 +142,6 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
       trackGameEnd(pointsEarned, true);
     }
   };
-      'trusted_heroes_circle',
-      `scenario_${currentScenario + 1}`,
-      currentScenarioData[selectedLanguage],
-      answer,
-      currentScenarioData.correctAnswer,
-      isCorrect,
-      Math.floor((Date.now() - startTime) / 1000)
-    );
-  };
-
-  const handleNext = () => {
-    if (currentScenario < scenarios.length - 1) {
-      setCurrentScenario(currentScenario + 1);
-      setShowFeedback(false);
-    } else {
-      setGameComplete(true);
-      // Track game completion
-      const finalScore = score;
-      const pointsEarned = finalScore * 15; // 15 points per correct answer
-      trackGameEnd(pointsEarned, true);
-    }
-  };
-
-  const handleReplay = () => {
-    setShowFeedback(false);
-  };
 
   const handleBack = () => {
     if (currentScenario > 0) {
