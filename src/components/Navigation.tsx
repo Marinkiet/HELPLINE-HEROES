@@ -1,14 +1,15 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe, ArrowLeft, BarChart3 } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe, ArrowLeft, BarChart3, Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
 interface NavigationProps {
   onBackToAgeSelection?: () => void;
   onShowDashboard?: () => void;
+  onReportSuspiciousBehavior?: () => void;
 }
 
-export function Navigation({ onBackToAgeSelection, onShowDashboard }: NavigationProps) {
+export function Navigation({ onBackToAgeSelection, onShowDashboard, onReportSuspiciousBehavior }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -45,6 +46,18 @@ export function Navigation({ onBackToAgeSelection, onShowDashboard }: Navigation
               >
                 <BarChart3 className="w-4 h-4" />
                 <span>Dashboard</span>
+              </button>
+            )}
+
+            {/* Report Suspicious Behavior Button */}
+            {onReportSuspiciousBehavior && (
+              <button
+                onClick={onReportSuspiciousBehavior}
+                className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm"
+                aria-label="Report suspicious behavior"
+              >
+                <Users className="w-4 h-4" />
+                <span>Report Suspicious Behavior</span>
               </button>
             )}
 
@@ -103,6 +116,18 @@ export function Navigation({ onBackToAgeSelection, onShowDashboard }: Navigation
               >
                 <BarChart3 className="w-4 h-4" />
                 <span>Dashboard</span>
+              </button>
+            )}
+
+            {/* Mobile Report Suspicious Behavior Button */}
+            {onReportSuspiciousBehavior && (
+              <button
+                onClick={onReportSuspiciousBehavior}
+                className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm"
+                aria-label="Report suspicious behavior"
+              >
+                <Users className="w-4 h-4" />
+                <span>Report</span>
               </button>
             )}
 
