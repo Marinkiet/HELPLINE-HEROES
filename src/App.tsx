@@ -223,10 +223,6 @@ function AppContent() {
               </div>
               <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
             <div className="mx-10">
-              <FeaturedSection 
-                onGameClick={handleGameClickById} 
-                onCardGamesClick={handleCardGamesClick}
-              />
             </div>
           </div>
           

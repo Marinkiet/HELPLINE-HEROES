@@ -1,7 +1,6 @@
 import React from 'react';
 import { Shield, Users, Phone, BookOpen } from 'lucide-react';
-import { useAudio } from '../contexts/AudioContext';
-import { appContent } from '../data/appContent';
+import { useAppContent } from '../hooks/useContent';
 
 interface Category {
   id: string;
@@ -17,12 +16,15 @@ interface CategoryCardsProps {
 }
 
 export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
-  const { selectedLanguage } = useAudio();
+  const recognitionTitle = useAppContent('categories.recognition');
+  const responseTitle = useAppContent('categories.response');
+  const reportingTitle = useAppContent('categories.reporting');
+  const supportTitle = useAppContent('categories.support');
   
   const categories: Category[] = [
     {
       id: 'recognition',
-      title: appContent.categories.recognition[selectedLanguage],
+      title: recognitionTitle,
       icon: <Shield className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-green-500 to-green-600',
@@ -30,7 +32,7 @@ export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
     },
     {
       id: 'response',
-      title: appContent.categories.response[selectedLanguage],
+      title: responseTitle,
       icon: <Users className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600',
@@ -38,7 +40,7 @@ export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
     },
     {
       id: 'reporting',
-      title: appContent.categories.reporting[selectedLanguage],
+      title: reportingTitle,
       icon: <Phone className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600',
@@ -46,7 +48,7 @@ export function CategoryCards({ onCategoryClick }: CategoryCardsProps) {
     },
     {
       id: 'support',
-      title: appContent.categories.support[selectedLanguage],
+      title: supportTitle,
       icon: <BookOpen className="w-8 h-8" />,
       color: 'text-white',
       bgColor: 'bg-gradient-to-br from-pink-500 to-pink-600',

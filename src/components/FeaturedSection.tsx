@@ -14,6 +14,7 @@ interface FeaturedSectionProps {
 
 export function FeaturedSection({ onGameClick, onCardGamesClick }: FeaturedSectionProps) {
   const { selectedLanguage } = useAudio();
+  const featuredTitle = appContent.featured.title[selectedLanguage];
   
   // Get the first 3 games (which should always be the main games regardless of age filtering)
   const mainGames = games.filter(game => ['1', '2', '3'].includes(game.id));
@@ -32,8 +33,8 @@ export function FeaturedSection({ onGameClick, onCardGamesClick }: FeaturedSecti
     
     return {
       id: game.id,
-      title: game.title[selectedLanguage],
-      subtitle: game.description[selectedLanguage],
+      title: typeof game.title === 'object' ? game.title.en : game.title, // Fallback for now
+      subtitle: typeof game.description === 'object' ? game.description.en : game.description, // Fallback for now
       icon: icons[index],
       image: images[index],
       onClick: () => onGameClick(game.id)
@@ -50,7 +51,7 @@ export function FeaturedSection({ onGameClick, onCardGamesClick }: FeaturedSecti
     <div className=" rounded-3xl p-8 my-10 shadow-2xl ">
       <div className="flex items-center mb-6">
         <Star className="w-8 h-8 text-yellow-300 mr-3" />
-        <h2 className="text-3xl font-black text-white">{appContent.featured.title[selectedLanguage]}</h2>
+        <h2 className="text-3xl font-black text-white">{featuredTitle}</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -158,10 +158,11 @@ class EngagementService {
         .eq('session_id', this.sessionId);
 
       if (error) {
-        console.error('Error updating session:', error);
+        console.warn('⚠️ Database error updating session (continuing normally):', error);
       }
     } catch (error) {
-      console.error('Error in updateSession:', error);
+      console.warn('⚠️ Network error updating session (continuing normally):', error);
+      // Don't throw the error - just log it and continue
     }
   }
 
