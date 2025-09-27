@@ -37,6 +37,8 @@ export function AnalyticsDashboard() {
   const [aiSuggestions, setAiSuggestions] = useState<string>('');
   const [loadingAI, setLoadingAI] = useState(false);
   const [showTrackingInfo, setShowTrackingInfo] = useState(false);
+  const [trackingData, setTrackingData] = useState<any>(null);
+  const [loadingTrackingData, setLoadingTrackingData] = useState(false);
 
   useEffect(() => {
     fetchAnalyticsData();
@@ -349,6 +351,71 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
     }
   };
 
+  const fetchTrackingData = async () => {
+    try {
+      setLoadingTrackingData(true);
+      
+      const daysAgo = new Date();
+      daysAgo.setDate(daysAgo.getDate() - parseInt(dateRange));
+
+      // Fetch recent user sessions
+      const { data: recentSessions, error: sessionsError } = await supabase
+        .from('user_sessions')
+        .select('*')
+        .gte('created_at', daysAgo.toISOString())
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (sessionsError) throw sessionsError;
+
+      // Fetch recent interactions
+      const { data: recentInteractions, error: interactionsError } = await supabase
+        .from('user_interactions')
+        .select('*')
+        .gte('timestamp', daysAgo.toISOString())
+        .order('timestamp', { ascending: false })
+        .limit(20);
+
+      if (interactionsError) throw interactionsError;
+
+      // Fetch recent game sessions
+      const { data: recentGameSessions, error: gameSessionsError } = await supabase
+        .from('game_sessions')
+        .select('*')
+        .gte('created_at', daysAgo.toISOString())
+        .order('created_at', { ascending: false })
+        .limit(15);
+
+      if (gameSessionsError) throw gameSessionsError;
+
+      // Fetch recent question responses
+      const { data: recentQuestions, error: questionsError } = await supabase
+        .from('question_responses')
+        .select('*')
+        .gte('created_at', daysAgo.toISOString())
+        .order('created_at', { ascending: false })
+        .limit(15);
+
+      if (questionsError) throw questionsError;
+
+      setTrackingData({
+        recentSessions: recentSessions || [],
+        recentInteractions: recentInteractions || [],
+        recentGameSessions: recentGameSessions || [],
+        recentQuestions: recentQuestions || []
+      });
+    } catch (error) {
+      console.error('Error fetching tracking data:', error);
+    } finally {
+      setLoadingTrackingData(false);
+    }
+  };
+
+  const handleShowTrackingInfo = () => {
+    setShowTrackingInfo(true);
+    fetchTrackingData();
+  };
+
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -451,7 +518,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                 <span>{loadingAI ? 'Analyzing...' : 'Q Suggestions'}</span>
               </button>
               <button
-                onClick={() => setShowTrackingInfo(true)}
+                onClick={handleShowTrackingInfo}
                 className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
               >
                 <Database className="w-4 h-4" />
