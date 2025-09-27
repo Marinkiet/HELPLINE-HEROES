@@ -14,7 +14,7 @@ interface AnalyticsData {
   totalGamesCompleted: number;
   ageGroupDistribution: { age_group: string; count: number }[];
   languageDistribution: { language: string; count: number }[];
-  locationDistribution: { location_country: string; count: number }[];
+  provinceDistribution: Record<string, number>;
   dailyActivity: { date: string; users: number; screen_time: number }[];
   gameCompletionRates: { game_id: string; game_name: string; completion_rate: number }[];
   averageSessionTime: number;
