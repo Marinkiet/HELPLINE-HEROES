@@ -89,7 +89,7 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
           className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-black py-4 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-3 mx-auto text-lg"
         >
           <ExternalLink className="w-6 h-6" />
-          <span>Play 30 Seconds Card Games</span>
+          <span>Card Games</span>
         </button>
         <p className="text-white/80 text-sm mt-2 font-semibold">
           Fun card games with similar educational content - Opens in new tab
