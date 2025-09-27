@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { TrustedHeroesLanding } from './TrustedHeroesLanding';
 import { TrustedAdultsExploration } from './TrustedAdultsExploration';
 import { TrustedAdultsScenario } from './TrustedAdultsScenario';
+import { Game } from '../../data/games';
 
 type GameStage = 'landing' | 'exploration' | 'scenarios' | 'complete';
 
 interface TrustedHeroesGameContainerProps {
   onClose: () => void;
+  game: Game;
 }
 
-export function TrustedHeroesGameContainer({ onClose }: TrustedHeroesGameContainerProps) {
+export function TrustedHeroesGameContainer({ onClose, game }: TrustedHeroesGameContainerProps) {
   const [currentStage, setCurrentStage] = useState<GameStage>('landing');
 
   const handleStageComplete = (nextStage: GameStage) => {
@@ -17,11 +19,16 @@ export function TrustedHeroesGameContainer({ onClose }: TrustedHeroesGameContain
   };
 
   const renderCurrentStage = () => {
+    const welcomeSection = game.sections.find(s => s.section_type === 'welcome');
+    const explorationSection = game.sections.find(s => s.section_type === 'exploration');
+    const scenariosSection = game.sections.find(s => s.section_type === 'scenarios');
+
     switch (currentStage) {
       case 'landing':
         return (
           <TrustedHeroesLanding 
             onStartGame={() => handleStageComplete('exploration')}
+            section={welcomeSection}
           />
         );
       
@@ -29,6 +36,7 @@ export function TrustedHeroesGameContainer({ onClose }: TrustedHeroesGameContain
         return (
           <TrustedAdultsExploration
             onComplete={() => handleStageComplete('scenarios')}
+            section={explorationSection}
           />
         );
       
@@ -36,6 +44,7 @@ export function TrustedHeroesGameContainer({ onClose }: TrustedHeroesGameContain
         return (
           <TrustedAdultsScenario
             onComplete={onClose}
+            section={scenariosSection}
           />
         );
       

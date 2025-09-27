@@ -7,13 +7,13 @@ import hug from '../assets/hug.jpg';
 import frontl from '../assets/frontl.png';
 import shout from '../assets/shout.jpg';
 
-interface GameCardProps extends Omit<Game, 'ageGroup' | 'category'> {
-  image: string;
-  featured?: boolean;
+interface GameCardProps {
+  game: Game;
   onClick: () => void;
 }
 
-export function GameCard({ id, title, description, image, featured = false, onClick }: GameCardProps) {
+export function GameCard({ game, onClick }: GameCardProps) {
+  const { title, description, image_url, featured, game_identifier } = game;
   const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [isPlayingNarration, setIsPlayingNarration] = React.useState(false);
 
@@ -22,20 +22,21 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const translatedDescription = typeof description === 'object' ? description[selectedLanguage] : description;
 
   // Check if game has content available
-  const hasContent = ['1', '2', '3'].includes(id); // Safe Touch Detective, Trusted Heroes Circle, Brave Voice
+  const hasContent = ['1', '2', '3'].includes(game_identifier); // Safe Touch Detective, Trusted Heroes Circle, Brave Voice
 
   // Get background image based on game ID
   const getBackgroundImage = () => {
-    switch (id) {
-      case '1': // Safe Touch Detective
-        return hug;
-      case '2': // Trusted Heroes Circle
-        return frontl;
-      case '3': // Brave Voice
-        return shout;
-      default:
-        return null; // No image for other games, use background color instead
-    }
+    return image_url
+    // switch (game_identifier) {
+    //   case '1': // Safe Touch Detective
+    //     return hug;
+    //   case '2': // Trusted Heroes Circle
+    //     return frontl;
+    //   case '3': // Brave Voice
+    //     return shout;
+    //   default:
+    //     return null; // No image for other games, use background color instead
+    // }
   };
 
   // Get background color for games without content
@@ -53,7 +54,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
     ];
     
     // Use game ID to consistently assign colors
-    const colorIndex = parseInt(id) % colors.length;
+    const colorIndex = parseInt(game_identifier) % colors.length;
     return colors[colorIndex];
   };
 
@@ -130,9 +131,9 @@ export function GameCard({ id, title, description, image, featured = false, onCl
           <div className="mb-4 flex justify-center group-hover:animate-bounce">
             {hasContent && (
               <>
-                {id === '1' && <Shield className="w-16 h-16 text-white" />}
-                {id === '2' && <Heart className="w-16 h-16 text-white" />}
-                {id === '3' && <Users className="w-16 h-16 text-white" />}
+                {game_identifier === '1' && <Shield className="w-16 h-16 text-white" />}
+                {game_identifier === '2' && <Heart className="w-16 h-16 text-white" />}
+                {game_identifier === '3' && <Users className="w-16 h-16 text-white" />}
               </>
             )}
           </div>

@@ -2,19 +2,21 @@ import React from 'react';
 import { Star, Shield, Heart, Users } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { appContent } from '../data/appContent';
-import { games } from '../data/games';
 import shout from '../assets/shout.jpg';
 import hug from '../assets/hug.jpg';
 import frontl from '../assets/frontl.png';
+import { Game } from '../data/games';
+
 interface FeaturedSectionProps {
   onGameClick: (gameId: string) => void;
+  games: Game[];
 }
 
-export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
+export function FeaturedSection({ onGameClick, games }: FeaturedSectionProps) {
   const { selectedLanguage } = useAudio();
   
   // Get the first 3 games (which should always be the main games regardless of age filtering)
-  const mainGames = games.filter(game => ['1', '2', '3'].includes(game.id));
+  const mainGames = games.filter(game => ['1', '2', '3'].includes(game.game_identifier));
   const featuredGames = mainGames.map((game, index) => {
     const icons = [
       <Shield className="w-16 h-16 text-white" />,

@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Play } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
-import { trustedHeroesContent } from '../../data/trustedHeroesContent';
+
 import { elevenLabsService } from '../../services/elevenLabsService';
+
+import { Section } from '../../data/games';
 
 interface TrustedHeroesLandingProps {
   onStartGame: () => void;
+  section: Section;
 }
 
-export function TrustedHeroesLanding({ onStartGame }: TrustedHeroesLandingProps) {
+export function TrustedHeroesLanding({ onStartGame, section }: TrustedHeroesLandingProps) {
   const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,6 +21,8 @@ export function TrustedHeroesLanding({ onStartGame }: TrustedHeroesLandingProps)
   const [heartClickAudio, setHeartClickAudio] = useState<string>('');
   const [playingHeartSound, setPlayingHeartSound] = useState(false);
 
+  const welcomeText = section.questions[0].text[selectedLanguage];
+
   useEffect(() => {
     // Generate audio for welcome message
     const generateAudio = async () => {
@@ -25,7 +30,7 @@ export function TrustedHeroesLanding({ onStartGame }: TrustedHeroesLandingProps)
         console.log('Generating welcome audio for Trusted Heroes:', selectedLanguage);
         const url = await elevenLabsService.generateSpeech({
           language: selectedLanguage,
-          text: trustedHeroesContent.welcome[selectedLanguage],
+          text: welcomeText,
           voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice - friendly narrator
         });
         console.log('Trusted Heroes audio URL generated:', url ? 'Success' : 'Failed');
@@ -100,7 +105,7 @@ export function TrustedHeroesLanding({ onStartGame }: TrustedHeroesLandingProps)
           </h1>
           <div className="bg-pink-100 border-l-4 border-pink-400 p-4 rounded-r-xl">
             <p className="text-lg text-gray-700 leading-relaxed">
-              {trustedHeroesContent.welcome[selectedLanguage]}
+              {welcomeText}
             </p>
           </div>
         </div>

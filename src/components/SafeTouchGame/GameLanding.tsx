@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Star, Play } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
-import { gameContent } from '../../data/gameContent';
+import { Section } from '../../data/games';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface GameLandingProps {
   onStartGame: () => void;
+  section: Section;
 }
 
-export function GameLanding({ onStartGame }: GameLandingProps) {
+export function GameLanding({ onStartGame, section }: GameLandingProps) {
   const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,6 +19,8 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
   const [starClickAudio, setStarClickAudio] = useState<string>('');
   const [playingStarSound, setPlayingStarSound] = useState(false);
 
+  const welcomeText = section.questions[0].text[selectedLanguage];
+
   useEffect(() => {
     // Generate audio for welcome message
     const generateAudio = async () => {
@@ -25,7 +28,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
         console.log('Generating welcome audio for language:', selectedLanguage);
         const url = await elevenLabsService.generateSpeech({
           language: selectedLanguage,
-          text: gameContent.welcome[selectedLanguage],
+          text: welcomeText,
           voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice - friendly narrator
         });
         console.log('Audio URL generated:', url ? 'Success' : 'Failed');
@@ -36,7 +39,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
     };
     
     generateAudio();
-  }, [selectedLanguage]);
+  }, [selectedLanguage, welcomeText]);
 
   useEffect(() => {
     // Pre-generate star click sound effect
@@ -99,7 +102,7 @@ export function GameLanding({ onStartGame }: GameLandingProps) {
           </h1>
           <div className="bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-xl">
             <p className="text-lg text-gray-700 leading-relaxed">
-              {gameContent.welcome[selectedLanguage]}
+              {welcomeText}
             </p>
           </div>
         </div>

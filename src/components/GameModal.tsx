@@ -55,6 +55,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
           setShowSafeTouchGame(false);
           onClose();
         }}
+        game={game}
       />
     );
   }
@@ -67,6 +68,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
           setShowTrustedHeroesGame(false);
           onClose();
         }}
+        game={game}
       />
     );
   }
@@ -79,6 +81,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
           setShowBraveVoiceGame(false);
           onClose();
         }}
+        game={game}
       />
     );
   }
@@ -86,13 +89,13 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const handleStartLearning = () => {
     if (game.game_identifier === '1') {
       setShowSafeTouchGame(true);
-      trackGameStart('1', game.title[selectedLanguage]);
+      trackGameStart(game.id, game.title[selectedLanguage]);
     } else if (game.game_identifier === '2') {
       setShowTrustedHeroesGame(true);
-      trackGameStart('2', game.title[selectedLanguage]);
+      trackGameStart(game.id, game.title[selectedLanguage]);
     } else if (game.game_identifier === '3') {
       setShowBraveVoiceGame(true);
-      trackGameStart('3', game.title[selectedLanguage]);
+      trackGameStart(game.id, game.title[selectedLanguage]);
     } else {
       // For other games, show a placeholder
       alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');

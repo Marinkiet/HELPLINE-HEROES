@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Sun, ArrowRight, Check } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
-import { gameContent } from '../../data/gameContent';
+import { Section } from '../../data/games';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BodyPartsExplorationProps {
   onComplete: () => void;
+  section: Section;
 }
 
-export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) {
+export function BodyPartsExploration({ onComplete, section }: BodyPartsExplorationProps) {
   const { selectedLanguage, isNarrationEnabled } = useAudio();
-  const [currentBodyPart, setCurrentBodyPart] = useState<'upperBody' | 'lowerBody'>('upperBody');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showTrustedAdults, setShowTrustedAdults] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [hoveredArea, setHoveredArea] = useState<string>('');
+
+  const questions = section.questions;
+  const currentQuestion = questions[currentQuestionIndex];
 
   useEffect(() => {
     if (showTrustedAdults) {
@@ -23,13 +27,13 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
     } else if (hoveredArea) {
       generateBodyPartAudio();
     }
-  }, [selectedLanguage, currentBodyPart, showTrustedAdults, hoveredArea]);
+  }, [selectedLanguage, currentQuestion, showTrustedAdults, hoveredArea]);
 
   const generateBodyPartAudio = async () => {
     if (!hoveredArea) return;
     
     try {
-      const text = gameContent.bodyParts[currentBodyPart][selectedLanguage];
+      const text = currentQuestion.text[selectedLanguage];
       console.log('Generating body part audio:', text.substring(0, 50) + '...');
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
@@ -44,7 +48,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
 
   const generateTrustedAdultsAudio = async () => {
     try {
-      const text = gameContent.trustedAdults[selectedLanguage];
+      const text = questions.find(q => q.type === 'trusted_adults').text[selectedLanguage];
       console.log('Generating trusted adults audio:', text.substring(0, 50) + '...');
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
@@ -66,8 +70,8 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
   };
 
   const handleNext = () => {
-    if (currentBodyPart === 'upperBody') {
-      setCurrentBodyPart('lowerBody');
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       setShowTrustedAdults(false);
       setHoveredArea('');
     } else {
@@ -89,29 +93,19 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
           {/* Body Diagrams */}
           <div className="bg-white rounded-3xl p-8 shadow-2xl">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-              {currentBodyPart === 'upperBody' ? 'Upper Body' : 'Lower Body'}
+              {currentQuestion.text[selectedLanguage]}
             </h2>
             
             <div className="flex justify-center">
               <div className="text-center">
                 <div className="relative">
-                  {currentBodyPart === 'upperBody' ? (
-                    <img 
-                      src="/src/assets/upper.gif" 
-                      alt="Upper body safety diagram"
-                      className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
-                      onMouseEnter={() => handleBodyPartHover('chest')}
-                      onMouseLeave={() => setHoveredArea('')}
-                    />
-                  ) : (
-                    <img 
-                      src="/src/assets/lower.gif" 
-                      alt="Lower body safety diagram"
-                      className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
-                      onMouseEnter={() => handleBodyPartHover('private')}
-                      onMouseLeave={() => setHoveredArea('')}
-                    />
-                  )}
+                  <img 
+                    src={currentQuestion.options[0]['image_url']}
+                    alt={currentQuestion.text[selectedLanguage]}
+                    className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
+                    onMouseEnter={() => handleBodyPartHover('chest')}
+                    onMouseLeave={() => setHoveredArea('')}
+                  />
                 </div>
               </div>
             </div>
@@ -176,7 +170,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
           <div className="bg-white rounded-3xl p-8 shadow-2xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800">
-                {showTrustedAdults}
+                {showTrustedAdults ? 'Trusted Adults' : hoveredArea ? currentQuestion.text[selectedLanguage] : ''}
               </h2>
               <AudioPlayer
                 audioUrl={audioUrl}
@@ -189,9 +183,9 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
             <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl mb-6">
               <p className="text-lg text-gray-700 leading-relaxed">
                 {showTrustedAdults 
-                  ? gameContent.trustedAdults[selectedLanguage]
+                  ? questions.find(q => q.type === 'trusted_adults').text[selectedLanguage]
                   : hoveredArea 
-                    ? gameContent.bodyParts[currentBodyPart][selectedLanguage]
+                    ? currentQuestion.text[selectedLanguage]
                     : ""
                 }
               </p>
@@ -226,7 +220,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                 onClick={handleNext}
                 className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center space-x-2"
               >
-                {currentBodyPart === 'upperBody' ? (
+                {currentQuestionIndex < questions.length - 1 ? (
                   <>
                     <span>Next Body Part</span>
                     <ArrowRight className="w-5 h-5" />

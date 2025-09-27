@@ -3,14 +3,15 @@ import { MessageCircle, RotateCcw, Trophy, Volume2 } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
-import { braveVoiceContent } from '../../data/braveVoiceContent';
+import { Section } from '../../data/games';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BraveVoiceScenariosProps {
   onComplete: () => void;
+  section: Section;
 }
 
-export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
+export function BraveVoiceScenarios({ onComplete, section }: BraveVoiceScenariosProps) {
   const { selectedLanguage, isNarrationEnabled } = useAudio();
   const { trackGameEnd, trackInteraction } = useEngagement();
   const [currentScenario, setCurrentScenario] = useState(0);
@@ -21,7 +22,7 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameComplete, setGameComplete] = useState(false);
 
-  const scenarios = braveVoiceContent.scenarios;
+  const scenarios = section.questions;
   const currentScenarioData = scenarios[currentScenario];
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
     if (!currentScenarioData) return;
     
     try {
-      const text = currentScenarioData[selectedLanguage];
+      const text = currentScenarioData.text[selectedLanguage];
       console.log('Generating scenario audio:', text.substring(0, 50) + '...');
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
@@ -52,12 +53,12 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
   const generateFeedbackAudio = async () => {
     try {
       const feedbackKey = lastAnswerCorrect ? 'correct' : 'incorrect';
-      let text = braveVoiceContent.feedback[feedbackKey][selectedLanguage];
-      
-      if (lastAnswerCorrect && currentScenarioData) {
-        text += ' ' + currentScenarioData.explanation[selectedLanguage];
+      let text = currentScenarioData.feedback[feedbackKey][selectedLanguage];
+
+      if (lastAnswerCorrect && currentScenarioData.feedback.explanation) {
+        text += ' ' + currentScenarioData.feedback.explanation[selectedLanguage];
       }
-      
+
       console.log('Generating feedback audio:', text.substring(0, 50) + '...');
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
@@ -70,8 +71,8 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
     }
   };
 
-  const handleAnswer = (answer: 'tell_trusted_adult' | 'use_brave_voice' | 'tell_another_adult') => {
-    const isCorrect = answer === currentScenarioData.correctAnswer;
+  const handleAnswer = (answer: string) => {
+    const isCorrect = answer === currentScenarioData.correct_answer;
     setLastAnswerCorrect(isCorrect);
     setShowFeedback(true);
     
@@ -120,7 +121,7 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
             </p>
             <div className="bg-green-100 border-l-4 border-green-400 p-4 rounded-r-xl">
               <p className="text-lg text-green-800">
-                {braveVoiceContent.completion[selectedLanguage]}
+                {section.completion_message?.[selectedLanguage]}
               </p>
             </div>
           </div>
@@ -171,7 +172,7 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
               <div className="text-center mb-8">
                 <div className="bg-indigo-50 border-l-4 border-indigo-400 p-6 rounded-r-xl mb-6">
                   <p className="text-xl text-gray-700 leading-relaxed">
-                    {currentScenarioData[selectedLanguage]}
+                    {currentScenarioData.text[selectedLanguage]}
                   </p>
                 </div>
                 
@@ -185,29 +186,16 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
 
               {/* Answer Buttons */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button
-                  onClick={() => handleAnswer('tell_trusted_adult')}
-                  className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2"
-                >
-                  <MessageCircle className="w-6 h-6" />
-                  <span>Tell a Trusted Adult</span>
-                </button>
-                
-                <button
-                  onClick={() => handleAnswer('use_brave_voice')}
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2"
-                >
-                  <Volume2 className="w-6 h-6" />
-                  <span>Use Brave Voice</span>
-                </button>
-                
-                <button
-                  onClick={() => handleAnswer('tell_another_adult')}
-                  className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2"
-                >
-                  <MessageCircle className="w-6 h-6" />
-                  <span>Tell Another Adult</span>
-                </button>
+                {currentScenarioData.options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(option[selectedLanguage])}
+                    className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-2"
+                  >
+                    <MessageCircle className="w-6 h-6" />
+                    <span>{option[selectedLanguage]}</span>
+                  </button>
+                ))}
               </div>
             </>
           ) : (
@@ -223,11 +211,11 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
                     )}
                   </div>
                   <p className="text-xl text-gray-700 leading-relaxed mb-4">
-                    {braveVoiceContent.feedback[lastAnswerCorrect ? 'correct' : 'incorrect'][selectedLanguage]}
+                    {currentScenarioData.feedback[lastAnswerCorrect ? 'correct' : 'incorrect'][selectedLanguage]}
                   </p>
-                  {lastAnswerCorrect && (
+                  {lastAnswerCorrect && currentScenarioData.feedback.explanation && (
                     <p className="text-lg text-gray-600">
-                      {currentScenarioData.explanation[selectedLanguage]}
+                      {currentScenarioData.feedback.explanation[selectedLanguage]}
                     </p>
                   )}
                 </div>

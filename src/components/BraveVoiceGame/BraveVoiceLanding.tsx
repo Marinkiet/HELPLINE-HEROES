@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Section } from '../../data/games';
 import { Mic, Play } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
-import { braveVoiceContent } from '../../data/braveVoiceContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BraveVoiceLandingProps {
   onStartGame: () => void;
+  section: Section;
 }
 
-export function BraveVoiceLanding({ onStartGame }: BraveVoiceLandingProps) {
+export function BraveVoiceLanding({ onStartGame, section }: BraveVoiceLandingProps) {
   const { isNarrationEnabled, selectedLanguage } = useAudio();
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,6 +19,8 @@ export function BraveVoiceLanding({ onStartGame }: BraveVoiceLandingProps) {
   const [micClickAudio, setMicClickAudio] = useState<string>('');
   const [playingMicSound, setPlayingMicSound] = useState(false);
 
+  const welcomeText = section.questions[0].text[selectedLanguage];
+
   useEffect(() => {
     // Generate audio for welcome message
     const generateAudio = async () => {
@@ -25,7 +28,7 @@ export function BraveVoiceLanding({ onStartGame }: BraveVoiceLandingProps) {
         console.log('Generating welcome audio for Brave Voice:', selectedLanguage);
         const url = await elevenLabsService.generateSpeech({
           language: selectedLanguage,
-          text: braveVoiceContent.welcome[selectedLanguage],
+          text: welcomeText,
           voiceId: 'vGQNBgLaiM3EdZtxIiuY' // Child voice - friendly narrator
         });
         console.log('Brave Voice audio URL generated:', url ? 'Success' : 'Failed');
@@ -36,7 +39,7 @@ export function BraveVoiceLanding({ onStartGame }: BraveVoiceLandingProps) {
     };
     
     generateAudio();
-  }, [selectedLanguage]);
+  }, [selectedLanguage, welcomeText]);
 
   useEffect(() => {
     // Pre-generate mic click sound effect
@@ -100,7 +103,7 @@ export function BraveVoiceLanding({ onStartGame }: BraveVoiceLandingProps) {
           </h1>
           <div className="bg-blue-100 border-l-4 border-blue-400 p-4 rounded-r-xl">
             <p className="text-lg text-gray-700 leading-relaxed">
-              {braveVoiceContent.welcome[selectedLanguage]}
+              {welcomeText}
             </p>
           </div>
         </div>

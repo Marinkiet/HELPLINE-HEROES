@@ -9,6 +9,7 @@ CREATE TABLE age_groups (
 CREATE TABLE topics (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
+    title JSONB,
     description TEXT
 );
 
@@ -26,7 +27,8 @@ CREATE TABLE sections (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     title JSONB NOT NULL,
     game_id uuid REFERENCES games(id),
-    "order" INTEGER
+    "order" INTEGER,
+    section_type TEXT
 );
 
 CREATE TABLE questions (
@@ -36,7 +38,8 @@ CREATE TABLE questions (
     "order" INTEGER,
     type TEXT,
     options JSONB,
-    correct_answer TEXT
+    correct_answer TEXT,
+    feedback JSONB
 );
 
 -- Seed initial data
@@ -47,23 +50,135 @@ INSERT INTO age_groups (name, description, image_url, age_range) VALUES
 ('{"en": "Young Leaders", "af": "Jong Leiers", "zu": "Abaholi Abasha", "xh": "Iinkokeli Ezintsha", "st": "Baetapele ba Bacha", "tn": "Baeteledipele ba Basha", "ts": "Varhangeri va Vantshwa", "ve": "Vharangaphanḓa vha Vhatshena", "nr": "Abaholi Abasha", "nso": "Baetapele ba Baša"}', '{"en": "Advanced safety skills for teens", "af": "Gevorderde veiligheidsvaardighede vir tieners", "zu": "Amakhono okuphepha aphakeme entsheni", "xh": "Izakhono eziphakamileyo zokhuseleko kolutsha", "st": "Tsebo e phahameng ea polokeho ea bacha", "tn": "Bokgoni jo bo kwa godimo jwa pabalesego jwa basha", "ts": "Vuswikoti bya le henhla bya vuhlayiseki bya vantshwa", "ve": "Zwikili zwa nṱha zwa vhushai ha vhatshena", "nr": "Amakhono okuphepha aphakeme entsheni", "nso": "Bokgoni bjo bo phagamego bja polokego bja baša"}', './assets/backpack.jpg', '12-14');
 
 -- Topics
-INSERT INTO topics (name, description) VALUES
-('recognition', 'Helping children recognize unsafe situations'),
-('response', 'Teaching children how to respond to unsafe situations'),
-('reporting', 'Guiding children on how to report unsafe situations'),
-('support', 'Encouraging children to seek help and support');
+INSERT INTO topics (name, title, description) VALUES
+('recognition', '{"en": "Safety Recognition",
+      "af": "Veiligheidsherkenning",
+      "zu": "Ukubona Ukuphepha",
+      "xh": "Ukuqonda Ukhuseleko",
+      "st": "Ho tseba Polokeho",
+      "tn": "Go lemoga Pabalesego",
+      "ts": "Ku vona Vuhlayiseki",
+      "ve": "U divha Vhushai",
+      "nr": "Ukubona Ukuphepha",
+      "nso": "Go lemoga Polokego"}', 'Helping children recognize unsafe situations'),
+('response', '{"en": "Response Skills",
+      "af": "Reaksievaardighede",
+      "zu": "Amakhono Okuphendula",
+      "xh": "Izakhono Zokuphendula",
+      "st": "Tsebo ea ho Arabela",
+      "tn": "Bokgoni jwa go Araba",
+      "ts": "Vuswikoti bya ku Hlamula",
+      "ve": "Zwikili zwa u Fhindula",
+      nr: "Amakhono Okuphendula",
+      "nso": "Bokgoni bja go Araba"}', 'Teaching children how to respond to unsafe situations'),
+('reporting', '{"en": "Getting Help",
+      "af": "Hulp kry",
+      "zu": "Ukuthola Usizo",
+      "xh": "Ukufumana Uncedo",
+      "st": "Ho fumana Thuso",
+      "tn": "Go bona Thuso",
+      "ts": "Ku kuma Mpfuno",
+      "ve": "U wana Thuso",
+      nr: "Ukuthola Usizo",
+      "nso": "Go hwetša Thušo"}', 'Guiding children on how to report unsafe situations'),
+('support', '{"en": "Support Network",
+      "af": "Ondersteuningsnetwerk",
+      "zu": "Inethiwekhi Yokusekela",
+      "xh": "Uthungelwano Lwenkxaso",
+      "st": "Marang-rang a Tšehetso",
+      "tn": "Mafaratlhatlha a Tshegetso",
+      "ts": "Netiweke ya Nseketelo",
+      "ve": "Netiweke ya Thuso",
+      nr: "Inethiwekhi Yokusekela",
+      "nso": "Netiweke ya Thekgo"}', 'Encouraging children to seek help and support');
 
 -- Games
 INSERT INTO games (age_group_id, topic_id, title, description, image_url, game_identifier) VALUES
-((SELECT id FROM age_groups WHERE name->>'en' = 'Little Heroes'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Safe Touch Detective", "af": "Veilige Raak Speurder", "zu": "Umcuphi Wokuthinta Okuphephile", "xh": "Umcuphi Wokuchukumisa Okukhuselekileyo", "st": "Mofuputsi oa Tšoaetso e Sireletsehileng", "tn": "Mmatlisisi wa Kgoma e e Babalesegileng", "ts": "Mufuputsi wa ku Kuma loku Hlayisekeke", "ve": "Mufuputsi wa u Khou Amba ha Vhushai", "nr": "Umcuphi Wokuthinta Okuphephile", "nso": "Mmatlisisi wa Kgoma ye e Šireletšegileng"}', '{"en": "Learn about good touch and bad touch on your body.", "af": "Leer oor gepaste en ongepaste aanraking op n veilige.", "zu": "Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.", "xh": "Funda ngokuchukumisa okufanelekileyo nokungafanelekanga ngendlela ekhuselekileyo.", "st": "Ithuta ka tšoaetso e nepahetseng le e sa nepahetseng ka tsela e sireletsehileng.", "tn": "Ithuta ka kgoma e e siameng le e e sa siamang ka tsela e e babalesegileng.", "ts": "Dyondza hi ku kuma loku faneleke na loku nga faneleki hi ndlela ya vuhlayiseki.", "ve": "Gudani nga u khou amba ha vhushai na ha vhusina vhushai nga ndila ya vhushai.", "nr": "Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.", "nso": "Ithuta ka kgoma ye e nepagetšego le ye e sa nepagetšego ka tsela ye e šireletšegileng."}', '../../assets/hug.jpg', '1'),
+((SELECT id FROM age_groups WHERE name->>'en' = 'Little Heroes'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Safe Touch Detective", "af": "Veilige Raak Speurder", "zu": "Umcuphi Wokuthinta Okuphephile", "xh": "Umcuphi Wokuchukumisa Okukhuselekileyo", "st": "Mofuputsi oa Tšoaetso e Sireletsehileng", "tn": "Mmatlisisi wa Kgoma e e Babalesegileng", "ts": "Mufuputsi wa ku Kuma loku Hlayisekeke", "ve": "Mufuputsi wa u Khou Amba ha Vhushai", "nr": "Umcuphi Wokuthinta Okuphephile", "nso": "Mmatlisisi wa Kgoma ye e Šireletšegileng"}', '{"en": "Learn about good touch and bad touch on your body.", "af": "Leer oor gepaste en ongepaste aanraking op ''n veilige.", "zu": "Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.", "xh": "Funda ngokuchukumisa okufanelekileyo nokungafanelekanga ngendlela ekhuselekileyo.", "st": "Ithuta ka tšoaetso e nepahetseng le e sa nepahetseng ka tsela e sireletsehileng.", "tn": "Ithuta ka kgoma e e siameng le e e sa siamang ka tsela e e babalesegileng.", "ts": "Dyondza hi ku kuma loku faneleke na loku nga faneleki hi ndlela ya vuhlayiseki.", "ve": "Gudani nga u khou amba ha vhushai na ha vhusina vhushai nga ndila ya vhushai.", "nr": "Funda ngokuthinta okufanele nokungafanele ngendlela ephephile.", "nso": "Ithuta ka kgoma ye e nepagetšego le ye e sa nepagetšego ka tsela ye e šireletšegileng."}', '../../assets/hug.jpg', '1'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Little Heroes'), (SELECT id FROM topics WHERE name = 'support'), '{"en": "Trusted Heroes Circle", "af": "Vertroude Helde Kring", "zu": "Isiyingi Samaqhawe Athembekile", "xh": "Isangqa Samaqhawe Athembekileyo", "st": "Selikalikoe sa Liqhawe tse Tšepahalang", "tn": "Setlhopha sa Diqhakga tse di Ikanyegang", "ts": "Xirhendzevutani xa Tiqhakga leti Tshembhekaka", "ve": "Tshirunzi tsha Magwala a Teaho", "nr": "Isiyingi Samaqhawe Athembekile", "nso": "Selekane sa Magwala a Tšhepegago"}', '{"en": "Identify and connect with trusted adults who can help you.", "af": "Identifiseer en verbind met vertroude volwassenes wat jou kan help.", "zu": "Khomba futhi uxhumane nabantu abadala abathembekile abangakusiza.", "xh": "Chonga kwaye unxibelelane nabantu abadala abathembekileyo abanokukunceda.", "st": "Tseba me u hokahane le batho ba baholo ba tšepahalang ba ka u thusang.", "tn": "Lemoga mme o golagane le bagolo ba ba ikanyegang ba ba ka go thusang.", "ts": "Vona naswona u hlanganisa na vanhu va vadala lava tshembhekaka lava nga ku pfunaka.", "ve": "Divhani nahone ni ṱanganyane na vhathu vhahulwane vho teaho vha nga ni thusaho.", "nr": "Khomba futhi uxhumane nabantu abadala abathembekile abangakusiza.", "nso": "Lemoga gomme o kgokagane le bagolo ba tšhepegago ba ka go thušago."}', '../../assets/frontl.png', '2'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'response'), '{"en": "Brave Voice", "af": "Dapper Stem", "zu": "Izwi Elinesbindi", "xh": "Ilizwi Elinesbindi", "st": "Lentsoe le Sebete", "tn": "Lentswe le le Pelokgale", "ts": "Rito ra Vutshila", "ve": "Ipfi ḽa Khongolose", "nr": "Izwi Elinesbindi", "nso": "Lentšu le le Pelokgale"}', '{"en": "Practice finding your voice and speaking up when something feels wrong.", "af": "Oefen om jou stem te vind en uit te praat wanneer iets verkeerd voel.", "zu": "Zijwayeze ukuthola izwi lakho futhi ukhulume uma into izwakala ingalungile.", "xh": "Ziqhelise ukufumana ilizwi lakho kwaye uthethe xa into iziva ingalunganga.", "st": "Itloaetse ho fumana lentsoe la hao le ho bua ha ntho e utlwahala e sa nepahala.", "tn": "Ikatise go bona lentswe la gago le go bua fa sengwe se utlwala se sa siama.", "ts": "Titolovete ku kuma rito ra wena na ku vulavula loko swinwana swi vonaka swi nga lulamanga.", "ve": "Titolovetseni u wana ipfi ḽaṋu na u amba musi tshithu tshi tshi vhonala tshi si khou ita zwavhuḓi.", "nr": "Zijwayeze ukuthola izwi lakho futhi ukhulume uma into izwakala ingalungile.", "nso": "Itlwaetše go hwetša lentšu la gago le go bolela ge selo se bonala se sa lokala."}', 'assets/shout.jpg', '3'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Little Heroes'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Secret vs. Surprise", "af": "Geheim vs. Verrassing", "zu": "Imfihlo vs. Isimangaliso", "xh": "Imfihlo vs. Isimangaliso", "st": "Lekunutu vs. Tšohanyetso", "tn": "Sephiri vs. Makatso", "ts": "Swifihla vs. Swimangaliso", "ve": "Zwiṅwe vs. Zwiṅwe zwa Vhudifhinduleli", "nr": "Imfihlo vs. Isimangaliso", "nso": "Sephiri vs. Makatšo"}', '{"en": "Learn the difference between good surprises and harmful secrets.", "af": "Leer die verskil tussen goeie verrassings en skadelike geheime.", "zu": "Funda umehluko phakathi kwezimangaliso ezinhle nezimfihlo eziyingozi.", "xh": "Funda umahluko phakathi kwezimangaliso ezilungileyo neemfihlo eziyingozi.", "st": "Ithuta phapang pakeng tsa litšohanyetso tse molemo le liphiri tse kotsi.", "tn": "Ithuta pharologano magareng ga makatso a a molemo le diphiri tse di kotsi.", "ts": "Dyondza ku hambana exikarhi ka swimangaliso swa kahle na swifihla leswi nga koteka.", "ve": "Gudani phambano vhukati ha zwiṅwe zwa vhudifhinduleli zwa vhuḓi na zwiṅwe zwo ḓowaho.", "nr": "Funda umehluko phakathi kwezimangaliso ezinhle nezimfihlo eziyingozi.", "nso": "Ithuta phapano magareng ga makatšo a mabotse le diphiri tše di kotsi."}', 'https://images.pexels.com/photos/1298684/pexels-photo-1298684.jpeg?auto=compress&cs=tinysrgb&w=400', '4'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Little Heroes'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Body Safety Rules", "af": "Liggaamsveiligheidsreëls", "zu": "Imithetho Yokuphepha Komzimba", "xh": "Imithetho Yokhuseleko Lomzimba", "st": "Melao ea Polokeho ea Mele", "tn": "Melao ya Pabalesego ya Mmele", "ts": "Milawu ya Vuhlayiseki bya Miri", "ve": "Milayo ya Vhushai ha Muvhili", "nr": "Imithetho Yokuphepha Komzimba", "nso": "Melao ya Polokego ya Mmele"}', '{"en": "Understand important rules about your body and personal boundaries.", "af": "Verstaan belangrike reëls oor jou liggaam en persoonlike grense.", "zu": "Qonda imithetho ebalulekile ngomzimba wakho nemingcele yakho.", "xh": "Qonda imithetho ebalulekileyo ngomzimba wakho nemida yakho.", "st": "Utloisisa melao ea bohlokoa mabapi le mele oa hao le meeli ea hao.", "tn": "Tlhaloganye melao e e botlhokwa ka mmele wa gago le melelwane ya gago.", "ts": "Twisisa milawu ya nkoka hi miri wa wena na swipimo swa wena.", "ve": "Pfesesani milayo ya ndeme nga ha muvhili waṋu na zwiṅwe zwaṋu.", "nr": "Qonda imithetho ebalulekile ngomzimba wakho nemingcele yakho.", "nso": "Kwešiša melao ye bohlokwa ka ga mmele wa gago le melelwane ya gago."}', 'https://images.pexels.com/photos/1477166/pexels-photo-1477166.jpeg?auto=compress&cs=tinysrgb&w=400', '5'),
-((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'support'), '{"en": "Help a Friend", "af": "Help n Vriend", "zu": "Siza Umngane", "xh": "Nceda Umhlobo", "st": "Thusa Motsoalle", "tn": "Thusa Tsala", "ts": "Pfuna Munghana", "ve": "Thusani Muṅwali", "nr": "Siza Umngane", "nso": "Thuša Mogwera"}', '{"en": "Learn how to help a friend who might be in an unsafe situation.", "af": "Leer hoe om n vriend te help wat dalk in n onveilige situasie is.", "zu": "Funda ukuthi ungasiza kanjani umngane ongase abe esimweni esingaphephile.", "xh": "Funda indlela yokunceda umhlobo onokuba kwimeko engakhuselekanga.", "st": "Ithuta hore na u ka thusa joang motsoalle ea ka bang maemong a sa sireletsehang.", "tn": "Ithuta gore o ka thusa jang tsala e e ka nnang mo maemong a a sa babalesegang.", "ts": "Dyondza leswaku u nga pfuna njhani munghana loyi a nga va eka xiyimo lexi nga hlayisekangiki.", "ve": "Gudani uri ni nga thusa hani muṅwali a nga vha kha tshiimo tshi sa vhushaaho.", "nr": "Funda ukuthi ungasiza kanjani umngane ongase abe esimweni esingaphephile.", "nso": "Ithuta gore o ka thuša bjang mogwera yo a ka bago mo maemong a a sa šireletšegago."}', 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=400', '6'),
+((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'support'), '{"en": "Help a Friend", "af": "Help '' n Vriend", "zu": "Siza Umngane", "xh": "Nceda Umhlobo", "st": "Thusa Motsoalle", "tn": "Thusa Tsala", "ts": "Pfuna Munghana", "ve": "Thusani Muṅwali", "nr": "Siza Umngane", "nso": "Thuša Mogwera"}', '{"en": "Learn how to help a friend who might be in an unsafe situation.", "af": "Leer hoe om n vriend te help wat dalk in n onveilige situasie is.", "zu": "Funda ukuthi ungasiza kanjani umngane ongase abe esimweni esingaphephile.", "xh": "Funda indlela yokunceda umhlobo onokuba kwimeko engakhuselekanga.", "st": "Ithuta hore na u ka thusa joang motsoalle ea ka bang maemong a sa sireletsehang.", "tn": "Ithuta gore o ka thusa jang tsala e e ka nnang mo maemong a a sa babalesegang.", "ts": "Dyondza leswaku u nga pfuna njhani munghana loyi a nga va eka xiyimo lexi nga hlayisekangiki.", "ve": "Gudani uri ni nga thusa hani muṅwali a nga vha kha tshiimo tshi sa vhushaaho.", "nr": "Funda ukuthi ungasiza kanjani umngane ongase abe esimweni esingaphephile.", "nso": "Ithuta gore o ka thuša bjang mogwera yo a ka bago mo maemong a a sa šireletšegago."}', 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg?auto=compress&cs=tinysrgb&w=400', '6'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Online Safety Shield", "af": "Aanlyn Veiligheidskerms", "zu": "Isihlangu Sokuphepha Ku-inthanethi", "xh": "Ikhaka Lokhuseleko Kwi-intanethi", "st": "Sesireletsi sa Polokeho Inthaneteng", "tn": "Sesireletsi sa Pabalesego mo Mafaratlhatlheng", "ts": "Xirhendzevutani xa Vuhlayiseki eka Inthanete", "ve": "Tshiṱirelo tsha Vhushai kha Inthanete", "nr": "Isihlangu Sokuphepha Ku-inthanethi", "nso": "Sesireletši sa Polokego Inthaneteng"}', '{"en": "Stay safe online and recognize inappropriate behavior on the internet.", "af": "Bly veilig aanlyn en herken ongepaste gedrag op die internet.", "zu": "Hlala uphephile ku-inthanethi futhi ubone ukuziphatha okungafanele ku-inthanethi.", "xh": "Hlala ukhuselekile kwi-intanethi kwaye uqaphele ukuziphatha okungafanelekanga kwi-intanethi.", "st": "Dula u sireletsehile inthaneteng me u tsebe boitšoaro bo sa nepahetseng inthaneteng.", "tn": "Nna o sireletsegile mo mafaratlhatlheng mme o lemoge maitsholo a a sa siamang mo inthaneteng.", "ts": "Tshama u hlayisekile eka inthanete naswona u vona mahanyelo lama nga fanelekangiki eka inthanete.", "ve": "Dzulani ni tshi khou pfalwa kha inthanete nahone ni divhe maitele a si khou ita zwavhuḓi kha inthanete.", "nr": "Hlala uphephile ku-inthanethi futhi ubone ukuziphatha okungafanele ku-inthanethi.", "nso": "Dula o šireletšegile inthaneteng gomme o lemoge boitshwaro bjo bo sa nepagetšego inthaneteng."}', 'https://images.pexels.com/photos/1680247/pexels-photo-1680247.jpeg?auto=compress&cs=tinysrgb&w=400', '7'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Little Heroes'), (SELECT id FROM topics WHERE name = 'reporting'), '{"en": "Emergency Contacts", "af": "Noodkontakte", "zu": "Oxhumana Nabo Ezimweni Eziphuthumayo", "xh": "Abantu Boqhagamshelwano Lwengxaki", "st": "Mabitso a Tšohanyetso", "tn": "Dikaonafatso tsa Kgogolego", "ts": "Vuhlanganisi bya Swiphiqo", "ve": "Vhudavhidzani ha Zwiṅwe", "nr": "Oxhumana Nabo Ezimweni Eziphuthumayo", "nso": "Dikgokagano tša Maemo a Tšhošetšo"}', '{"en": "Learn important phone numbers and how to ask for help.", "af": "Leer belangrike telefoonnommers en hoe om hulp te vra.", "zu": "Funda izinombolo zocingo ezibalulekile nokuthi ungacela kanjani usizo.", "xh": "Funda iinombolo zefowuni ezibalulekileyo nendlela yokucela uncedo.", "st": "Ithuta linomoro tsa mohala tse bohlokoa le hore na u ka kopa thuso joang.", "tn": "Ithuta dinomoro tsa mogala tse di botlhokwa le gore o ka kopa thuso jang.", "ts": "Dyondza tinomboro ta riqingho leti nga bohlokwa na leswaku u nga kombela mpfuno njhani.", "ve": "Gudani nomboro dza lutingo dzo tou fhelelaho na uri ni nga ṱoḓa thuso hani.", "nr": "Funda izinombolo zocingo ezibalulekile nokuthi ungacela kanjani usizo.", "nso": "Ithuta dinomoro tša mogala tše bohlokwa le gore o ka kgopela thušo bjang."}', 'https://images.pexels.com/photos/1639565/pexels-photo-1639565.jpeg?auto=compress&cs=tinysrgb&w=400', '8'),
-((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Feeling Safe at Home", "af": "Veilig Voel by die Huis", "zu": "Ukuzizwa Uphephile Ekhaya", "xh": "Ukuziva Ukhuselekile Ekhaya", "st": "Ho ikutloa u Sireletsehile Lapeng", "tn": "Go ikutlwa o Sireletsegile Gae", "ts": "Ku titwa u Hlayisekile Ekaya", "ve": "U pfesesa uri ni a Pfalwa Hayani", "nr": "Ukuzizwa Uphephile Ekhaya", "nso": "Go ikwa o Šireletšegile Gae"}', '{"en": "Understand what a safe home feels like and what to do if it doesn\'t.", "af": "Verstaan hoe 'n veilige huis voel en wat om te doen as dit nie so voel nie.", "zu": "Qonda ukuthi ikhaya eliphephile lizwakala kanjani nokuthi wenzeni uma lingenjalo.", "xh": "Qonda ukuba ikhaya elikhuselekileyo liziva njani kwaye wenze ntoni xa lingenjalo.", "st": "Utloisisa hore na lehae le sireletsehileng le utlwahala joang le hore na u ka etsa eng haeba le sa utlwahale jwalo.", "tn": "Tlhaloganye gore legae le le babalesegileng le utlwala jang le gore o ka dira eng fa le sa utlwale jalo.", "ts": "Twisisa leswaku kaya leri hlayisekeke ri titwa njhani na leswaku u nga endla yini loko ri nga titwa ri njalo.", "ve": "Pfesesani uri hayani ha vhushai hu pfesesa hani na uri ni nga ita mini arali hu si pfesese zwenezwo.", "nr": "Qonda ukuthi ikhaya eliphephile lizwakala kanjani nokuthi wenzeni uma lingenjalo.", "nso": "Kwešiša gore gae le le šireletšegileng le ikwa bjang le gore o ka dira eng ge le sa ikwe bjalo."}', 'https://images.pexels.com/photos/1509534/pexels-photo-1509534.jpeg?auto=compress&cs=tinysrgb&w=400', '9'),
+((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'recognition'), '{"en": "Feeling Safe at Home", "af": "Veilig Voel by die Huis", "zu": "Ukuzizwa Uphephile Ekhaya", "xh": "Ukuziva Ukhuselekile Ekhaya", "st": "Ho ikutloa u Sireletsehile Lapeng", "tn": "Go ikutlwa o Sireletsegile Gae", "ts": "Ku titwa u Hlayisekile Ekaya", "ve": "U pfesesa uri ni a Pfalwa Hayani", "nr": "Ukuzizwa Uphephile Ekhaya", "nso": "Go ikwa o Šireletšegile Gae"}', '{"en": "Understand what a safe home feels like and what to do if it doesn''t.", "af": "Verstaan hoe ''n veilige huis voel en wat om te doen as dit nie so voel nie.", "zu": "Qonda ukuthi ikhaya eliphephile lizwakala kanjani nokuthi wenzeni uma lingenjalo.", "xh": "Qonda ukuba ikhaya elikhuselekileyo liziva njani kwaye wenze ntoni xa lingenjalo.", "st": "Utloisisa hore na lehae le sireletsehileng le utlwahala joang le hore na u ka etsa eng haeba le sa utlwahale jwalo.", "tn": "Tlhaloganye gore legae le le babalesegileng le utlwala jang le gore o ka dira eng fa le sa utlwale jalo.", "ts": "Twisisa leswaku kaya leri hlayisekeke ri titwa njhani na leswaku u nga endla yini loko ri nga titwa ri njalo.", "ve": "Pfesesani uri hayani ha vhushai hu pfesesa hani na uri ni nga ita mini arali hu si pfesese zwenezwo.", "nr": "Qonda ukuthi ikhaya eliphephile lizwakala kanjani nokuthi wenzeni uma lingenjalo.", "nso": "Kwešiša gore gae le le šireletšegileng le ikwa bjang le gore o ka dira eng ge le sa ikwe bjalo."}', 'https://images.pexels.com/photos/1509534/pexels-photo-1509534.jpeg?auto=compress&cs=tinysrgb&w=400', '9'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'response'), '{"en": "Bullying Response Team", "af": "Boelie Reaksie Span", "zu": "Ithimba Lokuphendula Ukuxhaphaza", "xh": "Iqela Lokuphendula Ukuxhaphaza", "st": "Sehlopha sa ho Arabela Khathatso", "tn": "Setlhopha sa go Araba Kgatelelo", "ts": "Ntlawa wa ku Hlamula Ku Hlundzukisa", "ve": "Tshigwada tsha u Fhindula Vhudifhinduleli", "nr": "Ithimba Lokuphendula Ukuxhaphaza", "nso": "Sehlopha sa go Araba Kgateletšo"}', '{"en": "Learn strategies to handle bullying and when to get help.", "af": "Leer strategieë om boelie te hanteer en wanneer om hulp te kry.", "zu": "Funda amasu okubhekana nokuxhaphaza nokuthi usizo lufunwa nini.", "xh": "Funda amaqhinga okujongana nokuxhaphaza nanini xa kufuneka ufumane uncedo.", "st": "Ithuta maano a ho sebetsana le khathatso le hore na u fumane thuso neng.", "tn": "Ithuta mekgwa ya go samagana le kgatelelo le gore o bone thuso leng.", "ts": "Dyondza maendlelo yo tirhisa ku hlundzukisa na nkarhi lowu u faneleke ku kuma mpfuno.", "ve": "Gudani maitele a u shandukisa vhudifhinduleli na tshifhinga tsha u wana thuso.", "nr": "Funda amasu okubhekana nokuxhaphaza nokuthi usizo lufunwa nini.", "nso": "Ithuta mekgwa ya go šomana le kgateletšo le gore o hwetše thušo neng."}', 'https://images.pexels.com/photos/1679618/pexels-photo-1679618.jpeg?auto=compress&cs=tinysrgb&w=400', '10'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Young Leaders'), (SELECT id FROM topics WHERE name = 'response'), '{"en": "Teen Safety Network", "af": "Tiener Veiligheidsnetwerk", "zu": "Inethiwekhi Yokuphepha Kwentsha", "xh": "Uthungelwano Lokhuseleko Lolutsha", "st": "Marang-rang a Polokeho ea Bacha", "tn": "Mafaratlhatlha a Pabalesego ya Basha", "ts": "Netiweke ya Vuhlayiseki bya Vantshwa", "ve": "Netiweke ya Vhushai ha Vhatshena", "nr": "Inethiwekhi Yokuphepha Kwentsha", "nso": "Netiweke ya Polokego ya Baša"}', '{"en": "Navigate complex social situations and peer pressure safely.", "af": "Navigeer komplekse sosiale situasies en portuurdruk veilig.", "zu": "Zulazula ezimweni zomphakathi eziyinkimbinkimbi nengcindezi yontanga ngokuphepha.", "xh": "Khangela iimeko zentlalo ezintsonkothileyo noxinzelelo lontanga ngokukhuselekileyo.", "st": "Tsamaea maemong a rarahaneng a sechaba le khatello ea bo-metsoalle ka polokeho.", "tn": "Tsamaya mo maemong a a raraaneng a loago le kgateletso ya ditsala ka pabalesego.", "ts": "Famba-famba eka swiyimo swa ntshamisano leswi rharhanganeke na ku cincindzeleka ka vanghana hi vuhlayiseki.", "ve": "Fambani kha zwithu zwa vhutshilo zwo ralo na u khakhea ha vhaṅwali nga vhushai.", "nr": "Zulazula ezimweni zomphakathi eziyinkimbinkimbi nengcindezi yontanga ngokuphepha.", "nso": "Sepela mo maemong a a raraganego a leago le kgateletšo ya bagwera ka polokego."}', 'https://images.pexels.com/photos/1556195/pexels-photo-1556195.jpeg?auto=compress&cs=tinysrgb&w=400', '11'),
 ((SELECT id FROM age_groups WHERE name->>'en' = 'Smart Explorers'), (SELECT id FROM topics WHERE name = 'reporting'), '{"en": "Report It Right", "af": "Rapporteer dit Reg", "zu": "Kubike Kahle", "xh": "Xela Ngendlela Efanelekileyo", "st": "E Bege ka Nepo", "tn": "E Begele Sentle", "ts": "Ku Vika hi Ndlela", "ve": "Pfi nga Ndila", "nr": "Kubike Kahle", "nso": "E Begele ka Nepagalo"}', '{"en": "Learn how and when to report unsafe situations to trusted adults.", "af": "Leer hoe en wanneer om onveilige situasies aan vertroude volwassenes te rapporteer.", "zu": "Funda ukuthi ubike kanjani nanini izimo ezingaphephile kubantu abadala abathembekile.", "xh": "Funda indlela nanini xa uxela iimeko ezingakhuselekanga kubantu abadala abathembekileyo.", "st": "Ithuta hore na u ka bega joang le neng maemo a sa sireletsehang ho batho ba baholo ba tšepahalang.", "tn": "Ithuta gore o ka begela jang le leng maemo a a sa babalesegang go bagolo ba ba ikanyegang.", "ts": "Dyondza leswaku u nga vika njhani na nkarhi lowu swiyimo leswi nga hlayisekangiki eka vanhu va vadala lava tshembhekaka.", "ve": "Gudani uri ni nga pfi hani na nini zwithu zwo sa vhushaaho kha vhathu vhahulwane vho teaho.", "nr": "Funda ukuthi ubike kanjani nanini izimo ezingaphephile kubantu abadala abathembekile.", "nso": "Ithuta gore o ka begela bjang le neng maemo a a sa šireletšegago go bagolo ba tšhepegago."}', 'https://images.pexels.com/photos/1482477/pexels-photo-1482477.jpeg?auto=compress&cs=tinysrgb&w=400', '12');
+
+-- ... (previous content) ...
+
+-- Seed Sections and Questions for Brave Voice Game
+-- Welcome Section
+WITH brave_voice_game AS (
+  SELECT id FROM games WHERE game_identifier = '3'
+),
+welcome_section AS (
+  INSERT INTO sections (game_id, title, "order", section_type) 
+  SELECT id, '{"en": "Welcome"}', 1, 'welcome' FROM brave_voice_game
+  RETURNING id
+)
+INSERT INTO questions (section_id, text, "order")
+SELECT id, '{"en": "Welcome to Brave Voice! You''re going to learn how to use your powerful voice to stay safe and help others. Your voice is like a superhero power - it can protect you and your friends! Click the 3 blue microphones to start your brave voice training."}', 1 FROM welcome_section;
+
+-- Exploration Section
+WITH brave_voice_game AS (
+  SELECT id FROM games WHERE game_identifier = '3'
+),
+exploration_section AS (
+  INSERT INTO sections (game_id, title, "order", section_type) 
+  SELECT id, '{"en": "Exploration"}', 2, 'exploration' FROM brave_voice_game
+  RETURNING id
+)
+INSERT INTO questions (section_id, text, "order")
+SELECT id, '{"en": "Your brave voice is the strong, clear way you speak when something doesn''t feel right. It''s not about being loud or mean - it''s about being confident and honest. When you use your brave voice, you''re protecting yourself and others."}', 1 FROM exploration_section;
+
+-- Scenarios Section
+WITH brave_voice_game AS (
+  SELECT id FROM games WHERE game_identifier = '3'
+),
+scenarios_section AS (
+  INSERT INTO sections (game_id, title, "order", section_type) 
+  SELECT id, '{"en": "Scenarios"}', 3, 'scenarios' FROM brave_voice_game
+  RETURNING id
+)
+INSERT INTO questions (section_id, text, "order", type, options, correct_answer, feedback)
+SELECT id, '{"en": "Your friend tells you that their older cousin has been touching them in private areas and told them to keep it a secret. Your friend is scared and doesn''t know what to do. What should you tell your friend?"}', 1, 'multiple-choice', '[{"en": "Tell a trusted adult"}, {"en": "Keep it a secret"}, {"en": "Ignore it"}]', 'Tell a trusted adult', '{"correct": {"en": "Excellent! You''re learning to use your brave voice to stay safe and help others!"}, "incorrect": {"en": "Let''s think about this again. Remember, your brave voice is powerful and you should always tell trusted adults when something doesn''t feel right."}}' FROM scenarios_section;
+
+-- Seed Sections and Questions for Safe Touch Detective Game
+-- Welcome Section
+WITH safe_touch_game AS (
+  SELECT id FROM games WHERE game_identifier = '1'
+),
+welcome_section_st AS (
+  INSERT INTO sections (game_id, title, "order", section_type) 
+  SELECT id, '{"en": "Welcome"}', 1, 'welcome' FROM safe_touch_game
+  RETURNING id
+)
+INSERT INTO questions (section_id, text, "order")
+SELECT id, '{"en": "Hi there! Welcome to Safe Touch Detective. You''ll be the detective today! Click on the 3 green stars to enter and start your safety adventure."}', 1 FROM welcome_section_st;
+
+-- Body Parts Exploration Section
+WITH safe_touch_game AS (
+  SELECT id FROM games WHERE game_identifier = '1'
+),
+body_parts_section AS (
+  INSERT INTO sections (game_id, title, "order", section_type) 
+  SELECT id, '{"en": "Body Parts Exploration"}', 2, 'exploration' FROM safe_touch_game
+  RETURNING id
+)
+INSERT INTO questions (section_id, text, "order")
+SELECT id, '{"en": "This is your upper body. The covered areas are private parts. Only trusted adults like doctors or parents helping you get dressed should touch these areas."}', 1 FROM body_parts_section;
+
+-- Scenarios Section
+WITH safe_touch_game AS (
+  SELECT id FROM games WHERE game_identifier = '1'
+),
+scenarios_section_st AS (
+  INSERT INTO sections (game_id, title, "order", section_type) 
+  SELECT id, '{"en": "Scenarios"}', 3, 'scenarios' FROM safe_touch_game
+  RETURNING id
+)
+INSERT INTO questions (section_id, text, "order", type, options, correct_answer, feedback)
+SELECT id, '{"en": "Your doctor needs to check your chest during a medical exam, and your parent is in the room. Is this a Good Touch or Bad Touch?"}', 1, 'multiple-choice', '[{"en": "Good Touch"}, {"en": "Bad Touch"}]', 'Good Touch', '{"correct": {"en": "Great job, detective! You''re learning to keep yourself safe!"}, "incorrect": {"en": "Let''s think about this again. Remember what we learned about trusted adults and private parts."}}' FROM scenarios_section_st;

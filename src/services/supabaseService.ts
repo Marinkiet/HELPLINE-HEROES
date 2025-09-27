@@ -23,3 +23,9 @@ export const getGamesByAgeGroup = async (ageGroupId: string) => {
   if (error) throw error;
   return data;
 };
+
+export const getTopics = async () => {
+  const { data, error } = await supabase.from('topics').select('*');
+  if (error) throw error;
+  return data;
+};

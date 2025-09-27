@@ -15,7 +15,7 @@ export function GameGrid({ games, onGameClick, filteredCategory }: GameGridProps
   
   // Always filter out the main games (1, 2, 3) from this section
   // since they appear in the Featured Section
-  const filteredGames = games.filter(game => !['1', '2', '3'].includes(game.id));
+  const filteredGames = games.filter(game => !['1', '2', '3'].includes(game.game_identifier));
 
   return (
     <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-3xl p-8 shadow-2xl">
@@ -30,11 +30,7 @@ export function GameGrid({ games, onGameClick, filteredCategory }: GameGridProps
         {filteredGames.map((game) => (
           <GameCard
             key={game.id}
-            id={game.id}
-            title={game.title}
-            description={game.description}
-            image={game.image}
-            featured={game.featured}
+            game={game}
             onClick={() => onGameClick(game)}
           />
         ))}

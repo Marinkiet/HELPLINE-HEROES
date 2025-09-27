@@ -15,6 +15,7 @@ export interface Section {
   game_id: string;
   order: number;
   questions: Question[];
+  completion_message?: Record<string, string>;
 }
 
 export interface Question {
@@ -25,4 +26,10 @@ export interface Question {
   type: string;
   options: Record<string, string>[];
   correct_answer: string;
+  feedback: {
+    correct: Record<string, string>;
+    incorrect: Record<string, string>;
+    explanation?: Record<string, string>;
+    completion?: Record<string, string>;
+  };
 }

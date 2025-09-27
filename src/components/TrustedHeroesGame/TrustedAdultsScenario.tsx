@@ -3,14 +3,15 @@ import { ThumbsUp, ThumbsDown, RotateCcw, Trophy, Shield } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
-import { trustedHeroesContent } from '../../data/trustedHeroesContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
+import { Section } from '../../data/games';
 
 interface TrustedAdultsScenarioProps {
   onComplete: () => void;
+  section: Section;
 }
 
-export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps) {
+export function TrustedAdultsScenario({ onComplete, section }: TrustedAdultsScenarioProps) {
   const { selectedLanguage, isNarrationEnabled } = useAudio();
   const { trackGameEnd, trackInteraction } = useEngagement();
   const [currentScenario, setCurrentScenario] = useState(0);
@@ -21,7 +22,7 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameComplete, setGameComplete] = useState(false);
 
-  const scenarios = trustedHeroesContent.scenarios;
+  const scenarios = section.questions;
   const currentScenarioData = scenarios[currentScenario];
 
   useEffect(() => {
@@ -34,9 +35,9 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
 
   const generateScenarioAudio = async () => {
     if (!currentScenarioData) return;
-    
+
     try {
-      const text = currentScenarioData[selectedLanguage];
+      const text = currentScenarioData.text[selectedLanguage];
       console.log('Generating scenario audio:', text.substring(0, 50) + '...');
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
@@ -52,12 +53,12 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
   const generateFeedbackAudio = async () => {
     try {
       const feedbackKey = lastAnswerCorrect ? 'correct' : 'incorrect';
-      let text = trustedHeroesContent.feedback[feedbackKey][selectedLanguage];
-      
-      if (lastAnswerCorrect && currentScenarioData) {
-        text += ' ' + currentScenarioData.explanation[selectedLanguage];
+      let text = currentScenarioData.feedback[feedbackKey][selectedLanguage];
+
+      if (lastAnswerCorrect) {
+        text += ' ' + currentScenarioData.feedback.explanation[selectedLanguage];
       }
-      
+
       console.log('Generating feedback audio:', text.substring(0, 50) + '...');
       const url = await elevenLabsService.generateSpeech({
         language: selectedLanguage,
@@ -70,16 +71,15 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
     }
   };
 
-  const handleAnswer = (answer: 'trustworthy' | 'untrustworthy') => {
-    const isCorrect = answer === currentScenarioData.correctAnswer;
+  const handleAnswer = (answer: string) => {
+    const isCorrect = answer === currentScenarioData.correct_answer;
     setLastAnswerCorrect(isCorrect);
     setShowFeedback(true);
-    
+
     if (isCorrect) {
       setScore(score + 1);
     }
 
-    // Track answer
     trackInteraction('game_answer', {
       game_id: 'trusted_heroes_circle',
       scenario_id: currentScenario,
@@ -93,11 +93,11 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
     if (currentScenario < scenarios.length - 1) {
       setCurrentScenario(currentScenario + 1);
       setShowFeedback(false);
-    } else {
+    }
+    else {
       setGameComplete(true);
-      // Track game completion
       const finalScore = score;
-      const pointsEarned = finalScore * 15; // 15 points per correct answer
+      const pointsEarned = finalScore * 15;
       trackGameEnd(pointsEarned, true);
     }
   };
@@ -120,11 +120,10 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
             </p>
             <div className="bg-green-100 border-l-4 border-green-400 p-4 rounded-r-xl">
               <p className="text-lg text-green-800">
-                {trustedHeroesContent.completion[selectedLanguage]}
+                {section.completion_message[selectedLanguage]}
               </p>
             </div>
           </div>
-          
           <button
             onClick={onComplete}
             className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-black py-4 px-8 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200 text-xl"
@@ -139,7 +138,6 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <div className="flex justify-center items-center mb-6">
           <div className="flex items-center space-x-4">
             <Shield className="w-8 h-8 text-white" />
@@ -153,8 +151,6 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
             </div>
           </div>
         </div>
-
-        {/* Score */}
         <div className="text-center mb-6">
           <div className="bg-white rounded-2xl p-4 inline-block shadow-lg">
             <span className="text-2xl font-bold text-gray-800">
@@ -162,19 +158,15 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
             </span>
           </div>
         </div>
-
-        {/* Main Game Area */}
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
           {!showFeedback ? (
             <>
-              {/* Scenario */}
               <div className="text-center mb-8">
                 <div className="bg-purple-50 border-l-4 border-purple-400 p-6 rounded-r-xl mb-6">
                   <p className="text-xl text-gray-700 leading-relaxed">
-                    {currentScenarioData[selectedLanguage]}
+                    {currentScenarioData.text[selectedLanguage]}
                   </p>
                 </div>
-                
                 <AudioPlayer
                   audioUrl={audioUrl}
                   isPlaying={isPlaying}
@@ -182,29 +174,21 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
                   autoPlay={true}
                 />
               </div>
-
-              {/* Answer Buttons */}
               <div className="flex justify-center space-x-8">
-                <button
-                  onClick={() => handleAnswer('trustworthy')}
-                  className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black py-6 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-3 text-xl"
-                >
-                  <ThumbsUp className="w-8 h-8" />
-                  <span>Trustworthy</span>
-                </button>
-                
-                <button
-                  onClick={() => handleAnswer('untrustworthy')}
-                  className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black py-6 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-3 text-xl"
-                >
-                  <ThumbsDown className="w-8 h-8" />
-                  <span>Not Trustworthy</span>
-                </button>
+                {currentScenarioData.options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(option.value)}
+                    className={`bg-gradient-to-r ${option.value === 'trustworthy' ? 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' : 'from-red-500 to-red-600 hover:from-red-600 hover:to-red-700'} text-white font-black py-6 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center space-x-3 text-xl`}
+                  >
+                    {option.value === 'trustworthy' ? <ThumbsUp className="w-8 h-8" /> : <ThumbsDown className="w-8 h-8" />}
+                    <span>{option.text[selectedLanguage]}</span>
+                  </button>
+                ))}
               </div>
             </>
           ) : (
             <>
-              {/* Feedback */}
               <div className="text-center mb-8">
                 <div className={`${lastAnswerCorrect ? 'bg-green-50 border-green-400' : 'bg-red-50 border-red-400'} border-l-4 p-6 rounded-r-xl mb-6`}>
                   <div className="flex items-center justify-center mb-4">
@@ -215,15 +199,14 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
                     )}
                   </div>
                   <p className="text-xl text-gray-700 leading-relaxed mb-4">
-                    {trustedHeroesContent.feedback[lastAnswerCorrect ? 'correct' : 'incorrect'][selectedLanguage]}
+                    {currentScenarioData.feedback[lastAnswerCorrect ? 'correct' : 'incorrect'][selectedLanguage]}
                   </p>
                   {lastAnswerCorrect && (
                     <p className="text-lg text-gray-600">
-                      {currentScenarioData.explanation[selectedLanguage]}
+                      {currentScenarioData.feedback.explanation[selectedLanguage]}
                     </p>
                   )}
                 </div>
-                
                 <AudioPlayer
                   audioUrl={audioUrl}
                   isPlaying={isPlaying}
@@ -231,8 +214,6 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
                   autoPlay={true}
                 />
               </div>
-
-              {/* Action Buttons */}
               <div className="flex justify-center space-x-4">
                 {!lastAnswerCorrect && (
                   <button
@@ -243,7 +224,6 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
                     <span>Try Again</span>
                   </button>
                 )}
-                
                 <button
                   onClick={handleNext}
                   className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"

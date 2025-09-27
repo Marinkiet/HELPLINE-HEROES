@@ -5,11 +5,14 @@ import { TouchScenarioGame } from './TouchScenarioGame';
 
 type GameStage = 'landing' | 'exploration' | 'scenarios' | 'complete';
 
+import { Game } from '../../data/games';
+
 interface SafeTouchGameContainerProps {
   onClose: () => void;
+  game: Game;
 }
 
-export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps) {
+export function SafeTouchGameContainer({ onClose, game }: SafeTouchGameContainerProps) {
   const [currentStage, setCurrentStage] = useState<GameStage>('landing');
 
   const handleStageComplete = (nextStage: GameStage) => {
@@ -17,11 +20,16 @@ export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps)
   };
 
   const renderCurrentStage = () => {
+    const welcomeSection = game.sections.find(s => s.section_type === 'welcome');
+    const explorationSection = game.sections.find(s => s.section_type === 'exploration');
+    const scenariosSection = game.sections.find(s => s.section_type === 'scenarios');
+
     switch (currentStage) {
       case 'landing':
         return (
           <GameLanding 
             onStartGame={() => handleStageComplete('exploration')}
+            section={welcomeSection}
           />
         );
       
@@ -29,6 +37,7 @@ export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps)
         return (
           <BodyPartsExploration
             onComplete={() => handleStageComplete('scenarios')}
+            section={explorationSection}
           />
         );
       
@@ -36,6 +45,7 @@ export function SafeTouchGameContainer({ onClose }: SafeTouchGameContainerProps)
         return (
           <TouchScenarioGame
             onComplete={onClose}
+            section={scenariosSection}
           />
         );
       
