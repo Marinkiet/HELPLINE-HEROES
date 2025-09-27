@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { EngagementProvider } from './contexts/EngagementContext';
@@ -8,7 +8,6 @@ import { Age5to7Page } from './components/Age5to7Page';
 import { Navigation } from './components/Navigation';
 import { CommunitySafetyModal } from './components/CommunitySafetyModal';
 import { PhoneVerificationModal } from './components/PhoneVerificationModal';
-import { EngagementDashboard } from './components/EngagementDashboard';
 import { FeaturedSection } from './components/FeaturedSection';
 import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
@@ -34,7 +33,13 @@ function AppContent() {
   const [isCommunitySafetyOpen, setIsCommunitySafetyOpen] = useState(false);
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
+
+  // Initialize engagement tracking when age group is selected
+  useEffect(() => {
+    if (selectedAgeGroup) {
+      engagementService.initializeSession(selectedAgeGroup, selectedLanguage);
+    }
+  }, [selectedAgeGroup, selectedLanguage]);
 
   // Track language changes
   useEffect(() => {
@@ -129,16 +134,9 @@ function AppContent() {
   };
 
   const handleAgeSelect = (ageGroup: AgeGroup) => {
-    const isFirstTimeSelection = selectedAgeGroup === null;
     setSelectedAgeGroup(ageGroup);
     if (ageGroup) {
-      if (isFirstTimeSelection) {
-        // Initialize session only on first age group selection
-        engagementService.initializeSession(ageGroup, selectedLanguage);
-      } else {
-        // Update existing session for subsequent changes
-        updateAgeGroup(ageGroup);
-      }
+      updateAgeGroup(ageGroup);
     }
   };
 
@@ -149,19 +147,6 @@ function AppContent() {
     // Track back to age selection
     trackInteraction('back_to_age_selection');
   };
-
-  const handleShowDashboard = () => {
-    setShowDashboard(true);
-  };
-
-  const handleCloseDashboard = () => {
-    setShowDashboard(false);
-  };
-
-  // Show dashboard if requested
-  if (showDashboard) {
-    return <EngagementDashboard />;
-  }
 
   // Show age selection if no age group is selected
   if (!selectedAgeGroup) {
@@ -174,7 +159,6 @@ function AppContent() {
       <Age5to7Page 
         onBackToAgeSelection={handleBackToAgeSelection}
         onCommunitySafetyClick={handleCommunitySafetyClick}
-        onShowDashboard={handleShowDashboard}
       />
     );
   }
@@ -182,11 +166,7 @@ function AppContent() {
   return (
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <Navigation 
-            onBackToAgeSelection={handleBackToAgeSelection}
-            onShowDashboard={handleShowDashboard}
-            onHelpServicesClick={handleCommunitySafetyClick}
-          />
+          <Navigation onBackToAgeSelection={handleBackToAgeSelection} />
           <div className="w-full"
           style={{
                   backgroundImage: `url(${kidsbg})`, 

@@ -11,14 +11,14 @@ import { games, Game } from '../data/games';
 import { appContent } from '../data/appContent';
 import kidsbg from '../assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './ReportBadTouchButton';
+import { AdultReportButton } from './AdultReportButton';
 
 interface Age5to7PageProps {
   onBackToAgeSelection: () => void;
   onCommunitySafetyClick: () => void;
-  onShowDashboard: () => void;
 }
 
-export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onShowDashboard }: Age5to7PageProps) {
+export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Age5to7PageProps) {
   const { selectedLanguage } = useAudio();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -91,11 +91,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
   return (
     <div className="min-h-screen bg-yellow-300">
       <div className="relative z-10">
-        <Navigation 
-          onBackToAgeSelection={onBackToAgeSelection}
-          onShowDashboard={onShowDashboard}
-          onHelpServicesClick={onCommunitySafetyClick}
-        />
+        <Navigation onBackToAgeSelection={onBackToAgeSelection} />
         <div className="w-full"
         style={{
                 backgroundImage: `url(${kidsbg})`, 
@@ -105,7 +101,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
               <div className="flex flex-col items-center justify-center mb-6">
                 {/* Main heading and button row */}
                 <div className="flex items-center justify-between w-full max-w-4xl px-8 mb-4">
-                  <div className="w-32"></div>
+                  <AdultReportButton onClick={onCommunitySafetyClick} />
                   <h1 className="text-4xl md:text-6xl font-black text-purple-800 leading-tight">
                     {appContent.hero.title[selectedLanguage].split(' ').slice(0, 3).join(' ')}
                     <br />

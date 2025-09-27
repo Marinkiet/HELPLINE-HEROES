@@ -39,7 +39,6 @@ export interface UserInteraction {
 class EngagementService {
   private sessionId: string;
   private sessionStartTime: number;
-  private isSessionInitialized: boolean = false;
   private currentGameSession: string | null = null;
   private gameStartTime: number | null = null;
   private screenTimeInterval: NodeJS.Timeout | null = null;
@@ -56,11 +55,6 @@ class EngagementService {
 
   // Initialize user session
   async initializeSession(ageGroup: 'early' | 'middle' | 'teen', language: string): Promise<void> {
-    // Check if session is already initialized
-    if (this.isSessionInitialized) {
-      return;
-    }
-
     try {
       // Get user location (optional)
       const location = await this.getUserLocation();
@@ -82,16 +76,8 @@ class EngagementService {
         .from('user_sessions')
         .insert(sessionData);
 
-      if (error && error.code !== '23505') {
+      if (error) {
         console.error('Error initializing session:', error);
-        return;
-      }
-      
-      // Mark session as initialized on success or if already exists
-      this.isSessionInitialized = true;
-      
-      if (error?.code === '23505') {
-        console.log('✅ Session already exists:', this.sessionId);
       } else {
         console.log('✅ User session initialized:', this.sessionId);
       }

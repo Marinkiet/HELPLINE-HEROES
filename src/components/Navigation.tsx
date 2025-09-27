@@ -1,15 +1,13 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe, ArrowLeft, BarChart3 } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe, ArrowLeft } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
 interface NavigationProps {
   onBackToAgeSelection?: () => void;
-  onShowDashboard?: () => void;
-  onHelpServicesClick?: () => void;
 }
 
-export function Navigation({ onBackToAgeSelection, onShowDashboard, onHelpServicesClick }: NavigationProps) {
+export function Navigation({ onBackToAgeSelection }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -53,18 +51,6 @@ export function Navigation({ onBackToAgeSelection, onShowDashboard, onHelpServic
                 ))}
               </select>
             </div>
-
-            {/* Help Services Button */}
-            {onHelpServicesClick && (
-              <button
-                onClick={onHelpServicesClick}
-                className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm"
-                aria-label="Access help services"
-              >
-                <Users className="w-4 h-4" />
-                <span>Help Services</span>
-              </button>
-            )}
 
             {/* Narration Toggle */}
             <button
@@ -111,18 +97,6 @@ export function Navigation({ onBackToAgeSelection, onShowDashboard, onHelpServic
                 ))}
               </select>
             </div>
-
-            {/* Mobile Help Services Button */}
-            {onHelpServicesClick && (
-              <button
-                onClick={onHelpServicesClick}
-                className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-bold transition-all duration-200 text-sm"
-                aria-label="Access help services"
-              >
-                <Users className="w-4 h-4" />
-                <span>Help Services</span>
-              </button>
-            )}
 
             {/* Mobile Narration Toggle */}
             <button
