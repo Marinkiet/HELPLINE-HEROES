@@ -8,7 +8,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface UserSession {
   session_id: string;
-  age_group: 'early' | 'middle' | 'teen';
+  age_group: string;
   language: string;
   location_country?: string;
   location_region?: string;
@@ -55,7 +55,7 @@ class EngagementService {
   }
 
   // Initialize user session
-  async initializeSession(ageGroup: 'early' | 'middle' | 'teen', language: string): Promise<void> {
+  async initializeSession(ageGroup: string, language: string): Promise<void> {
     // Check if session is already initialized
     if (this.isSessionInitialized) {
       return;
@@ -251,7 +251,7 @@ class EngagementService {
   }
 
   // Update age group
-  async updateAgeGroup(ageGroup: 'early' | 'middle' | 'teen'): Promise<void> {
+  async updateAgeGroup(ageGroup: string): Promise<void> {
     await this.updateSession({ age_group: ageGroup });
     await this.trackInteraction('age_group_change', { age_group: ageGroup });
   }

@@ -50,7 +50,7 @@
 CREATE TABLE IF NOT EXISTS user_sessions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   session_id text UNIQUE NOT NULL,
-  age_group text NOT NULL CHECK (age_group IN ('early', 'middle', 'teen')),
+  age_group text, --NOT NULL CHECK (age_group IN ('early', 'middle', 'teen')),
   language text NOT NULL DEFAULT 'en',
   location_country text,
   location_region text,

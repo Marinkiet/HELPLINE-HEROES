@@ -6,7 +6,7 @@ interface EngagementContextType {
   trackGameEnd: (pointsEarned?: number, completed?: boolean) => Promise<void>;
   trackInteraction: (type: string, data?: Record<string, any>) => Promise<void>;
   updateLanguage: (language: string) => Promise<void>;
-  updateAgeGroup: (ageGroup: 'early' | 'middle' | 'teen') => Promise<void>;
+  updateAgeGroup: (ageGroup: string) => Promise<void>;
 }
 
 const EngagementContext = createContext<EngagementContextType | undefined>(undefined);
@@ -32,7 +32,7 @@ export function EngagementProvider({ children }: EngagementProviderProps) {
     await engagementService.updateLanguage(language);
   };
 
-  const updateAgeGroup = async (ageGroup: 'early' | 'middle' | 'teen') => {
+  const updateAgeGroup = async (ageGroup: string) => {
     await engagementService.updateAgeGroup(ageGroup);
   };
 

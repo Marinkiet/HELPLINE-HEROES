@@ -13,14 +13,15 @@ import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
 import { SearchBar } from './components/SearchBar';
 import { GameModal } from './components/GameModal';
-import { games, Game } from './data/games';
+import { Game } from './data/games';
+import { getGamesByAgeGroup } from './services/supabaseService';
 import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './components/ReportBadTouchButton';
 import { AdultReportButton } from './components/AdultReportButton';
 import { engagementService } from './services/engagementService';
 
-type AgeGroup = 'early' | 'middle' | 'teen' | null;
+type AgeGroup = string | null;
 
 function AppContent() {
   const { selectedLanguage } = useAudio();
@@ -33,6 +34,17 @@ function AppContent() {
   const [isCommunitySafetyOpen, setIsCommunitySafetyOpen] = useState(false);
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [games, setGames] = useState<Game[]>([]);
+
+  useEffect(() => {
+    if (selectedAgeGroup) {
+      const fetchGames = async () => {
+        const gamesData = await getGamesByAgeGroup(selectedAgeGroup);
+        setGames(gamesData);
+      };
+      fetchGames();
+    }
+  }, [selectedAgeGroup]);
 
   // Track language changes
   useEffect(() => {
@@ -41,28 +53,7 @@ function AppContent() {
     }
   }, [selectedLanguage, selectedAgeGroup, updateLanguage]);
 
-  // Filter games based on selected age group
-  const filteredGames = useMemo(() => {
-    let filtered = games;
-    
-    // Filter by age group if selected
-    if (selectedAgeGroup) {
-      filtered = filtered.filter(game => game.ageGroup === selectedAgeGroup);
-    }
-    
-    if (selectedCategory) {
-      filtered = filtered.filter(game => game.category === selectedCategory);
-    }
-    
-    if (searchQuery) {
-      filtered = filtered.filter(game => 
-        game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        game.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    
-    return filtered;
-  }, [searchQuery, selectedCategory, selectedAgeGroup]);
+  
 
   const handleGameClick = (game: Game) => {
     setSelectedGame(game);
@@ -126,12 +117,14 @@ function AppContent() {
     setIsCommunitySafetyOpen(true);
   };
 
-  const handleAgeSelect = (ageGroup: AgeGroup) => {
-    const isFirstTimeSelection = selectedAgeGroup === null;
+  const handleAgeSelect = (ageGroup: string) => {
     setSelectedAgeGroup(ageGroup);
+    // The fetching of games is now handled by the useEffect hook.
+    // The engagementService can be updated here as well.
+    // Initialize session only on first age group selection
+
     if (ageGroup) {
-      if (isFirstTimeSelection) {
-        // Initialize session only on first age group selection
+      if (selectedAgeGroup === null) {
         engagementService.initializeSession(ageGroup, selectedLanguage);
       } else {
         // Update existing session for subsequent changes
@@ -202,7 +195,7 @@ function AppContent() {
             />
 
             <GameGrid 
-              games={filteredGames}
+              games={games}
               onGameClick={handleGameClick}
               filteredCategory={selectedCategory}
             />

@@ -1,112 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAudio } from '../contexts/AudioContext';
+import { getAgeGroups } from '../services/supabaseService';
 import kidsbg from '../assets/kidsbg.jpg';
-import starImg from '../assets/star.jpg';
-import bookImg from '../assets/book.jpg';
-import backpackImg from '../assets/backpack.jpg';
+
+interface AgeGroup {
+  id: string;
+  name: Record<string, string>;
+  description: Record<string, string>;
+  image_url: string;
+  age_range: string;
+}
 
 interface AgeSelectionProps {
-  onAgeSelect: (ageGroup: 'early' | 'middle' | 'teen') => void;
+  onAgeSelect: (ageGroup: string) => void;
 }
 
 export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
   const { selectedLanguage } = useAudio();
+  const [ageGroups, setAgeGroups] = useState<AgeGroup[]>([]);
 
-  const ageGroups = [
-    {
-      id: 'early' as const,
-      ageRange: '6-8',
-      title: {
-        en: 'Little Heroes',
-        af: 'Klein Helde',
-        zu: 'Amaqhawe Amancane',
-        xh: 'Amaqhawe Amancinci',
-        st: 'Liqhawe tse Nyane',
-        tn: 'Diqhakga tse Dinnye',
-        ts: 'Tiqhakga ta le Hansi',
-        ve: 'Magwala Maduku',
-        nr: 'Amaqhawe Amancane',
-        nso: 'Magwala a Mannye'
-      },
-      description: {
-        en: 'Fun activities for young children',
-        af: 'Prettige aktiwiteite vir jong kinders',
-        zu: 'Imisebenzi ejabulisayo yezingane ezincane',
-        xh: 'Imisebenzi emnandi yabantwana abancinci',
-        st: 'Mesebetsi e monate ea bana ba banyane',
-        tn: 'Ditiro tse di monate tsa bana ba bannye',
-        ts: 'Mintirho ya ntsakiso ya vana va vatsongo',
-        ve: 'Mishumo ya u tsakisa ya vhana vhaduku',
-        nr: 'Imisebenzi ejabulisayo yezingane ezincane',
-        nso: 'Mešomo ye mebotse ya bana ba bannye'
-      },
-      image: starImg,
-      bgColor: 'from-yellow-400 to-orange-500',
-      iconColor: 'text-yellow-600'
-    },
-    {
-      id: 'middle' as const,
-      ageRange: '9-11',
-      title: {
-        en: 'Smart Explorers',
-        af: 'Slim Ontdekkers',
-        zu: 'Abaphenyi Abahlakaniphile',
-        xh: 'Abaphandi Abahlakaniphileyo',
-        st: 'Bafuputsi ba Bohlale',
-        tn: 'Batlhatlhobi ba Botlhale',
-        ts: 'Vafuputsi va Vutlhari',
-        ve: 'Vhafuputsi vha Vhutshilo',
-        nr: 'Abaphenyi Abahlakaniphile',
-        nso: 'Bafuputši ba Bohlale'
-      },
-      description: {
-        en: 'Learning adventures for school-age kids',
-        af: 'Leeravonture vir skoolkinders',
-        zu: 'Izigigaba zokufunda zezingane zasesikoleni',
-        xh: 'Uhambo lokufunda lwabantwana abasesikolweni',
-        st: 'Dipalangwang tsa ho ithuta tsa bana ba sekolo',
-        tn: 'Dipalangwa tsa go ithuta tsa bana ba sekolo',
-        ts: 'Maendzo ya ku dyondza ya vana va xikolo',
-        ve: 'Zwiendedzo zwa u guda zwa vhana vha tshikolo',
-        nr: 'Izigigaba zokufunda zezingane zasesikoleni',
-        nso: 'Dipalangwa tša go ithuta tša bana ba sekolo'
-      },
-      image: bookImg,
-      bgColor: 'from-blue-400 to-purple-500',
-      iconColor: 'text-blue-600'
-    },
-    {
-      id: 'teen' as const,
-      ageRange: '12-14',
-      title: {
-        en: 'Young Leaders',
-        af: 'Jong Leiers',
-        zu: 'Abaholi Abasha',
-        xh: 'Iinkokeli Ezintsha',
-        st: 'Baetapele ba Bacha',
-        tn: 'Baeteledipele ba Basha',
-        ts: 'Varhangeri va Vantshwa',
-        ve: 'Vharangaphanḓa vha Vhatshena',
-        nr: 'Abaholi Abasha',
-        nso: 'Baetapele ba Baša'
-      },
-      description: {
-        en: 'Advanced safety skills for teens',
-        af: 'Gevorderde veiligheidsvaardighede vir tieners',
-        zu: 'Amakhono okuphepha aphakeme entsheni',
-        xh: 'Izakhono eziphakamileyo zokhuseleko kolutsha',
-        st: 'Tsebo e phahameng ea polokeho ea bacha',
-        tn: 'Bokgoni jo bo kwa godimo jwa pabalesego jwa basha',
-        ts: 'Vuswikoti bya le henhla bya vuhlayiseki bya vantshwa',
-        ve: 'Zwikili zwa nṱha zwa vhushai ha vhatshena',
-        nr: 'Amakhono okuphepha aphakeme entsheni',
-        nso: 'Bokgoni bjo bo phagamego bja polokego bja baša'
-      },
-      image: backpackImg,
-      bgColor: 'from-purple-400 to-pink-500',
-      iconColor: 'text-purple-600'
-    }
-  ];
+  useEffect(() => {
+    const fetchAgeGroups = async () => {
+      const data = await getAgeGroups();
+      setAgeGroups(data);
+    };
+    fetchAgeGroups();
+  }, []);
+
+  
 
   return (
     <div 
@@ -165,8 +86,8 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
               {/* Large Image */}
               <div className="mb-4 group-hover:animate-bounce">
                 <img 
-                  src={group.image} 
-                  alt={group.title[selectedLanguage]}
+                  src={group.image_url} 
+                  alt={group.name[selectedLanguage]}
                   className="w-12 h-12 md:w-20 md:h-20 object-cover rounded-full"
                 />
               </div>
@@ -174,10 +95,10 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
               {/* Age Range */}
               <div className="text-center">
                 <span className="text-2xl md:text-3xl font-black text-white">
-                  {group.ageRange}
+                  {group.age_range}
                 </span>
                 <p className="text-sm md:text-lg font-bold text-white/90 mt-1">
-                  {group.title[selectedLanguage]}
+                  {group.name[selectedLanguage]}
                 </p>
               </div>
             </button>
