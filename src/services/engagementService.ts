@@ -42,11 +42,17 @@ class EngagementService {
   private currentGameSession: string | null = null;
   private gameStartTime: number | null = null;
   private screenTimeInterval: NodeJS.Timeout | null = null;
+  private sessionInitialized: Promise<boolean>;
+  private sessionInitializedResolver: ((value: boolean) => void) | null = null;
 
   constructor() {
     this.sessionId = this.generateSessionId();
     this.sessionStartTime = Date.now();
-    this.startScreenTimeTracking();
+    
+    // Create a promise that resolves when session is initialized
+    this.sessionInitialized = new Promise((resolve) => {
+      this.sessionInitializedResolver = resolve;
+    });
   }
 
   private generateSessionId(): string {
@@ -78,23 +84,46 @@ class EngagementService {
 
       if (error) {
         console.error('Error initializing session:', error);
+        // Resolve with false to indicate failure
+        if (this.sessionInitializedResolver) {
+          this.sessionInitializedResolver(false);
+        }
       } else {
         console.log('✅ User session initialized:', this.sessionId);
+        // Resolve with true to indicate success
+        if (this.sessionInitializedResolver) {
+          this.sessionInitializedResolver(true);
+        }
+        // Start screen time tracking only after successful initialization
+        this.startScreenTimeTracking();
       }
 
       // Track session start interaction
-      await this.trackInteraction('session_start', {
-        age_group: ageGroup,
-        language: language,
-        location: location
-      });
+      if (!error) {
+        await this.trackInteraction('session_start', {
+          age_group: ageGroup,
+          language: language,
+          location: location
+        });
+      }
     } catch (error) {
       console.error('Error in initializeSession:', error);
+      // Resolve with false to indicate failure
+      if (this.sessionInitializedResolver) {
+        this.sessionInitializedResolver(false);
+      }
     }
   }
 
   // Update session data
   async updateSession(updates: Partial<UserSession>): Promise<void> {
+    // Wait for session to be initialized before updating
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session not initialized, skipping update');
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('user_sessions')
@@ -114,6 +143,13 @@ class EngagementService {
 
   // Start game session
   async startGameSession(gameId: string, gameName: string): Promise<void> {
+    // Wait for session to be initialized before starting game session
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session not initialized, skipping game session start');
+      return;
+    }
+
     try {
       this.currentGameSession = `game_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       this.gameStartTime = Date.now();
@@ -211,6 +247,13 @@ class EngagementService {
 
   // Track user interactions
   async trackInteraction(type: string, data: Record<string, any> = {}): Promise<void> {
+    // Wait for session to be initialized before tracking interactions
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session not initialized, skipping interaction tracking');
+      return;
+    }
+
     try {
       const interactionData: Partial<UserInteraction> = {
         session_id: this.sessionId,
@@ -232,12 +275,26 @@ class EngagementService {
 
   // Update language
   async updateLanguage(language: string): Promise<void> {
+    // Wait for session to be initialized before updating language
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session not initialized, skipping language update');
+      return;
+    }
+
     await this.updateSession({ language });
     await this.trackInteraction('language_change', { language });
   }
 
   // Update age group
   async updateAgeGroup(ageGroup: 'early' | 'middle' | 'teen'): Promise<void> {
+    // Wait for session to be initialized before updating age group
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session not initialized, skipping age group update');
+      return;
+    }
+
     await this.updateSession({ age_group: ageGroup });
     await this.trackInteraction('age_group_change', { age_group: ageGroup });
   }
@@ -284,6 +341,13 @@ class EngagementService {
 
   // End session (call when user leaves)
   async endSession(): Promise<void> {
+    // Wait for session to be initialized before ending session
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session was not initialized, skipping end session');
+      return;
+    }
+
     this.stopScreenTimeTracking();
     
     const finalScreenTime = Math.floor((Date.now() - this.sessionStartTime) / 1000);
