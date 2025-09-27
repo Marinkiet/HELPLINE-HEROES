@@ -973,7 +973,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-8">
           <div className="flex items-center mb-4">
             <TrendingUp className="w-5 h-5 text-gray-600 mr-2" />
-            <h3 className="text-xl font-bold text-gray-800">Provinces</h3>
+            <h3 className="text-xl font-bold text-gray-800">Cities</h3>
           </div>
           <div className="overflow-x-auto">
             <div className="flex items-end space-x-2 h-64 min-w-max">
