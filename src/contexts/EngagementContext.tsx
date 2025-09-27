@@ -43,9 +43,21 @@ export function EngagementProvider({ children }: EngagementProviderProps) {
     userAnswer: string, 
     correctAnswer: string, 
     isCorrect: boolean, 
-    responseTimeSeconds?: number
+    responseTimeSeconds?: number,
+    retryCount?: number,
+    firstAttemptCorrect?: boolean
   ) => {
-    await engagementService.trackQuestionResponse(gameId, questionId, questionText, userAnswer, correctAnswer, isCorrect, responseTimeSeconds);
+    await engagementService.trackQuestionResponse(
+      gameId, 
+      questionId, 
+      questionText, 
+      userAnswer, 
+      correctAnswer, 
+      isCorrect, 
+      responseTimeSeconds || 0,
+      retryCount || 0,
+      firstAttemptCorrect !== undefined ? firstAttemptCorrect : true
+    );
   };
 
   const value = {

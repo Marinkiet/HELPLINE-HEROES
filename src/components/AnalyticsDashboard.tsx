@@ -538,7 +538,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                 <Users className="w-6 h-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Users</p>
+                <p className="text-sm font-medium text-gray-600">Total Visits</p>
                 <p className="text-2xl font-bold text-gray-900">{data.totalUsers.toLocaleString()}</p>
               </div>
             </div>
