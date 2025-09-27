@@ -4,7 +4,14 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Check if Supabase credentials are available
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.warn('⚠️ Supabase credentials not found. Please check your .env file contains VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');
+}
+
+const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 export interface UserSession {
   session_id: string;
@@ -62,6 +69,15 @@ class EngagementService {
   // Initialize user session
   async initializeSession(ageGroup: 'early' | 'middle' | 'teen', language: string): Promise<void> {
     try {
+      // Check if Supabase is available
+      if (!supabase) {
+        console.warn('⚠️ Supabase not initialized. Session tracking disabled.');
+        if (this.sessionInitializedResolver) {
+          this.sessionInitializedResolver(false);
+        }
+        return;
+      }
+
       // Get user location (optional)
       const location = await this.getUserLocation();
       
@@ -124,6 +140,12 @@ class EngagementService {
       return;
     }
 
+    // Check if Supabase is available
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping session update');
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('user_sessions')
@@ -147,6 +169,12 @@ class EngagementService {
     const isInitialized = await this.sessionInitialized;
     if (!isInitialized) {
       console.warn('Session not initialized, skipping game session start');
+      return;
+    }
+
+    // Check if Supabase is available
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping game session start');
       return;
     }
 
@@ -185,7 +213,7 @@ class EngagementService {
 
   // End game session
   async endGameSession(pointsEarned: number = 0, completed: boolean = false): Promise<void> {
-    if (!this.currentGameSession || !this.gameStartTime) return;
+    if (!this.currentGameSession || !this.gameStartTime || !supabase) return;
 
     try {
       const endTime = Date.now();
@@ -251,6 +279,12 @@ class EngagementService {
     const isInitialized = await this.sessionInitialized;
     if (!isInitialized) {
       console.warn('Session not initialized, skipping interaction tracking');
+      return;
+    }
+
+    // Check if Supabase is available
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping interaction tracking');
       return;
     }
 
@@ -345,6 +379,12 @@ class EngagementService {
     const isInitialized = await this.sessionInitialized;
     if (!isInitialized) {
       console.warn('Session was not initialized, skipping end session');
+      return;
+    }
+
+    // Check if Supabase is available
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping end session');
       return;
     }
 
