@@ -17,13 +17,7 @@ export function CardGamesPage({ onBack }: CardGamesPageProps) {
           <div className="flex items-center justify-between h-20">
             {/* Left side - Logo and branding */}
             <div className="flex items-center space-x-4">
-              <button
-                onClick={onBack}
-                className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-colors duration-200 mr-4"
-                aria-label="Back to Home"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
+              {/* Back button moved to absolute positioning */}
               
               {/* Irish flag */}
               <div className="flex">
@@ -76,6 +70,17 @@ export function CardGamesPage({ onBack }: CardGamesPageProps) {
 
       {/* Main content */}
       <main className="relative overflow-hidden">
+        {/* Back Button */}
+        <div className="absolute top-4 left-4 z-10">
+          <button
+            onClick={onBack}
+            className="bg-white/20 hover:bg-white/30 text-gray-800 hover:text-gray-900 font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
+            aria-label="Go back to home"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
+        </div>
+
         {/* Background hourglass */}
         <div className="absolute inset-0 flex items-center justify-center opacity-20">
           <div className="text-yellow-600 text-9xl">⏳</div>

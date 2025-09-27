@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Phone, Shield, AlertTriangle, Ambulance, Car } from 'lucide-react';
+import { X, Phone, Shield, AlertTriangle, Ambulance, Car, ArrowLeft } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { appContent } from '../data/appContent';
 
@@ -97,6 +97,17 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
       <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
+        {/* Back Button */}
+        <div className="absolute top-4 left-4 z-10">
+          <button
+            onClick={onClose}
+            className="bg-white/20 hover:bg-white/30 text-gray-600 hover:text-gray-800 font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
+        </div>
+
         {/* Header */}
         <div className="bg-orange-500 text-white p-6 rounded-t-3xl relative">
           <div className="flex items-center justify-between">

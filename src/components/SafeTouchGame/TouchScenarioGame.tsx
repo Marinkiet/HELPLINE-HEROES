@@ -152,18 +152,16 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 p-4">
       <div className="max-w-4xl mx-auto">
-        {/* Back Button */}
-        {currentScenario > 0 && (
-          <div className="mb-4">
-            <button
-              onClick={handleBack}
-              className="bg-white/20 hover:bg-white/30 text-white font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
-              aria-label="Go back to previous question"
-            >
-              <ArrowLeft className="w-6 h-6" />
-            </button>
-          </div>
-        )}
+        {/* Back Button - Always show */}
+        <div className="absolute top-4 left-4 z-10">
+          <button
+            onClick={currentScenario > 0 ? handleBack : onComplete}
+            className="bg-white/20 hover:bg-white/30 text-white font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
+            aria-label={currentScenario > 0 ? "Go back to previous question" : "Exit game"}
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
+        </div>
 
         {/* Header */}
         <div className="flex justify-center items-center mb-6">

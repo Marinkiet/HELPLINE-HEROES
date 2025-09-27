@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Play, Volume2, Maximize } from 'lucide-react';
+import { X, Play, Volume2, Maximize, ArrowLeft } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { useEngagement } from '../contexts/EngagementContext';
 
@@ -95,6 +95,17 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUp
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-3xl p-6 max-w-4xl w-full max-h-[90vh] shadow-2xl transform animate-bounce-in overflow-hidden">
+        {/* Back Button */}
+        <div className="absolute top-4 left-4 z-10">
+          <button
+            onClick={handleClose}
+            className="bg-white/20 hover:bg-white/30 text-gray-600 hover:text-gray-800 font-bold p-3 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
+        </div>
+
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl font-black text-gray-800">{gameTitle}</h2>
           <button
