@@ -900,7 +900,8 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                       </div>
                     </div>
                   </div>
-                </div>
+                </>
+              )}
               </div>
             </div>
           </div>
