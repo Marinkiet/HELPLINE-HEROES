@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Shield, Heart, Users } from 'lucide-react';
+import { Star, Shield, Heart, Users, ExternalLink } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { appContent } from '../data/appContent';
 import { games } from '../data/games';
@@ -38,6 +38,9 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
     };
   });
 
+  const handle30SecondsClick = () => {
+    window.open('https://www.30seconds.ie/', '_blank');
+  };
   return (
     <div className=" rounded-3xl p-8 my-10 shadow-2xl ">
       <div className="flex items-center mb-6">
@@ -77,6 +80,20 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
             </div>
           </div>
         ))}
+      </div>
+      
+      {/* 30 Seconds Card Games Button */}
+      <div className="mt-8 text-center">
+        <button
+          onClick={handle30SecondsClick}
+          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-black py-4 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-3 mx-auto text-lg"
+        >
+          <ExternalLink className="w-6 h-6" />
+          <span>Play 30 Seconds Card Games</span>
+        </button>
+        <p className="text-white/80 text-sm mt-2 font-semibold">
+          Fun card games with similar educational content - Opens in new tab
+        </p>
       </div>
     </div>
   );
