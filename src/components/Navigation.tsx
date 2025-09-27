@@ -48,17 +48,7 @@ export function Navigation({ onBackToAgeSelection, onShowAnalytics }: Navigation
               </button>
             )}
 
-            {/* Analytics Button */}
-            {onShowAnalytics && (
-              <button
-                onClick={onShowAnalytics}
-                className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md hover:bg-gray-50 transition-colors duration-200"
-                aria-label="View Analytics"
-              >
-                <BarChart3 className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-semibold text-gray-700">Analytics</span>
-              </button>
-            )}
+  
 
             {/* Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
