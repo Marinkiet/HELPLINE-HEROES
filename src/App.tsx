@@ -3,6 +3,7 @@ import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { EngagementProvider } from './contexts/EngagementContext';
 import { useEngagement } from './contexts/EngagementContext';
+import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { AgeSelection } from './components/AgeSelection';
 import { Age5to7Page } from './components/Age5to7Page';
 import { Navigation } from './components/Navigation';
@@ -33,6 +34,7 @@ function AppContent() {
   const [isCommunitySafetyOpen, setIsCommunitySafetyOpen] = useState(false);
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   // Initialize engagement tracking when age group is selected
   useEffect(() => {
@@ -147,6 +149,11 @@ function AppContent() {
     // Track back to age selection
     trackInteraction('back_to_age_selection');
   };
+
+  // Show analytics dashboard
+  if (showAnalytics) {
+    return <AnalyticsDashboard />;
+  }
 
   // Show age selection if no age group is selected
   if (!selectedAgeGroup) {
