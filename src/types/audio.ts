@@ -4,7 +4,7 @@ export interface AudioConfig {
   voiceId?: string;
 }
 
-export interface GameAudio {
+interface GameAudio {
   welcome: Record<string, string>;
   bodyParts: Record<string, Record<string, string>>;
   scenarios: Record<string, Record<string, string>>;

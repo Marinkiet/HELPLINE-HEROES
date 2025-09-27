@@ -13,7 +13,7 @@ const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
-export interface UserSession {
+interface UserSession {
   session_id: string;
   age_group: 'early' | 'middle' | 'teen';
   language: string;
@@ -26,7 +26,7 @@ export interface UserSession {
   last_activity: string;
 }
 
-export interface GameSession {
+interface GameSession {
   session_id: string;
   game_id: string;
   game_name: string;
@@ -37,7 +37,7 @@ export interface GameSession {
   completed: boolean;
 }
 
-export interface UserInteraction {
+interface UserInteraction {
   session_id: string;
   interaction_type: string;
   interaction_data: Record<string, any>;
