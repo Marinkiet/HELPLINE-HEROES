@@ -4,12 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Check if environment variables are available
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase environment variables not found. Analytics will be disabled.');
-}
-
-const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface UserSession {
   session_id: string;
@@ -66,13 +61,6 @@ class EngagementService {
       return;
     }
 
-    // Skip if Supabase is not available
-    if (!supabase) {
-      console.warn('Supabase not available, skipping session initialization');
-      this.isSessionInitialized = true;
-      return;
-    }
-
     try {
       // Get user location (optional)
       const location = await this.getUserLocation();
@@ -121,11 +109,6 @@ class EngagementService {
 
   // Update session data
   async updateSession(updates: Partial<UserSession>): Promise<void> {
-    // Skip if Supabase is not available
-    if (!supabase) {
-      return;
-    }
-
     try {
       const { error } = await supabase
         .from('user_sessions')
@@ -145,12 +128,6 @@ class EngagementService {
 
   // Start game session
   async startGameSession(gameId: string, gameName: string): Promise<void> {
-    // Skip if Supabase is not available
-    if (!supabase) {
-      console.warn('Supabase not available, skipping game session tracking');
-      return;
-    }
-
     try {
       this.currentGameSession = `game_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       this.gameStartTime = Date.now();
@@ -187,14 +164,6 @@ class EngagementService {
   // End game session
   async endGameSession(pointsEarned: number = 0, completed: boolean = false): Promise<void> {
     if (!this.currentGameSession || !this.gameStartTime) return;
-
-    // Skip if Supabase is not available
-    if (!supabase) {
-      console.warn('Supabase not available, skipping game session end tracking');
-      this.currentGameSession = null;
-      this.gameStartTime = null;
-      return;
-    }
 
     try {
       const endTime = Date.now();
@@ -256,11 +225,6 @@ class EngagementService {
 
   // Track user interactions
   async trackInteraction(type: string, data: Record<string, any> = {}): Promise<void> {
-    // Skip if Supabase is not available
-    if (!supabase) {
-      return;
-    }
-
     try {
       const interactionData: Partial<UserInteraction> = {
         session_id: this.sessionId,
@@ -336,24 +300,14 @@ class EngagementService {
   async endSession(): Promise<void> {
     this.stopScreenTimeTracking();
     
-    // Skip if Supabase is not available
-    if (!supabase) {
-      console.log('📊 Session ended (offline mode):', this.sessionId);
-      return;
-    }
+    const finalScreenTime = Math.floor((Date.now() - this.sessionStartTime) / 1000);
+    await this.updateSession({ screen_time_seconds: finalScreenTime });
+    
+    await this.trackInteraction('session_end', {
+      total_screen_time: finalScreenTime
+    });
 
-    try {
-      const finalScreenTime = Math.floor((Date.now() - this.sessionStartTime) / 1000);
-      await this.updateSession({ screen_time_seconds: finalScreenTime });
-      
-      await this.trackInteraction('session_end', {
-        total_screen_time: finalScreenTime
-      });
-
-      console.log('📊 Session ended:', this.sessionId);
-    } catch (error) {
-      console.error('Error ending session:', error);
-    }
+    console.log('📊 Session ended:', this.sessionId);
   }
 }
 

@@ -18,6 +18,7 @@ import { games, Game } from './data/games';
 import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './components/ReportBadTouchButton';
+import { AdultReportButton } from './components/AdultReportButton';
 import { engagementService } from './services/engagementService';
 
 type AgeGroup = 'early' | 'middle' | 'teen' | null;
@@ -184,7 +185,7 @@ function AppContent() {
           <Navigation 
             onBackToAgeSelection={handleBackToAgeSelection}
             onShowDashboard={handleShowDashboard}
-            onReportSuspiciousBehavior={handleCommunitySafetyClick}
+            onHelpServicesClick={handleCommunitySafetyClick}
           />
           <div className="w-full"
           style={{
@@ -199,7 +200,7 @@ function AppContent() {
                     <h1 className="text-4xl md:text-6xl font-black text-purple-800 leading-tight">
                       {appContent.hero.title[selectedLanguage].split(' ').slice(0, 3).join(' ')}
                       <br />
-                  <div className="w-32"></div>
+                      {appContent.hero.title[selectedLanguage].split(' ').slice(3).join(' ')}
                     </h1>
                     <ReportBadTouchButton />
                   </div>
