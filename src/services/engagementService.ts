@@ -305,7 +305,8 @@ class EngagementService {
         console.error('Error tracking interaction:', error);
       }
     } catch (error) {
-      console.error('Error in trackInteraction:', error);
+      console.warn('⚠️ Failed to track interaction (network/connection issue):', error);
+      // Don't throw the error - just log it and continue
     }
   }
 
@@ -439,6 +440,7 @@ class EngagementService {
       return;
     }
 
+    try {
     this.stopScreenTimeTracking();
     
     const finalScreenTime = Math.floor((Date.now() - this.sessionStartTime) / 1000);
@@ -449,6 +451,11 @@ class EngagementService {
     });
 
     console.log('📊 Session ended:', this.sessionId);
+    } catch (error) {
+      console.warn('⚠️ Failed to end session properly (network/connection issue):', error);
+      // Still stop screen time tracking even if network fails
+      this.stopScreenTimeTracking();
+    }
   }
 }
 
