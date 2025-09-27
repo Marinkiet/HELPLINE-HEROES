@@ -4,6 +4,7 @@ import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { braveVoiceContent } from '../../data/braveVoiceContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
+import doctorJpg from '../../assets/doctor.jpg';
 
 interface BraveVoiceExplorationProps {
   onComplete: () => void;
@@ -183,7 +184,7 @@ export function BraveVoiceExploration({ onComplete }: BraveVoiceExplorationProps
             <div className="mb-8">
               <div className="bg-gray-50 rounded-2xl p-6 text-center">
                 <img 
-                  src="../../assets/doctor.jpg"
+                  src={doctorJpg}
                   alt="Educational content illustration"
                   className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
                   onError={(e) => {

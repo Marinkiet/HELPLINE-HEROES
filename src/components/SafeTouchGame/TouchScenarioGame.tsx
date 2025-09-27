@@ -5,6 +5,9 @@ import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
+import doctorGif from '../../assets/doctor.gif';
+import strangerGif from '../../assets/stranger.gif';
+import bathtimeMp4 from '../../assets/bathtime.mp4';
 
 interface TouchScenarioGameProps {
   onComplete: () => void;
@@ -171,7 +174,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 0 && (
             <div className="flex justify-center mb-6">
               <img 
-                src="../../assets/doctor.gif" 
+                src={doctorGif} 
                 alt="Doctor examining patient"
                 className="w-100 h-auto rounded-lg"
               />
@@ -180,7 +183,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 1 && (
             <div className="flex justify-center mb-6">
               <img 
-                src="../../assets/stranger.gif" 
+                src={strangerGif} 
                 alt="Stranger offering candy"
                 className="w-100 h-auto rounded-lg"
               />
@@ -189,7 +192,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 2 && (
             <div className="flex justify-center mb-6">
               <video 
-                src="../../assets/bathtime.mp4" 
+                src={bathtimeMp4} 
                 autoPlay
                 loop
                 muted

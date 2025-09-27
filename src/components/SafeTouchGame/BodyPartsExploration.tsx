@@ -3,6 +3,8 @@ import { Sun, ArrowRight, Check } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
+import upperGif from '../../assets/upper.gif';
+import lowerGif from '../../assets/lower.gif';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BodyPartsExplorationProps {
@@ -97,7 +99,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                 <div className="relative">
                   {currentBodyPart === 'upperBody' ? (
                     <img 
-                      src="../../assets/upper.gif" 
+                      src={upperGif} 
                       alt="Upper body safety diagram"
                       className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
                       onMouseEnter={() => handleBodyPartHover('chest')}
@@ -105,7 +107,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                     />
                   ) : (
                     <img 
-                      src="../../assets/lower.gif" 
+                      src={lowerGif} 
                       alt="Lower body safety diagram"
                       className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
                       onMouseEnter={() => handleBodyPartHover('private')}
