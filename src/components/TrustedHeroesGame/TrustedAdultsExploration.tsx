@@ -7,8 +7,9 @@ import { elevenLabsService } from '../../services/elevenLabsService';
 import therapist from '../../assets/therapist.jpg';
 import doctor from '../../assets/doctor.jpg';
 import teacher from '../../assets/teacher.jpg';
-import home from '../../assets/home.jpg';
+import family from '../../assets/family.jpg';
 import police from '../../assets/police.jpg';
+import fatherSon from '../../assets/fatherSon.jpg'
 
 interface TrustedAdultsExplorationProps {
   onComplete: () => void;
@@ -33,7 +34,7 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
   const getAdultTypeImage = (adultType: string) => {
     switch (adultType) {
       case 'parents':
-        return home;
+        return family;
       case 'teachers':
         return teacher;
       case 'doctors':
@@ -272,6 +273,21 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
               </p>
             </div>
 
+            {currentSection === 'definition' && (
+              <div className="mb-8">
+                <div className="bg-gray-50 rounded-2xl p-6 text-center">
+                  <img 
+                    src={fatherSon}
+                    alt="Trusted adult"
+                    className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
+                  />
+                  <p className="text-sm text-gray-600 mt-3 font-semibold">
+                    What is a Trusted Adult?
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Image Display Area - Only show in types section when an adult type is selected */}
             {currentSection === 'types' && selectedAdultType && (
               <div className="mb-8">
@@ -280,11 +296,6 @@ export function TrustedAdultsExploration({ onComplete }: TrustedAdultsExploratio
                     src={getAdultTypeImage(selectedAdultType)}
                     alt={`${selectedAdultType} trusted adults`}
                     className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
-                    onError={(e) => {
-                      // Fallback to a placeholder if image doesn't exist
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
-                    }}
                   />
                   <p className="text-sm text-gray-600 mt-3 font-semibold">
                     {adultTypes.find(type => type.key === selectedAdultType)?.title}
