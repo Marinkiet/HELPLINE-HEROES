@@ -183,7 +183,7 @@ export function BraveVoiceExploration({ onComplete }: BraveVoiceExplorationProps
             <div className="mb-8">
               <div className="bg-gray-50 rounded-2xl p-6 text-center">
                 <img 
-                  src="/src/assets/doctor.jpg"
+                  src="../../assets/doctor.jpg"
                   alt="Educational content illustration"
                   className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
                   onError={(e) => {

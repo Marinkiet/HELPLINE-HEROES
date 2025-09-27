@@ -171,7 +171,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 0 && (
             <div className="flex justify-center mb-6">
               <img 
-                src="/src/assets/doctor.gif" 
+                src="../../assets/doctor.gif" 
                 alt="Doctor examining patient"
                 className="w-100 h-auto rounded-lg"
               />
@@ -180,7 +180,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 1 && (
             <div className="flex justify-center mb-6">
               <img 
-                src="/src/assets/stranger.gif" 
+                src="../../assets/stranger.gif" 
                 alt="Stranger offering candy"
                 className="w-100 h-auto rounded-lg"
               />
@@ -189,7 +189,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 2 && (
             <div className="flex justify-center mb-6">
               <video 
-                src="/src/assets/bathtime.mp4" 
+                src="../../assets/bathtime.mp4" 
                 autoPlay
                 loop
                 muted
