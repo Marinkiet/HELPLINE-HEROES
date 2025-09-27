@@ -387,68 +387,22 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
         .limit(15);
 
       if (gameSessionsError) throw gameSessionsError;
-      // Fetch provinces and cities data
-      const provincesQuery = supabase
-        .from('user_sessions')
-        .select('location_country, location_region, location_city')
-        .gte('created_at', startDate.toISOString())
-        .not('location_region', 'is', null);
-
 
       // Fetch recent question responses
       const { data: recentQuestions, error: questionsError } = await supabase
         .from('question_responses')
-        questionsQuery,
-        provincesQuery
+        .select('*')
         .gte('created_at', daysAgo.toISOString())
         .order('created_at', { ascending: false })
         .limit(15);
 
       if (questionsError) throw questionsError;
 
-      if (provincesResult.error) throw provincesResult.error;
       setTrackingData({
         recentSessions: recentSessions || [],
         recentInteractions: recentInteractions || [],
         recentGameSessions: recentGameSessions || [],
         recentQuestions: recentQuestions || []
-      
-      // Process provinces data
-      const provincesMap = new Map();
-      (provincesResult.data || []).forEach((session: any) => {
-        if (session.location_region && session.location_country === 'South Africa') {
-          const province = session.location_region;
-          const city = session.location_city || 'Unknown City';
-          
-          if (!provincesMap.has(province)) {
-            provincesMap.set(province, {
-              name: province,
-              userCount: 0,
-              cities: new Map()
-            });
-          }
-          
-          const provinceData = provincesMap.get(province);
-          provinceData.userCount += 1;
-          
-          if (!provinceData.cities.has(city)) {
-            provinceData.cities.set(city, 0);
-          }
-          provinceData.cities.set(city, provinceData.cities.get(city) + 1);
-        }
-      });
-      
-      // Convert to array and sort by user count
-      const provincesArray = Array.from(provincesMap.values())
-        .map(province => ({
-          ...province,
-          cities: Array.from(province.cities.entries())
-            .map(([name, count]) => ({ name, count }))
-            .sort((a, b) => b.count - a.count)
-        }))
-        .sort((a, b) => b.userCount - a.userCount);
-      
-      setProvincesData(provincesArray);
       });
     } catch (error) {
       console.error('Error fetching tracking data:', error);
@@ -722,6 +676,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                 <div className="prose max-w-none">
                   <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans">
                     {aiSuggestions}
+                  </pre>
                 </div>
               </div>
             </div>
