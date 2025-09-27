@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star, Shield, Heart, Users, ExternalLink } from 'lucide-react';
-import { useAppContent } from '../hooks/useContent';
+import { useAudio } from '../contexts/AudioContext';
+import { appContent } from '../data/appContent';
 import { games } from '../data/games';
 import shout from '../assets/shout.jpg';
 import hug from '../assets/hug.jpg';
@@ -12,7 +13,8 @@ interface FeaturedSectionProps {
 }
 
 export function FeaturedSection({ onGameClick, onCardGamesClick }: FeaturedSectionProps) {
-  const featuredTitle = useAppContent('featured.title');
+  const { selectedLanguage } = useAudio();
+  const featuredTitle = appContent.featured.title[selectedLanguage];
   
   // Get the first 3 games (which should always be the main games regardless of age filtering)
   const mainGames = games.filter(game => ['1', '2', '3'].includes(game.id));
