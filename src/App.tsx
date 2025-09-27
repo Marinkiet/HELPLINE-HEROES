@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useAudio } from './contexts/AudioContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { EngagementProvider } from './contexts/EngagementContext';
@@ -73,8 +73,8 @@ function AppContent() {
     
     if (searchQuery) {
       filtered = filtered.filter(game => 
-        game.title[selectedLanguage].toLowerCase().includes(searchQuery.toLowerCase()) ||
-        game.description[selectedLanguage].toLowerCase().includes(searchQuery.toLowerCase())
+        game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        game.description.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     

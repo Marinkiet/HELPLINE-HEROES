@@ -17,19 +17,26 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
   const [showTrustedAdults, setShowTrustedAdults] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hoveredArea, setHoveredArea] = useState<string>('');
+  const [hoveredArea, setHoveredArea] = useState<string>('chest'); // Default to show content immediately
+
+  useEffect(() => {
+    // Always show content for the current body part when it changes
+    if (currentBodyPart === 'upperBody') {
+      setHoveredArea('chest');
+    } else {
+      setHoveredArea('private');
+    }
+  }, [currentBodyPart]);
 
   useEffect(() => {
     if (showTrustedAdults) {
       generateTrustedAdultsAudio();
-    } else if (hoveredArea) {
+    } else {
       generateBodyPartAudio();
     }
-  }, [selectedLanguage, currentBodyPart, showTrustedAdults, hoveredArea]);
+  }, [selectedLanguage, currentBodyPart, showTrustedAdults]);
 
   const generateBodyPartAudio = async () => {
-    if (!hoveredArea) return;
-    
     try {
       const text = gameContent.bodyParts[currentBodyPart][selectedLanguage];
       console.log('Generating body part audio:', text.substring(0, 50) + '...');
@@ -101,17 +108,13 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                     <img 
                       src={upperGif} 
                       alt="Upper body safety diagram"
-                      className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
-                      onMouseEnter={() => handleBodyPartHover('chest')}
-                      onMouseLeave={() => setHoveredArea('')}
+                      className="w-80 h-auto border-2 border-gray-200 rounded-lg"
                     />
                   ) : (
                     <img 
                       src={lowerGif} 
                       alt="Lower body safety diagram"
-                      className="w-80 h-auto border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition-colors"
-                      onMouseEnter={() => handleBodyPartHover('private')}
-                      onMouseLeave={() => setHoveredArea('')}
+                      className="w-80 h-auto border-2 border-gray-200 rounded-lg"
                     />
                   )}
                 </div>
@@ -192,9 +195,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
               <p className="text-lg text-gray-700 leading-relaxed">
                 {showTrustedAdults 
                   ? gameContent.trustedAdults[selectedLanguage]
-                  : hoveredArea 
-                    ? gameContent.bodyParts[currentBodyPart][selectedLanguage]
-                    : ""
+                  : gameContent.bodyParts[currentBodyPart][selectedLanguage]
                 }
               </p>
             </div>
