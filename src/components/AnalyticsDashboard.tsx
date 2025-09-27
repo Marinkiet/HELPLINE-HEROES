@@ -1,22 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { 
-  Users, 
-  Globe, 
-  Clock, 
-  Trophy, 
-  TrendingUp, 
-  MapPin, 
-  Languages,
-  GamepadIcon,
-  BarChart3,
-  PieChart,
-  Activity,
-  Calendar,
-  ArrowLeft
-} from 'lucide-react';
-
-// Initialize Supabase client
+import { Users, Globe, Clock, Trophy, TrendingUp, MapPin, Languages, Gamepad as GamepadIcon, BarChart3, PieChart, Activity, Calendar, ArrowLeft } from 'lucide-react'ize Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -35,11 +19,7 @@ interface AnalyticsData {
   topCountries: { country: string; users: number; avg_screen_time: number }[];
 }
 
-interface AnalyticsDashboardProps {
-  onBack?: () => void;
-}
-
-export function AnalyticsDashboard({ onBack }: AnalyticsDashboardProps) {
+export function AnalyticsDashboard() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -266,15 +246,6 @@ export function AnalyticsDashboard({ onBack }: AnalyticsDashboardProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              {onBack && (
-                <button
-                  onClick={onBack}
-                  className="mb-4 flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Back to App</span>
-                </button>
-              )}
               <h1 className="text-3xl font-bold text-gray-900">Trustline Heroes Analytics</h1>
               <p className="text-gray-600 mt-1">User engagement and app performance insights</p>
             </div>
