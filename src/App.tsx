@@ -185,6 +185,7 @@ function AppContent() {
           <Navigation 
             onBackToAgeSelection={handleBackToAgeSelection}
             onShowDashboard={handleShowDashboard}
+            onHelpServicesClick={handleCommunitySafetyClick}
           />
           <div className="w-full"
           style={{

@@ -94,6 +94,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
         <Navigation 
           onBackToAgeSelection={onBackToAgeSelection}
           onShowDashboard={onShowDashboard}
+          onHelpServicesClick={onCommunitySafetyClick}
         />
         <div className="w-full"
         style={{
