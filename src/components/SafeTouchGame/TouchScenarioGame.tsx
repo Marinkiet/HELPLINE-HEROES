@@ -71,6 +71,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
   };
 
   const handleAnswer = (answer: 'good' | 'bad') => {
+    const startTime = Date.now();
     const isCorrect = answer === currentScenarioData.correctAnswer;
     setLastAnswerCorrect(isCorrect);
     setShowFeedback(true);
@@ -79,14 +80,16 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
       setScore(score + 1);
     }
 
-    // Track answer
-    trackInteraction('game_answer', {
-      game_id: 'safe_touch_detective',
-      scenario_id: currentScenario,
-      answer: answer,
-      correct: isCorrect,
-      current_score: isCorrect ? score + 1 : score
-    });
+    // Track detailed question response
+    trackQuestionResponse(
+      'safe_touch_detective',
+      `scenario_${currentScenario + 1}`,
+      currentScenarioData[selectedLanguage],
+      answer,
+      currentScenarioData.correctAnswer,
+      isCorrect,
+      Math.floor((Date.now() - startTime) / 1000)
+    );
   };
 
   const handleNext = () => {

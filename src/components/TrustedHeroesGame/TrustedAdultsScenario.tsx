@@ -71,6 +71,7 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
   };
 
   const handleAnswer = (answer: 'trustworthy' | 'untrustworthy') => {
+    const startTime = Date.now();
     const isCorrect = answer === currentScenarioData.correctAnswer;
     setLastAnswerCorrect(isCorrect);
     setShowFeedback(true);
@@ -79,14 +80,16 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
       setScore(score + 1);
     }
 
-    // Track answer
-    trackInteraction('game_answer', {
-      game_id: 'trusted_heroes_circle',
-      scenario_id: currentScenario,
-      answer: answer,
-      correct: isCorrect,
-      current_score: isCorrect ? score + 1 : score
-    });
+    // Track detailed question response
+    trackQuestionResponse(
+      'trusted_heroes_circle',
+      `scenario_${currentScenario + 1}`,
+      currentScenarioData[selectedLanguage],
+      answer,
+      currentScenarioData.correctAnswer,
+      isCorrect,
+      Math.floor((Date.now() - startTime) / 1000)
+    );
   };
 
   const handleNext = () => {

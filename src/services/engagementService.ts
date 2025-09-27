@@ -307,6 +307,55 @@ class EngagementService {
     }
   }
 
+  // Track question responses for analytics
+  async trackQuestionResponse(
+    gameId: string, 
+    questionId: string, 
+    questionText: string, 
+    userAnswer: string, 
+    correctAnswer: string, 
+    isCorrect: boolean, 
+    responseTimeSeconds: number = 0
+  ): Promise<void> {
+    // Wait for session to be initialized before tracking
+    const isInitialized = await this.sessionInitialized;
+    if (!isInitialized) {
+      console.warn('Session not initialized, skipping question response tracking');
+      return;
+    }
+
+    // Check if Supabase is available
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping question response tracking');
+      return;
+    }
+
+    try {
+      const questionResponseData = {
+        session_id: this.sessionId,
+        game_id: gameId,
+        question_id: questionId,
+        question_text: questionText,
+        user_answer: userAnswer,
+        correct_answer: correctAnswer,
+        is_correct: isCorrect,
+        response_time_seconds: responseTimeSeconds
+      };
+
+      const { error } = await supabase
+        .from('question_responses')
+        .insert(questionResponseData);
+
+      if (error) {
+        console.error('Error tracking question response:', error);
+      } else {
+        console.log('✅ Question response tracked:', { gameId, questionId, isCorrect });
+      }
+    } catch (error) {
+      console.error('Error in trackQuestionResponse:', error);
+    }
+  }
+
   // Update language
   async updateLanguage(language: string): Promise<void> {
     // Wait for session to be initialized before updating language

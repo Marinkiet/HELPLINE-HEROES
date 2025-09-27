@@ -36,12 +36,25 @@ export function EngagementProvider({ children }: EngagementProviderProps) {
     await engagementService.updateAgeGroup(ageGroup);
   };
 
+  const trackQuestionResponse = async (
+    gameId: string, 
+    questionId: string, 
+    questionText: string, 
+    userAnswer: string, 
+    correctAnswer: string, 
+    isCorrect: boolean, 
+    responseTimeSeconds?: number
+  ) => {
+    await engagementService.trackQuestionResponse(gameId, questionId, questionText, userAnswer, correctAnswer, isCorrect, responseTimeSeconds);
+  };
+
   const value = {
     trackGameStart,
     trackGameEnd,
     trackInteraction,
     updateLanguage,
-    updateAgeGroup
+    updateAgeGroup,
+    trackQuestionResponse
   };
 
   return (

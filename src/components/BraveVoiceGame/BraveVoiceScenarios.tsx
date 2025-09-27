@@ -71,6 +71,7 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
   };
 
   const handleAnswer = (answer: 'tell_trusted_adult' | 'use_brave_voice' | 'tell_another_adult') => {
+    const startTime = Date.now();
     const isCorrect = answer === currentScenarioData.correctAnswer;
     setLastAnswerCorrect(isCorrect);
     setShowFeedback(true);
@@ -79,14 +80,16 @@ export function BraveVoiceScenarios({ onComplete }: BraveVoiceScenariosProps) {
       setScore(score + 1);
     }
 
-    // Track answer
-    trackInteraction('game_answer', {
-      game_id: 'brave_voice',
-      scenario_id: currentScenario,
-      answer: answer,
-      correct: isCorrect,
-      current_score: isCorrect ? score + 1 : score
-    });
+    // Track detailed question response
+    trackQuestionResponse(
+      'brave_voice',
+      `scenario_${currentScenario + 1}`,
+      currentScenarioData[selectedLanguage],
+      answer,
+      currentScenarioData.correctAnswer,
+      isCorrect,
+      Math.floor((Date.now() - startTime) / 1000)
+    );
   };
 
   const handleNext = () => {

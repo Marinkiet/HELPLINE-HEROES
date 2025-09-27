@@ -19,6 +19,13 @@ interface AnalyticsData {
   gameCompletionRates: { game_id: string; game_name: string; completion_rate: number }[];
   averageSessionTime: number;
   topProvinces: { province: string; users: number; avg_screen_time: number }[];
+  questionAnalytics: {
+    totalQuestions: number;
+    overallAccuracy: number;
+    gameAccuracy: { game_id: string; game_name: string; accuracy: number; total_responses: number }[];
+    difficultQuestions: { question_id: string; question_text: string; game_id: string; accuracy: number; total_responses: number }[];
+    commonWrongAnswers: { question_id: string; question_text: string; wrong_answer: string; count: number }[];
+  };
 }
 
 export function AnalyticsDashboard() {
@@ -26,6 +33,9 @@ export function AnalyticsDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [dateRange, setDateRange] = useState('7'); // days
+  const [showAISuggestions, setShowAISuggestions] = useState(false);
+  const [aiSuggestions, setAiSuggestions] = useState<string>('');
+  const [loadingAI, setLoadingAI] = useState(false);
 
   useEffect(() => {
     fetchAnalyticsData();
@@ -55,8 +65,16 @@ export function AnalyticsDashboard() {
 
       if (gameError) throw gameError;
 
+      // Fetch question responses data
+      const { data: questionResponses, error: questionError } = await supabase
+        .from('question_responses')
+        .select('*')
+        .gte('created_at', daysAgo.toISOString());
+
+      if (questionError) throw questionError;
+
       // Process the data
-      const analyticsData = processAnalyticsData(userSessions || [], gameSessions || []);
+      const analyticsData = processAnalyticsData(userSessions || [], gameSessions || [], questionResponses || []);
       setData(analyticsData);
     } catch (err) {
       console.error('Error fetching analytics:', err);
@@ -66,7 +84,7 @@ export function AnalyticsDashboard() {
     }
   };
 
-  const processAnalyticsData = (userSessions: any[], gameSessions: any[]): AnalyticsData => {
+  const processAnalyticsData = (userSessions: any[], gameSessions: any[], questionResponses: any[]): AnalyticsData => {
     // Basic metrics
     const totalUsers = userSessions.length;
     const totalScreenTime = userSessions.reduce((sum, session) => sum + (session.screen_time_seconds || 0), 0);
@@ -161,6 +179,86 @@ export function AnalyticsDashboard() {
       .sort((a, b) => b.users - a.users)
       .slice(0, 10);
 
+    // Question Analytics
+    const totalQuestions = questionResponses.length;
+    const correctAnswers = questionResponses.filter(q => q.is_correct).length;
+    const overallAccuracy = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+
+    // Game accuracy breakdown
+    const gameAccuracyStats = questionResponses.reduce((acc, response) => {
+      const gameId = response.game_id;
+      if (!acc[gameId]) {
+        acc[gameId] = { total: 0, correct: 0, name: getGameName(gameId) };
+      }
+      acc[gameId].total += 1;
+      if (response.is_correct) acc[gameId].correct += 1;
+      return acc;
+    }, {} as Record<string, { total: number; correct: number; name: string }>);
+
+    const gameAccuracy = Object.entries(gameAccuracyStats).map(([game_id, stats]) => ({
+      game_id,
+      game_name: stats.name,
+      accuracy: stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0,
+      total_responses: stats.total
+    }));
+
+    // Difficult questions (low accuracy)
+    const questionStats = questionResponses.reduce((acc, response) => {
+      const questionId = response.question_id;
+      if (!acc[questionId]) {
+        acc[questionId] = { 
+          total: 0, 
+          correct: 0, 
+          text: response.question_text,
+          game_id: response.game_id 
+        };
+      }
+      acc[questionId].total += 1;
+      if (response.is_correct) acc[questionId].correct += 1;
+      return acc;
+    }, {} as Record<string, { total: number; correct: number; text: string; game_id: string }>);
+
+    const difficultQuestions = Object.entries(questionStats)
+      .map(([question_id, stats]) => ({
+        question_id,
+        question_text: stats.text,
+        game_id: stats.game_id,
+        accuracy: stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0,
+        total_responses: stats.total
+      }))
+      .filter(q => q.total_responses >= 5) // Only questions with at least 5 responses
+      .sort((a, b) => a.accuracy - b.accuracy)
+      .slice(0, 10);
+
+    // Common wrong answers
+    const wrongAnswerStats = questionResponses
+      .filter(response => !response.is_correct)
+      .reduce((acc, response) => {
+        const key = `${response.question_id}_${response.user_answer}`;
+        if (!acc[key]) {
+          acc[key] = {
+            question_id: response.question_id,
+            question_text: response.question_text,
+            wrong_answer: response.user_answer,
+            count: 0
+          };
+        }
+        acc[key].count += 1;
+        return acc;
+      }, {} as Record<string, { question_id: string; question_text: string; wrong_answer: string; count: number }>);
+
+    const commonWrongAnswers = Object.values(wrongAnswerStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    const questionAnalytics = {
+      totalQuestions,
+      overallAccuracy,
+      gameAccuracy,
+      difficultQuestions,
+      commonWrongAnswers
+    };
+
     return {
       totalUsers,
       totalScreenTime,
@@ -172,8 +270,82 @@ export function AnalyticsDashboard() {
       dailyActivity,
       gameCompletionRates,
       averageSessionTime,
-      topProvinces
+      topProvinces,
+      questionAnalytics
     };
+  };
+
+  const getGameName = (gameId: string): string => {
+    const gameNames: Record<string, string> = {
+      'safe_touch_detective': 'Safe Touch Detective',
+      'trusted_heroes_circle': 'Trusted Heroes Circle',
+      'brave_voice': 'Brave Voice'
+    };
+    return gameNames[gameId] || gameId;
+  };
+
+  const generateAISuggestions = async () => {
+    if (!data) return;
+    
+    setLoadingAI(true);
+    try {
+      // Prepare data for AI analysis
+      const analysisData = {
+        overallAccuracy: data.questionAnalytics.overallAccuracy,
+        gameAccuracy: data.questionAnalytics.gameAccuracy,
+        difficultQuestions: data.questionAnalytics.difficultQuestions.slice(0, 5),
+        commonWrongAnswers: data.questionAnalytics.commonWrongAnswers.slice(0, 5),
+        totalResponses: data.questionAnalytics.totalQuestions
+      };
+
+      // Note: In a real implementation, you would call OpenAI GPT API here
+      // For now, we'll simulate the response
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
+      
+      const mockSuggestions = `
+## AI Analysis & Improvement Suggestions
+
+### Overall Performance
+- **Accuracy Rate**: ${data.questionAnalytics.overallAccuracy}% (${data.questionAnalytics.totalQuestions} total responses)
+- **Status**: ${data.questionAnalytics.overallAccuracy >= 70 ? '✅ Good' : '⚠️ Needs Improvement'}
+
+### Game-Specific Insights
+${data.questionAnalytics.gameAccuracy.map(game => `
+**${game.game_name}**: ${game.accuracy}% accuracy (${game.total_responses} responses)
+${game.accuracy < 60 ? '- 🔴 Consider simplifying questions or adding visual aids' : 
+  game.accuracy < 80 ? '- 🟡 Good performance, minor improvements possible' : 
+  '- 🟢 Excellent performance'}
+`).join('')}
+
+### Most Challenging Questions
+${data.questionAnalytics.difficultQuestions.slice(0, 3).map((q, i) => `
+${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}..."
+   - Suggestion: Add visual cues or break into simpler steps
+`).join('')}
+
+### Recommended Improvements
+1. **Visual Enhancement**: Add more illustrations to difficult questions
+2. **Progressive Difficulty**: Introduce easier warm-up questions
+3. **Feedback Quality**: Provide more detailed explanations for wrong answers
+4. **Language Adaptation**: Consider cultural context in question phrasing
+5. **Interactive Elements**: Add drag-and-drop or matching activities
+
+### Next Steps
+- Focus on questions with <60% accuracy
+- A/B test different question formats
+- Gather qualitative feedback from users
+- Consider age-appropriate language adjustments
+      `;
+      
+      setAiSuggestions(mockSuggestions);
+      setShowAISuggestions(true);
+    } catch (error) {
+      console.error('Error generating AI suggestions:', error);
+      setAiSuggestions('Error generating suggestions. Please try again.');
+      setShowAISuggestions(true);
+    } finally {
+      setLoadingAI(false);
+    }
   };
 
   const formatTime = (seconds: number) => {
@@ -269,6 +441,14 @@ export function AnalyticsDashboard() {
                 <Activity className="w-4 h-4" />
                 <span>Refresh</span>
               </button>
+              <button
+                onClick={generateAISuggestions}
+                disabled={loadingAI}
+                className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+              >
+                <Brain className="w-4 h-4" />
+                <span>{loadingAI ? 'Analyzing...' : 'Q Suggestions'}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -325,6 +505,108 @@ export function AnalyticsDashboard() {
             </div>
           </div>
         </div>
+
+        {/* Question Analytics Section */}
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              <Brain className="w-6 h-6 text-indigo-600 mr-3" />
+              <h3 className="text-xl font-semibold text-gray-900">Question Analytics</h3>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-indigo-600">{data.questionAnalytics.overallAccuracy}%</p>
+              <p className="text-sm text-gray-600">Overall Accuracy</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Game Accuracy */}
+            <div>
+              <h4 className="font-semibold text-gray-800 mb-3">Game Performance</h4>
+              <div className="space-y-3">
+                {data.questionAnalytics.gameAccuracy.map((game) => (
+                  <div key={game.game_id} className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-700 flex-1 truncate">
+                      {game.game_name}
+                    </span>
+                    <div className="flex items-center space-x-2 ml-2">
+                      <div className={`w-3 h-3 rounded-full ${
+                        game.accuracy >= 80 ? 'bg-green-500' : 
+                        game.accuracy >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                      }`}></div>
+                      <span className="text-sm font-semibold text-gray-900 w-12">
+                        {game.accuracy}%
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Difficult Questions */}
+            <div>
+              <h4 className="font-semibold text-gray-800 mb-3">Most Challenging</h4>
+              <div className="space-y-3">
+                {data.questionAnalytics.difficultQuestions.slice(0, 3).map((question, index) => (
+                  <div key={question.question_id} className="bg-red-50 p-3 rounded-lg">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-bold text-red-600">#{index + 1}</span>
+                      <span className="text-xs font-semibold text-red-800">{question.accuracy}%</span>
+                    </div>
+                    <p className="text-xs text-gray-700 line-clamp-2">
+                      {question.question_text.substring(0, 80)}...
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Common Wrong Answers */}
+            <div>
+              <h4 className="font-semibold text-gray-800 mb-3">Common Mistakes</h4>
+              <div className="space-y-3">
+                {data.questionAnalytics.commonWrongAnswers.slice(0, 3).map((mistake, index) => (
+                  <div key={`${mistake.question_id}_${mistake.wrong_answer}`} className="bg-orange-50 p-3 rounded-lg">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-bold text-orange-600">#{index + 1}</span>
+                      <span className="text-xs font-semibold text-orange-800">{mistake.count}x</span>
+                    </div>
+                    <p className="text-xs text-gray-700">
+                      Answer: <span className="font-semibold">"{mistake.wrong_answer}"</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* AI Suggestions Modal */}
+        {showAISuggestions && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl max-w-4xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between p-6 border-b">
+                <div className="flex items-center">
+                  <Lightbulb className="w-6 h-6 text-yellow-500 mr-3" />
+                  <h3 className="text-xl font-semibold text-gray-900">AI Question Improvement Suggestions</h3>
+                </div>
+                <button
+                  onClick={() => setShowAISuggestions(false)}
+                  className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto max-h-[60vh]">
+                <div className="prose max-w-none">
+                  <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans">
+                    {aiSuggestions}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
