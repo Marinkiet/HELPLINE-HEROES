@@ -604,7 +604,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                     <span className="text-sm font-medium text-gray-700 flex-1 truncate">
                       {game.game_name}
                     </span>
-                    <div className="flex items-center space-x-2 ml-4">
+                    <div className="flex items-center space-x-2">
                       <div className={`w-3 h-3 rounded-full ${
                         game.accuracy >= 80 ? 'bg-green-500' : 
                         game.accuracy >= 60 ? 'bg-yellow-500' : 'bg-red-500'
