@@ -48,6 +48,18 @@ export function Navigation({ onBackToAgeSelection, onShowAnalytics }: Navigation
               </button>
             )}
 
+            {/* Analytics Button */}
+            {onShowAnalytics && (
+              <button
+                onClick={onShowAnalytics}
+                className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md hover:bg-gray-50 transition-colors duration-200"
+                aria-label="View Analytics"
+              >
+                <BarChart3 className="w-4 h-4 text-blue-600" />
+                <span className="text-sm font-semibold text-gray-700">Analytics</span>
+              </button>
+            )}
+
             {/* Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
@@ -94,6 +106,18 @@ export function Navigation({ onBackToAgeSelection, onShowAnalytics }: Navigation
         {/* Mobile Narration Controls */}
         <div className="md:hidden pb-3">
           <div className="flex items-center justify-center space-x-4">
+            {/* Mobile Analytics Button */}
+            {onShowAnalytics && (
+              <button
+                onClick={onShowAnalytics}
+                className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md hover:bg-gray-50 transition-colors duration-200"
+                aria-label="View Analytics"
+              >
+                <BarChart3 className="w-4 h-4 text-blue-600" />
+                <span className="text-sm font-semibold text-gray-700">Analytics</span>
+              </button>
+            )}
+
             {/* Mobile Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
               <Globe className="w-4 h-4 text-blue-600" />
