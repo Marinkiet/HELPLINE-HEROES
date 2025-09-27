@@ -7,7 +7,6 @@ import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 import doctorGif from '../../assets/doctor.gif';
 import strangerGif from '../../assets/stranger.gif';
-import bathtimeMp4 from '../../assets/bathtime.mp4';
 
 interface TouchScenarioGameProps {
   onComplete: () => void;
