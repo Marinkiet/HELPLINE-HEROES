@@ -450,13 +450,6 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                 <Brain className="w-4 h-4" />
                 <span>{loadingAI ? 'Analyzing...' : 'Q Suggestions'}</span>
               </button>
-              <button
-                onClick={() => setShowTrackingInfo(true)}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
-              >
-                <Database className="w-4 h-4" />
-                <span>Tracking Info</span>
-              </button>
             </div>
           </div>
         </div>
@@ -610,6 +603,229 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                   <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans">
                     {aiSuggestions}
                   </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tracking Features Modal */}
+        {showTrackingInfo && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between p-6 border-b">
+                <div className="flex items-center">
+                  <Database className="w-6 h-6 text-green-500 mr-3" />
+                  <h3 className="text-xl font-semibold text-gray-900">Tracking Features & Data Collection</h3>
+                </div>
+                <button
+                  onClick={() => setShowTrackingInfo(false)}
+                  className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto max-h-[75vh]">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* User Data Collected */}
+                  <div className="bg-blue-50 rounded-xl p-6">
+                    <div className="flex items-center mb-4">
+                      <Users className="w-6 h-6 text-blue-600 mr-3" />
+                      <h4 className="text-lg font-semibold text-blue-800">User Data Collected</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 text-blue-500 mr-2" />
+                        <span className="text-blue-700"><strong>Location:</strong> Country, region, city (via IP geolocation)</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Users className="w-4 h-4 text-blue-500 mr-2" />
+                        <span className="text-blue-700"><strong>Age Group:</strong> Selected age group (6-8, 9-11, 12-14)</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Languages className="w-4 h-4 text-blue-500 mr-2" />
+                        <span className="text-blue-700"><strong>Language:</strong> Currently selected language</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 text-blue-500 mr-2" />
+                        <span className="text-blue-700"><strong>Screen Time:</strong> Total time spent in the app</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Trophy className="w-4 h-4 text-blue-500 mr-2" />
+                        <span className="text-blue-700"><strong>Points:</strong> Points earned from completing games</span>
+                      </div>
+                      <div className="flex items-center">
+                        <GamepadIcon className="w-4 h-4 text-blue-500 mr-2" />
+                        <span className="text-blue-700"><strong>Games Completed:</strong> List of completed game IDs</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Database Tables */}
+                  <div className="bg-purple-50 rounded-xl p-6">
+                    <div className="flex items-center mb-4">
+                      <Database className="w-6 h-6 text-purple-600 mr-3" />
+                      <h4 className="text-lg font-semibold text-purple-800">Database Tables</h4>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="bg-white p-3 rounded-lg border border-purple-200">
+                        <h5 className="font-semibold text-purple-700 mb-1">user_sessions</h5>
+                        <p className="text-sm text-purple-600">Main user session data and demographics</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-purple-200">
+                        <h5 className="font-semibold text-purple-700 mb-1">game_sessions</h5>
+                        <p className="text-sm text-purple-600">Individual game play sessions and completion data</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-purple-200">
+                        <h5 className="font-semibold text-purple-700 mb-1">user_interactions</h5>
+                        <p className="text-sm text-purple-600">Detailed user interactions and behaviors</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-purple-200">
+                        <h5 className="font-semibold text-purple-700 mb-1">question_responses</h5>
+                        <p className="text-sm text-purple-600">Question-level analytics and performance data</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tracked Interactions */}
+                  <div className="bg-green-50 rounded-xl p-6">
+                    <div className="flex items-center mb-4">
+                      <Activity className="w-6 h-6 text-green-600 mr-3" />
+                      <h4 className="text-lg font-semibold text-green-800">Tracked Interactions</h4>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Session start/end</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Age group selection</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Language changes</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Game starts/completions</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Category clicks</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">"Surprise Me" usage</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Video plays/completions</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        <span className="text-green-700">Game answers and scores</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Implementation Details */}
+                  <div className="bg-orange-50 rounded-xl p-6">
+                    <div className="flex items-center mb-4">
+                      <Settings className="w-6 h-6 text-orange-600 mr-3" />
+                      <h4 className="text-lg font-semibold text-orange-800">Implementation Details</h4>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <h5 className="font-semibold text-orange-700 mb-1">Services:</h5>
+                        <ul className="text-sm text-orange-600 space-y-1">
+                          <li>• <code className="bg-orange-100 px-1 rounded">engagementService.ts</code> - Core tracking service</li>
+                          <li>• <code className="bg-orange-100 px-1 rounded">EngagementContext.tsx</code> - React context for easy access</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-orange-700 mb-1">Integration Points:</h5>
+                        <ul className="text-sm text-orange-600 space-y-1">
+                          <li>• App initialization and age selection</li>
+                          <li>• Game modal interactions</li>
+                          <li>• All three main games (Safe Touch, Trusted Heroes, Brave Voice)</li>
+                          <li>• Video modal interactions</li>
+                          <li>• Navigation and UI interactions</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Privacy & Security */}
+                  <div className="bg-gray-50 rounded-xl p-6 lg:col-span-2">
+                    <div className="flex items-center mb-4">
+                      <Shield className="w-6 h-6 text-gray-600 mr-3" />
+                      <h4 className="text-lg font-semibold text-gray-800">Privacy & Security</h4>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <div className="flex items-center mb-2">
+                          <Eye className="w-4 h-4 text-green-500 mr-2" />
+                          <h5 className="font-semibold text-gray-700">Anonymous Tracking</h5>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-3">No personal identification collected - all data is anonymous</p>
+                        
+                        <div className="flex items-center mb-2">
+                          <Shield className="w-4 h-4 text-blue-500 mr-2" />
+                          <h5 className="font-semibold text-gray-700">Row Level Security</h5>
+                        </div>
+                        <p className="text-sm text-gray-600">Database security enabled with proper access controls</p>
+                      </div>
+                      <div>
+                        <div className="flex items-center mb-2">
+                          <MapPin className="w-4 h-4 text-purple-500 mr-2" />
+                          <h5 className="font-semibold text-gray-700">Location Data</h5>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-3">Optional IP-based geolocation only - no GPS tracking</p>
+                        
+                        <div className="flex items-center mb-2">
+                          <Globe className="w-4 h-4 text-indigo-500 mr-2" />
+                          <h5 className="font-semibold text-gray-700">GDPR-Friendly</h5>
+                        </div>
+                        <p className="text-sm text-gray-600">Compliant data collection practices</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Analytics Benefits */}
+                  <div className="bg-yellow-50 rounded-xl p-6 lg:col-span-2">
+                    <div className="flex items-center mb-4">
+                      <TrendingUp className="w-6 h-6 text-yellow-600 mr-3" />
+                      <h4 className="text-lg font-semibold text-yellow-800">Analytics Benefits</h4>
+                    </div>
+                    <p className="text-yellow-700 mb-4">This comprehensive tracking system helps you understand:</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                        <h5 className="font-semibold text-yellow-800 mb-1">📍 Geographic Distribution</h5>
+                        <p className="text-sm text-yellow-600">User distribution across South African provinces</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                        <h5 className="font-semibold text-yellow-800 mb-1">👥 Age Group Preferences</h5>
+                        <p className="text-sm text-yellow-600">Popular age groups and content preferences</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                        <h5 className="font-semibold text-yellow-800 mb-1">🌍 Language Usage</h5>
+                        <p className="text-sm text-yellow-600">Language selection patterns and preferences</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                        <h5 className="font-semibold text-yellow-800 mb-1">⏱️ Engagement Duration</h5>
+                        <p className="text-sm text-yellow-600">Session length and drop-off points</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                        <h5 className="font-semibold text-yellow-800 mb-1">🎮 Game Performance</h5>
+                        <p className="text-sm text-yellow-600">Completion rates and difficulty analysis</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                        <h5 className="font-semibold text-yellow-800 mb-1">🛤️ User Journey</h5>
+                        <p className="text-sm text-yellow-600">Navigation patterns and user flow</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
