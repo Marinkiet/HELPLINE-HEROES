@@ -18,7 +18,7 @@ interface AnalyticsData {
   dailyActivity: { date: string; users: number; screen_time: number }[];
   gameCompletionRates: { game_id: string; game_name: string; completion_rate: number }[];
   averageSessionTime: number;
-  topCountries: { country: string; users: number; avg_screen_time: number }[];
+  topProvinces: { province: string; users: number; avg_screen_time: number }[];
 }
 
 export function AnalyticsDashboard() {
@@ -141,20 +141,20 @@ export function AnalyticsDashboard() {
       completion_rate: stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0
     }));
 
-    // Top countries with average screen time
-    const countryStats = userSessions.reduce((acc, session) => {
-      const country = session.location_country || 'Unknown';
-      if (!acc[country]) {
-        acc[country] = { users: 0, total_screen_time: 0 };
+    // Top provinces with average screen time
+    const provinceStats = userSessions.reduce((acc, session) => {
+      const province = session.location_region || 'Unknown Province';
+      if (!acc[province]) {
+        acc[province] = { users: 0, total_screen_time: 0 };
       }
-      acc[country].users += 1;
-      acc[country].total_screen_time += session.screen_time_seconds || 0;
+      acc[province].users += 1;
+      acc[province].total_screen_time += session.screen_time_seconds || 0;
       return acc;
     }, {} as Record<string, { users: number; total_screen_time: number }>);
 
-    const topCountries = Object.entries(countryStats)
-      .map(([country, stats]) => ({
-        country,
+    const topProvinces = Object.entries(provinceStats)
+      .map(([province, stats]) => ({
+        province,
         users: stats.users,
         avg_screen_time: Math.round(stats.total_screen_time / stats.users / 60) // Convert to minutes
       }))
@@ -172,7 +172,7 @@ export function AnalyticsDashboard() {
       dailyActivity,
       gameCompletionRates,
       averageSessionTime,
-      topCountries
+      topProvinces
     };
   };
 
@@ -436,29 +436,29 @@ export function AnalyticsDashboard() {
 
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Top Countries */}
+          {/* Top Provinces */}
           <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
             <div className="flex items-center mb-4">
               <MapPin className="w-5 h-5 text-gray-600 mr-2" />
-              <h3 className="text-lg font-semibold text-gray-900">Top Countries</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Top Provinces</h3>
             </div>
             <div className="space-y-4">
-              {data.topCountries.slice(0, 8).map((country, index) => (
-                <div key={country.country} className="flex items-center justify-between">
+              {data.topProvinces.slice(0, 8).map((province, index) => (
+                <div key={province.province} className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <span className="text-sm font-bold text-gray-400 w-4">
                       #{index + 1}
                     </span>
                     <span className="text-sm font-medium text-gray-700">
-                      {country.country}
+                      {province.province}
                     </span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <span className="text-sm text-gray-600">
-                      {country.users} users
+                      {province.users} users
                     </span>
                     <span className="text-sm font-semibold text-blue-600">
-                      {country.avg_screen_time}m avg
+                      {province.avg_screen_time}m avg
                     </span>
                   </div>
                 </div>
