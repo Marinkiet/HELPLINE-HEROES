@@ -9,10 +9,6 @@ interface CardGamesPageProps {
 export function CardGamesPage({ onBack }: CardGamesPageProps) {
   const { selectedLanguage } = useAudio();
 
-  const handlePlayOnline = () => {
-    window.open('https://www.30seconds.ie/', '_blank');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-400 via-yellow-300 to-orange-400">
       {/* Navigation */}
@@ -109,17 +105,12 @@ export function CardGamesPage({ onBack }: CardGamesPageProps) {
                 </div>
               </div>
 
-              <button
-                onClick={handlePlayOnline}
-                className="w-full bg-black hover:bg-black/90 text-yellow-400 font-black py-4 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-3 text-xl"
-              >
-                <ExternalLink className="w-6 h-6" />
-                <span>Play Online Now</span>
-              </button>
-
-              <p className="text-center text-black/70 text-sm font-semibold">
-                Opens in a new tab • Free to play • No download required
-              </p>
+              <div className="bg-black/10 rounded-2xl p-6 text-center">
+                <h3 className="text-2xl font-black text-black mb-4">Ready to Play?</h3>
+                <p className="text-lg text-black/80 font-semibold">
+                  Get your physical 30 Seconds card game and gather your family and friends for hours of educational fun!
+                </p>
+              </div>
             </div>
           </div>
         </div>

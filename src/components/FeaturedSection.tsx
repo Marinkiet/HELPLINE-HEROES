@@ -43,8 +43,6 @@ export function FeaturedSection({ onGameClick, onCardGamesClick }: FeaturedSecti
   const handleCardGamesClick = () => {
     if (onCardGamesClick) {
       onCardGamesClick();
-    } else {
-      window.open('https://www.30seconds.ie/', '_blank');
     }
   };
 

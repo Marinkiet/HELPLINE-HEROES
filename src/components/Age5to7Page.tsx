@@ -84,6 +84,12 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
     setCurrentVideoGame('');
   };
 
+  const handleCardGamesClick = () => {
+    // Navigate to card games page - this would need to be passed down from App.tsx
+    // For now, we'll just show an alert
+    alert('Card Games page - coming soon!');
+  };
+
   // Get game title for video modal
   const getVideoGameTitle = (gameId: string) => {
     const game = games.find(g => g.id === gameId);
@@ -119,10 +125,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
               </div>
               <FeaturedSection 
                 onGameClick={handleGameClickById} 
-                onCardGamesClick={() => {
-                  // For Age 5-7 page, we can either navigate to card games or open external link
-                  window.open('https://www.30seconds.ie/', '_blank');
-                }}
+                onCardGamesClick={handleCardGamesClick}
               />
             </div>
             <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
