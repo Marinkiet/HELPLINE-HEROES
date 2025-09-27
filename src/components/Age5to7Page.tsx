@@ -116,6 +116,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
                 <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
                    {appContent.hero.subtitle[selectedLanguage]}
                 </p>
+              </div>
               <FeaturedSection 
                 onGameClick={handleGameClickById} 
                 onCardGamesClick={() => {
