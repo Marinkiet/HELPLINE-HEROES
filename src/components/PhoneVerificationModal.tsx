@@ -27,6 +27,15 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
     }
   }, [countdown]);
 
+  // Track modal open/close
+  useEffect(() => {
+    if (isOpen) {
+      trackInteraction('adult_report_modal_opened', {
+        step: step
+      });
+    }
+  }, [isOpen, trackInteraction, step]);
+
   if (!isOpen) return null;
 
   const handleSendOTP = async () => {
@@ -153,15 +162,6 @@ export function PhoneVerificationModal({ isOpen, onClose, onVerified }: PhoneVer
       });
     }
   }, [isOpen, trackInteraction, step]);
-
-  const handleClose = () => {
-    trackInteraction('adult_report_modal_closed', {
-      step: step,
-      phone_entered: phoneNumber ? 'yes' : 'no',
-      otp_entered: otp ? 'yes' : 'no'
-    });
-    onClose();
-  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
