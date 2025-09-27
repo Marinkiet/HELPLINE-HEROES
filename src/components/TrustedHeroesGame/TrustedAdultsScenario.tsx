@@ -6,10 +6,10 @@ import { useEngagement } from '../../contexts/EngagementContext';
 import { trustedHeroesContent } from '../../data/trustedHeroesContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 import cleaning from '../../assets/classroomCleaning.gif'
-import doctorExam from '../../assets/doctorExam.gif'
-import student from '../../assets/student.gif'
+import doctorExam from '../../assets/doctorExam.jpg'
+import student from '../../assets/student.jpg'
 import neighbour from '../../assets/neighbour.gif'
-import stranger from '../../assets/stranger.gif'
+import stranger from '../../assets/strangerSweets.jpg'
 
 interface TrustedAdultsScenarioProps {
   onComplete: () => void;
@@ -223,58 +223,58 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
           </div>
         </div>
 
-        {currentScenario === 0 && (
-          <div className="flex justify-center mb-6">
-            <img 
-              src={cleaning} 
-              alt="Teacher and Student"
-              className="w-100 h-auto rounded-lg"
-            />
-          </div>
-        )}
-
-        {currentScenario === 1 && (
-          <div className="flex justify-center mb-6">
-            <img 
-              src={stranger} 
-              alt="Stranger Giving Candy"
-              className="w-100 h-auto rounded-lg"
-            />
-          </div>
-        )}
-
-        {currentScenario === 2 && (
-          <div className="flex justify-center mb-6">
-            <img 
-              src={doctorExam} 
-              alt="Doctor Visit"
-              className="w-100 h-auto rounded-lg"
-            />
-          </div>
-        )}
-
-        {currentScenario === 3 && (
-          <div className="flex justify-center mb-6">
-            <img 
-              src={student} 
-              alt="Older and Younger Student"
-              className="w-100 h-auto rounded-lg"
-            />
-          </div>
-        )}
-
-        {currentScenario === 4 && (
-          <div className="flex justify-center mb-6">
-            <img 
-              src={neighbour} 
-              alt="Neighbour Helping with Homework"
-              className="w-100 h-auto rounded-lg"
-            />
-          </div>
-        )}
-
         {/* Main Game Area */}
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
+          {currentScenario === 0 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src={cleaning} 
+                alt="Teacher and Student"
+                className="w-100 h-auto rounded-lg"
+              />
+            </div>
+          )}
+
+          {currentScenario === 1 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src={stranger} 
+                alt="Stranger Giving Candy"
+                className="w-100 h-auto rounded-lg"
+              />
+            </div>
+          )}
+
+          {currentScenario === 2 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src={doctorExam} 
+                alt="Doctor Visit"
+                className="w-100 h-auto rounded-lg"
+              />
+            </div>
+          )}
+
+          {currentScenario === 3 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src={student} 
+                alt="Older and Younger Student"
+                className="w-100 h-auto rounded-lg"
+              />
+            </div>
+          )}
+
+          {currentScenario === 4 && (
+            <div className="flex justify-center mb-6">
+              <img 
+                src={neighbour} 
+                alt="Neighbour Helping with Homework"
+                className="w-100 h-auto rounded-lg"
+              />
+            </div>
+          )}
+
           {!showFeedback ? (
             <>
               {/* Scenario */}
