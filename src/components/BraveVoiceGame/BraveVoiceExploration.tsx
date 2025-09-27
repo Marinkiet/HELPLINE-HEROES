@@ -4,7 +4,7 @@ import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { braveVoiceContent } from '../../data/braveVoiceContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
-import doctorJpg from '../../assets/doctor.jpg';
+import speakUp from '../../assets/speakUp.png'
 
 interface BraveVoiceExplorationProps {
   onComplete: () => void;
@@ -184,14 +184,9 @@ export function BraveVoiceExploration({ onComplete }: BraveVoiceExplorationProps
             <div className="mb-8">
               <div className="bg-gray-50 rounded-2xl p-6 text-center">
                 <img 
-                  src={doctorJpg}
+                  src={speakUp}
                   alt="Educational content illustration"
                   className="w-full max-w-md h-64 object-cover rounded-xl mx-auto shadow-lg"
-                  onError={(e) => {
-                    // Fallback to a placeholder if image doesn't exist
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400';
-                  }}
                 />
                 <p className="text-sm text-gray-600 mt-3 font-semibold">
                   {currentSectionData?.title}
