@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ExternalLink, Users, Clock, Star } from 'lucide-react';
+import { ArrowLeft, Facebook, Instagram, Twitter } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 
 interface CardGamesPageProps {
@@ -10,150 +10,196 @@ export function CardGamesPage({ onBack }: CardGamesPageProps) {
   const { selectedLanguage } = useAudio();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-400 via-yellow-300 to-orange-400">
-      {/* Navigation */}
-      <nav className="bg-black/10 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-b from-yellow-400 via-yellow-300 to-yellow-200">
+      {/* Header */}
+      <header className="bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <button
-              onClick={onBack}
-              className="flex items-center space-x-2 bg-black/20 hover:bg-black/30 text-black font-bold px-4 py-2 rounded-xl transition-colors duration-200"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back to Home</span>
-            </button>
-            
-            <h1 className="text-2xl font-black text-black">
-              30 Seconds Card Games
-            </h1>
-            
-            <div className="w-32"></div> {/* Spacer for centering */}
-          </div>
-        </div>
-      </nav>
+          <div className="flex items-center justify-between h-20">
+            {/* Left side - Logo and branding */}
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={onBack}
+                className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-colors duration-200 mr-4"
+                aria-label="Back to Home"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              
+              {/* Irish flag */}
+              <div className="flex">
+                <div className="w-6 h-4 bg-green-500"></div>
+                <div className="w-6 h-4 bg-white"></div>
+                <div className="w-6 h-4 bg-orange-500"></div>
+              </div>
+              
+              {/* Blue smiley face logo */}
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                <div className="text-white text-xl">😊</div>
+              </div>
+              
+              <div className="text-white text-sm">Irish Edition</div>
+            </div>
 
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left side - Image */}
-          <div className="order-2 lg:order-1">
-            <div className="relative">
-              <div className="bg-black/10 rounded-3xl p-8 shadow-2xl">
-                <img 
-                  src="https://images.pexels.com/photos/1679618/pexels-photo-1679618.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="30 Seconds Card Game"
-                  className="w-full h-96 object-cover rounded-2xl shadow-lg"
-                />
-                <div className="absolute -top-4 -right-4 bg-yellow-500 text-black font-black px-4 py-2 rounded-full shadow-lg transform rotate-12">
-                  <Star className="w-5 h-5 inline mr-1" />
-                  Popular!
-                </div>
+            {/* Center - Main logo */}
+            <div className="text-center">
+              <h1 className="text-4xl font-black text-yellow-400">30 SECONDS</h1>
+              <p className="text-sm text-red-400 italic">the quick thinking fast talking game</p>
+            </div>
+
+            {/* Right side - Social media icons */}
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                <Facebook className="w-4 h-4 text-white" />
+              </div>
+              <div className="w-8 h-8 bg-pink-500 rounded flex items-center justify-center">
+                <Instagram className="w-4 h-4 text-white" />
+              </div>
+              <div className="w-8 h-8 bg-blue-400 rounded flex items-center justify-center">
+                <Twitter className="w-4 h-4 text-white" />
               </div>
             </div>
           </div>
 
-          {/* Right side - Content */}
-          <div className="order-1 lg:order-2 space-y-8">
-            <div>
-              <h1 className="text-5xl md:text-6xl font-black text-black leading-tight mb-4">
-                30 Seconds
-                <span className="block text-4xl md:text-5xl text-black/80">Card Games</span>
+          {/* Navigation menu */}
+          <div className="border-t border-gray-700 py-3">
+            <nav className="flex justify-center space-x-8 text-yellow-400 text-sm font-semibold">
+              <span className="hover:text-yellow-300 cursor-pointer">How To Play</span>
+              <span className="hover:text-yellow-300 cursor-pointer">Buy the Games</span>
+              <span className="hover:text-yellow-300 cursor-pointer">30 Seconds of Facts</span>
+              <span className="hover:text-yellow-300 cursor-pointer">News</span>
+              <span className="hover:text-yellow-300 cursor-pointer">The story so far</span>
+              <span className="hover:text-yellow-300 cursor-pointer">Contact</span>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main className="relative overflow-hidden">
+        {/* Background hourglass */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+          <div className="text-yellow-600 text-9xl">⏳</div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+            
+            {/* Left - Main game box */}
+            <div className="flex justify-center">
+              <div className="relative transform hover:scale-105 transition-transform duration-300">
+                <div className="w-80 h-96 bg-black rounded-lg shadow-2xl p-6 flex flex-col">
+                  {/* Irish flag on box */}
+                  <div className="flex mb-4">
+                    <div className="w-4 h-3 bg-green-500"></div>
+                    <div className="w-4 h-3 bg-white"></div>
+                    <div className="w-4 h-3 bg-orange-500"></div>
+                  </div>
+                  
+                  <div className="text-white text-xs mb-2">Irish Edition</div>
+                  
+                  {/* Blue smiley */}
+                  <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                    <div className="text-white text-2xl">😊</div>
+                  </div>
+                  
+                  {/* Main title */}
+                  <h2 className="text-yellow-400 text-4xl font-black mb-2">30 SECONDS</h2>
+                  <p className="text-red-400 text-sm italic mb-4">the quick thinking fast talking game</p>
+                  
+                  {/* Side text */}
+                  <div className="absolute -left-8 top-1/2 transform -translate-y-1/2 -rotate-90">
+                    <span className="text-yellow-400 text-lg font-black whitespace-nowrap">30 SECONDS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Center - Main text and button */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-5xl lg:text-6xl font-black text-white mb-8 leading-tight">
+                30 Seconds & 30 Seconds junior
+                <br />
+                are fun, fast-paced
+                <br />
+                & easy to play
+                <br />
+                general knowledge
+                <br />
+                board games
               </h1>
-              <div className="w-24 h-2 bg-black rounded-full mb-6"></div>
+              
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-black text-2xl px-12 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200">
+                How Do You Play?
+              </button>
             </div>
 
-            <div className="space-y-6">
-              <p className="text-xl text-black/90 font-semibold leading-relaxed">
-                Experience the excitement of 30 Seconds with our educational card games! 
-                These fun, fast-paced games help children learn important safety concepts 
-                while having a blast with friends and family.
+            {/* Right - Junior game box */}
+            <div className="flex justify-center">
+              <div className="relative transform rotate-12 hover:rotate-0 transition-transform duration-300">
+                <div className="w-72 h-72 bg-purple-600 rounded-lg shadow-2xl p-4 flex flex-col">
+                  {/* Irish flag on junior box */}
+                  <div className="flex mb-2">
+                    <div className="w-3 h-2 bg-green-500"></div>
+                    <div className="w-3 h-2 bg-white"></div>
+                    <div className="w-3 h-2 bg-orange-500"></div>
+                  </div>
+                  
+                  <div className="text-white text-xs mb-2">junior</div>
+                  
+                  {/* Blue smiley */}
+                  <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-3">
+                    <div className="text-white text-lg">😊</div>
+                  </div>
+                  
+                  {/* Junior title */}
+                  <h3 className="text-yellow-400 text-2xl font-black mb-1">30 SECONDS</h3>
+                  <p className="text-red-400 text-xs italic mb-4">the quick thinking fast talking game</p>
+                  
+                  {/* Game board preview */}
+                  <div className="flex-1 bg-purple-700 rounded p-2">
+                    <div className="grid grid-cols-6 gap-1 h-full">
+                      {Array.from({ length: 36 }, (_, i) => (
+                        <div
+                          key={i}
+                          className={`rounded-sm ${
+                            i % 4 === 0 ? 'bg-red-400' :
+                            i % 4 === 1 ? 'bg-green-400' :
+                            i % 4 === 2 ? 'bg-blue-400' : 'bg-yellow-400'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom section - Educational context */}
+          <div className="mt-16 text-center">
+            <div className="bg-black/20 backdrop-blur-sm rounded-3xl p-8 max-w-4xl mx-auto">
+              <h2 className="text-3xl font-black text-white mb-4">
+                Educational Fun for the Whole Family
+              </h2>
+              <p className="text-xl text-white/90 leading-relaxed">
+                These fast-paced games help children develop communication skills, quick thinking, 
+                and confidence - all while having fun with family and friends. Perfect for building 
+                the social skills that help keep children safe and connected.
               </p>
-
-              <div className="bg-black/10 rounded-2xl p-6 space-y-4">
-                <h3 className="text-2xl font-black text-black mb-4">How to Play:</h3>
-                <div className="space-y-3">
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-black text-yellow-400 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">1</div>
-                    <p className="text-black font-semibold">Pick your teams and get ready for fun!</p>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-black text-yellow-400 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">2</div>
-                    <p className="text-black font-semibold">Turn the timer and pick a card with safety topics</p>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="bg-black text-yellow-400 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm">3</div>
-                    <p className="text-black font-semibold">Describe the safety concepts to your teammates as quickly as you can!</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-black/10 rounded-xl p-4 text-center">
-                  <Users className="w-8 h-8 text-black mx-auto mb-2" />
-                  <h4 className="font-black text-black">2-20 Players</h4>
-                  <p className="text-black/80 text-sm">Perfect for groups</p>
-                </div>
-                <div className="bg-black/10 rounded-xl p-4 text-center">
-                  <Clock className="w-8 h-8 text-black mx-auto mb-2" />
-                  <h4 className="font-black text-black">30 Seconds</h4>
-                  <p className="text-black/80 text-sm">Fast-paced fun</p>
-                </div>
-                <div className="bg-black/10 rounded-xl p-4 text-center">
-                  <Star className="w-8 h-8 text-black mx-auto mb-2" />
-                  <h4 className="font-black text-black">Educational</h4>
-                  <p className="text-black/80 text-sm">Learn while playing</p>
-                </div>
-              </div>
-
-              <div className="bg-black/10 rounded-2xl p-6 text-center">
-                <h3 className="text-2xl font-black text-black mb-4">Ready to Play?</h3>
-                <p className="text-lg text-black/80 font-semibold">
-                  Get your physical 30 Seconds card game and gather your family and friends for hours of educational fun!
-                </p>
-              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Additional Info Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-black/10 rounded-3xl p-8">
-          <h2 className="text-3xl font-black text-black mb-6 text-center">
-            Why Play 30 Seconds Card Games?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="bg-yellow-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🧠</span>
-              </div>
-              <h3 className="font-black text-black mb-2">Educational</h3>
-              <p className="text-black/80 text-sm">Learn safety concepts through play</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-yellow-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">👨‍👩‍👧‍👦</span>
-              </div>
-              <h3 className="font-black text-black mb-2">Family Fun</h3>
-              <p className="text-black/80 text-sm">Perfect for family game nights</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-yellow-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚡</span>
-              </div>
-              <h3 className="font-black text-black mb-2">Fast-Paced</h3>
-              <p className="text-black/80 text-sm">Quick rounds keep everyone engaged</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-yellow-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎯</span>
-              </div>
-              <h3 className="font-black text-black mb-2">Skill Building</h3>
-              <p className="text-black/80 text-sm">Improves communication and thinking</p>
+        {/* Shopping cart icon (bottom right) */}
+        <div className="fixed bottom-8 right-8">
+          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
+            <div className="text-white font-bold">0</div>
+            <div className="absolute -top-1 -right-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+              <span className="text-white text-xs">🛒</span>
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
