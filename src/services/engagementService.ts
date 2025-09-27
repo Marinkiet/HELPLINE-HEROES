@@ -410,13 +410,24 @@ class EngagementService {
   // Get user location (optional, requires user permission)
   private async getUserLocation(): Promise<{ country?: string; region?: string; city?: string } | null> {
     try {
-      // Try to get location from IP (using a free service)
-      const response = await fetch('https://ipapi.co/json/');
+      // Try to get location from IP (using a free service with South African province mapping)
+      const response = await fetch('https://ipapi.co/json/', {
+        headers: {
+          'User-Agent': 'TrustlineHeroes/1.0'
+        }
+      });
       if (response.ok) {
         const data = await response.json();
+        
+        // Map region to South African provinces if country is South Africa
+        let mappedRegion = data.region;
+        if (data.country_code === 'ZA' || data.country_name === 'South Africa') {
+          mappedRegion = this.mapToSouthAfricanProvince(data.region, data.city);
+        }
+        
         return {
           country: data.country_name,
-          region: data.region,
+          region: mappedRegion,
           city: data.city
         };
       }
@@ -424,6 +435,76 @@ class EngagementService {
       console.log('Could not get location:', error);
     }
     return null;
+  }
+
+  // Map location data to South African provinces
+  private mapToSouthAfricanProvince(region: string, city: string): string {
+    if (!region && !city) return 'Unknown';
+    
+    const regionLower = (region || '').toLowerCase();
+    const cityLower = (city || '').toLowerCase();
+    
+    // Direct province name matches
+    if (regionLower.includes('eastern cape')) return 'Eastern Cape';
+    if (regionLower.includes('free state')) return 'Free State';
+    if (regionLower.includes('gauteng')) return 'Gauteng';
+    if (regionLower.includes('kwazulu') || regionLower.includes('natal')) return 'KwaZulu-Natal';
+    if (regionLower.includes('limpopo')) return 'Limpopo';
+    if (regionLower.includes('mpumalanga')) return 'Mpumalanga';
+    if (regionLower.includes('northern cape')) return 'Northern Cape';
+    if (regionLower.includes('north west') || regionLower.includes('northwest')) return 'North West';
+    if (regionLower.includes('western cape')) return 'Western Cape';
+    
+    // City-based mapping for major cities
+    if (cityLower.includes('johannesburg') || cityLower.includes('pretoria') || 
+        cityLower.includes('soweto') || cityLower.includes('sandton') ||
+        cityLower.includes('centurion') || cityLower.includes('roodepoort')) {
+      return 'Gauteng';
+    }
+    
+    if (cityLower.includes('cape town') || cityLower.includes('stellenbosch') ||
+        cityLower.includes('paarl') || cityLower.includes('george') ||
+        cityLower.includes('mossel bay')) {
+      return 'Western Cape';
+    }
+    
+    if (cityLower.includes('durban') || cityLower.includes('pietermaritzburg') ||
+        cityLower.includes('newcastle') || cityLower.includes('richards bay')) {
+      return 'KwaZulu-Natal';
+    }
+    
+    if (cityLower.includes('port elizabeth') || cityLower.includes('east london') ||
+        cityLower.includes('uitenhage') || cityLower.includes('grahamstown')) {
+      return 'Eastern Cape';
+    }
+    
+    if (cityLower.includes('bloemfontein') || cityLower.includes('welkom') ||
+        cityLower.includes('kroonstad')) {
+      return 'Free State';
+    }
+    
+    if (cityLower.includes('polokwane') || cityLower.includes('tzaneen') ||
+        cityLower.includes('thohoyandou') || cityLower.includes('makhado')) {
+      return 'Limpopo';
+    }
+    
+    if (cityLower.includes('nelspruit') || cityLower.includes('mbombela') ||
+        cityLower.includes('witbank') || cityLower.includes('emalahleni')) {
+      return 'Mpumalanga';
+    }
+    
+    if (cityLower.includes('kimberley') || cityLower.includes('upington') ||
+        cityLower.includes('kuruman')) {
+      return 'Northern Cape';
+    }
+    
+    if (cityLower.includes('mahikeng') || cityLower.includes('rustenburg') ||
+        cityLower.includes('klerksdorp') || cityLower.includes('potchefstroom')) {
+      return 'North West';
+    }
+    
+    // Return original region if no mapping found
+    return region || 'Unknown';
   }
 
   // Get session ID for external use
