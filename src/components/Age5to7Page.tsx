@@ -116,7 +116,13 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
                 <p className="text-xl md:text-2xl text-purple-700 font-bold max-w-2xl mx-auto">
                    {appContent.hero.subtitle[selectedLanguage]}
                 </p>
-              </div>
+              <FeaturedSection 
+                onGameClick={handleGameClickById} 
+                onCardGamesClick={() => {
+                  // For Age 5-7 page, we can either navigate to card games or open external link
+                  window.open('https://www.30seconds.ie/', '_blank');
+                }}
+              />
             </div>
             <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
           </div>

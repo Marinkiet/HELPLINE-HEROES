@@ -6,11 +6,13 @@ import { games } from '../data/games';
 import shout from '../assets/shout.jpg';
 import hug from '../assets/hug.jpg';
 import frontl from '../assets/frontl.png';
+
 interface FeaturedSectionProps {
   onGameClick: (gameId: string) => void;
+  onCardGamesClick?: () => void;
 }
 
-export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
+export function FeaturedSection({ onGameClick, onCardGamesClick }: FeaturedSectionProps) {
   const { selectedLanguage } = useAudio();
   
   // Get the first 3 games (which should always be the main games regardless of age filtering)
@@ -38,9 +40,14 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
     };
   });
 
-  const handle30SecondsClick = () => {
-    window.open('https://www.30seconds.ie/', '_blank');
+  const handleCardGamesClick = () => {
+    if (onCardGamesClick) {
+      onCardGamesClick();
+    } else {
+      window.open('https://www.30seconds.ie/', '_blank');
+    }
   };
+
   return (
     <div className=" rounded-3xl p-8 my-10 shadow-2xl ">
       <div className="flex items-center mb-6">
@@ -85,14 +92,14 @@ export function FeaturedSection({ onGameClick }: FeaturedSectionProps) {
       {/* 30 Seconds Card Games Button */}
       <div className="mt-8 text-center">
         <button
-          onClick={handle30SecondsClick}
+          onClick={handleCardGamesClick}
           className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-black py-4 px-8 rounded-2xl shadow-lg transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center space-x-3 mx-auto text-lg"
         >
           <ExternalLink className="w-6 h-6" />
           <span>Card Games</span>
         </button>
         <p className="text-white/80 text-sm mt-2 font-semibold">
-          Fun card games with similar educational content - Opens in new tab
+          Fun card games with similar educational content
         </p>
       </div>
     </div>

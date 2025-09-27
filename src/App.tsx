@@ -14,6 +14,7 @@ import { CategoryCards } from './components/CategoryCards';
 import { GameGrid } from './components/GameGrid';
 import { SearchBar } from './components/SearchBar';
 import { GameModal } from './components/GameModal';
+import { CardGamesPage } from './components/CardGamesPage';
 import { games, Game } from './data/games';
 import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
@@ -36,6 +37,7 @@ function AppContent() {
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [hasSessionBeenInitialized, setHasSessionBeenInitialized] = useState(false);
+  const [showCardGames, setShowCardGames] = useState(false);
 
   // Initialize engagement tracking when age group is selected
   useEffect(() => {
@@ -156,9 +158,23 @@ function AppContent() {
     trackInteraction('back_to_age_selection');
   };
 
+  const handleCardGamesClick = () => {
+    setShowCardGames(true);
+    trackInteraction('card_games_page_open');
+  };
+
+  const handleBackFromCardGames = () => {
+    setShowCardGames(false);
+  };
+
   // Show analytics dashboard
   if (showAnalytics) {
     return <AnalyticsDashboard onBack={() => setShowAnalytics(false)} />;
+  }
+
+  // Show card games page
+  if (showCardGames) {
+    return <CardGamesPage onBack={handleBackFromCardGames} />;
   }
 
   // Show age selection if no age group is selected
@@ -206,6 +222,11 @@ function AppContent() {
                 </div>
               </div>
               <div className="mx-10"><FeaturedSection onGameClick={handleGameClickById} /></div>
+            <div className="mx-10">
+              <FeaturedSection 
+                onGameClick={handleGameClickById} 
+                onCardGamesClick={handleCardGamesClick}
+              />
             </div>
           
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
