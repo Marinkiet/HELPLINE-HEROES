@@ -152,7 +152,7 @@ function AppContent() {
 
   // Show analytics dashboard
   if (showAnalytics) {
-    return <AnalyticsDashboard />;
+    return <AnalyticsDashboard onBack={() => setShowAnalytics(false)} />;
   }
 
   // Show age selection if no age group is selected

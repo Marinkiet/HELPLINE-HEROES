@@ -16,9 +16,10 @@ import { AdultReportButton } from './AdultReportButton';
 interface Age5to7PageProps {
   onBackToAgeSelection: () => void;
   onCommunitySafetyClick: () => void;
+  onShowAnalytics?: () => void;
 }
 
-export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Age5to7PageProps) {
+export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onShowAnalytics }: Age5to7PageProps) {
   const { selectedLanguage } = useAudio();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -91,7 +92,10 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick }: Ag
   return (
     <div className="min-h-screen bg-yellow-300">
       <div className="relative z-10">
-        <Navigation onBackToAgeSelection={onBackToAgeSelection} />
+        <Navigation 
+          onBackToAgeSelection={onBackToAgeSelection}
+          onShowAnalytics={onShowAnalytics}
+        />
         <div className="w-full"
         style={{
                 backgroundImage: `url(${kidsbg})`, 
