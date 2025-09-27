@@ -2,8 +2,7 @@ import React from 'react';
 import { useAudio } from '../contexts/AudioContext';
 import kidsbg from '../assets/kidsbg.jpg';
 import starImg from '../assets/star.jpg';
-import bookImg from '../assets/book.jpg';
-import backpackImg from '../assets/backpack.jpg';
+
 
 interface AgeSelectionProps {
   onAgeSelect: (ageGroup: 'early' | 'middle' | 'teen') => void;
