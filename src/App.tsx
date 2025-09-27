@@ -173,7 +173,10 @@ function AppContent() {
   return (
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <Navigation onBackToAgeSelection={handleBackToAgeSelection} />
+          <Navigation 
+            onBackToAgeSelection={handleBackToAgeSelection}
+            onShowAnalytics={() => setShowAnalytics(true)}
+          />
           <div className="w-full"
           style={{
                   backgroundImage: `url(${kidsbg})`, 
