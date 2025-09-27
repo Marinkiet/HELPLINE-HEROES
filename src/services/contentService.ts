@@ -245,7 +245,7 @@ class ContentService {
         .select('*');
 
       if (appError) {
-        console.error('Error loading app content:', appError);
+        console.warn('⚠️ Database error loading app content, using fallback:', appError);
         this.loadFallbackContent();
         return;
       }
@@ -256,7 +256,7 @@ class ContentService {
         .select('*');
 
       if (gameError) {
-        console.error('Error loading game content:', gameError);
+        console.warn('⚠️ Database error loading game content:', gameError);
       }
 
       // Update cache
@@ -283,7 +283,7 @@ class ContentService {
       this.lastCacheUpdate = Date.now();
       console.log('✅ Content cache loaded from database');
     } catch (error) {
-      console.error('Error loading content cache:', error);
+      console.warn('⚠️ Network error loading content cache, using fallback:', error);
       this.loadFallbackContent();
     }
   }
