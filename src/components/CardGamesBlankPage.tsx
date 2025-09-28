@@ -45,7 +45,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="text-white text-xl">😊</div>
               </div>
               
-              <div className="text-white text-sm font-semibold">Irish Edition</div>
+              <div className="text-white text-sm font-semibold">English Edition</div>
             </div>
 
             {/* Center - Main logo */}
