@@ -5,7 +5,6 @@ import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
-import doctorGif from '../../assets/doctor.gif';
 import strangerGif from '../../assets/stranger.gif';
 
 interface TouchScenarioGameProps {
@@ -225,7 +224,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 0 && (
             <div className="flex justify-center mb-6">
               <img 
-                src={doctorGif} 
+                src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/doctor.gif"
                 alt="Doctor examining patient"
                 className="w-100 h-auto rounded-lg"
               />
