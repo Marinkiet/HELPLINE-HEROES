@@ -104,7 +104,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 {/* Box shadow */}
                 <div className="absolute inset-0 rounded-lg transform translate-x-3 translate-y-3"></div>
                 
-                <div className="relative w-80 h-[480px] bg-black rounded-lg shadow-2xl p-6 flex flex-col">
+                <div className="relative w-80 h-[480px] rounded-lg shadow-2xl p-6 flex flex-col">
                   <img 
                     src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/gamecards.png"
                     alt="30 Seconds Game Card"
