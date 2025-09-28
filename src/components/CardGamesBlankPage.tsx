@@ -222,9 +222,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           </div>
         </div>
       </main>
-    </div>
-  );
-}
+
       {/* How to Play Modal */}
       {showHowToPlay && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
@@ -450,3 +448,6 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
