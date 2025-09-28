@@ -105,11 +105,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="absoluterounded-lg transform translate-x-3 translate-y-3"></div>
                 
                 <div className="relative w-80 h-[480px] bg-black rounded-lg shadow-2xl p-6 flex flex-col">
-                  <img 
-                    src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/gamecards.png"
-                    alt="30 Seconds Game Card"
-                    className="w-full h-full object-cover rounded-lg"
-                  />
+                  <div className="w-full h-full bg-white rounded-lg"></div>
                 </div>
               </div>
             </div>
