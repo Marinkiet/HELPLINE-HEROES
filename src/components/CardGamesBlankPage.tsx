@@ -102,7 +102,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             <div className="flex justify-center lg:justify-end">
               <div className="relative transform hover:scale-105 transition-transform duration-300">
                 {/* Box shadow */}
-                <div className="absolute inset-0 bg-black/40 rounded-lg transform translate-x-3 translate-y-3"></div>
+                <div className="absoluterounded-lg transform translate-x-3 translate-y-3"></div>
                 
                 <div className="relative w-80 h-[480px] bg-black rounded-lg shadow-2xl p-6 flex flex-col">
                   <img 
