@@ -33,12 +33,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           <div className="flex items-center justify-between h-20">
             {/* Left side - Logo and branding */}
             <div className="flex items-center space-x-4">
-              {/* Irish flag */}
-              <div className="flex">
-                <div className="w-6 h-4 bg-green-500"></div>
-                <div className="w-6 h-4 bg-white"></div>
-                <div className="w-6 h-4 bg-orange-500"></div>
-              </div>
+           
               
               {/* Blue smiley face logo */}
               <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
