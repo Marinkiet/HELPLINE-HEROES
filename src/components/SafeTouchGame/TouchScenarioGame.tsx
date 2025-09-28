@@ -5,7 +5,6 @@ import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
 import { gameContent } from '../../data/gameContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
-import strangerGif from '../../assets/stranger.gif';
 
 interface TouchScenarioGameProps {
   onComplete: () => void;
@@ -233,7 +232,7 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           {currentScenario === 1 && (
             <div className="flex justify-center mb-6">
               <img 
-                src={strangerGif} 
+                src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/stranger.gif"
                 alt="Stranger offering candy"
                 className="w-100 h-auto rounded-lg"
               />
