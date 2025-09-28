@@ -3,7 +3,6 @@ import { Sun, ArrowRight, Check } from 'lucide-react';
 import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
-import upperGif from '../../assets/upper.gif';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BodyPartsExplorationProps {
@@ -105,7 +104,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                 <div className="relative">
                   {currentBodyPart === 'upperBody' ? (
                     <img 
-                      src={upperGif} 
+                      src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/upper.gif"
                       alt="Upper body safety diagram"
                       className="w-80 h-auto border-2 border-gray-200 rounded-lg"
                     />
