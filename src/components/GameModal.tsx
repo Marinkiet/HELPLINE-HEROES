@@ -7,6 +7,7 @@ import { Game } from '../data/games';
 import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
+import { BraveVoiceGameContainer } from './BraveVoiceGame/BraveVoiceGameContainer';
 import hug from '../assets/hug.jpg';
 import frontl from '../assets/frontl.png';
 import shout from '../assets/shout.jpg';
@@ -47,7 +48,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const modalImage = getModalImage();
 
   const handleStartLearning = () => {
-    trackGameStart(game.id);
+    trackGameStart(game.id, translatedTitle);
     
     if (game.id === '1') {
       setShowSafeTouchGame(true);
