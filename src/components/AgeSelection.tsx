@@ -2,8 +2,7 @@ import React from 'react';
 import { useAudio } from '../contexts/AudioContext';
 import kidsbg from '../assets/kidsbg.jpg';
 import starImg from '../assets/star.jpg';
-import bookImg from '../assets/backpack.jpg';
-import backpackImg from '../assets/backpack.jpg';
+import bookImg from '../assets/book.jpg';
 
 
 interface AgeSelectionProps {
@@ -103,7 +102,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         nr: 'Amakhono okuphepha aphakeme entsheni',
         nso: 'Bokgoni bjo bo phagamego bja polokego bja baša'
       },
-      image: backpackImg,
+      image: 'https://trustlineheroes.s3.eu-north-1.amazonaws.com/backpack.jpg',
       bgColor: 'from-purple-400 to-pink-500',
       iconColor: 'text-purple-600'
     }
