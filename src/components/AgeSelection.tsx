@@ -3,6 +3,7 @@ import { useAudio } from '../contexts/AudioContext';
 import kidsbg from '../assets/kidsbg.jpg';
 import starImg from '../assets/star.jpg';
 import bookImg from '../assets/backpack.jpg';
+import backpackImg from '../assets/backpack.jpg';
 
 
 interface AgeSelectionProps {
