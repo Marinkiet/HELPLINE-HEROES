@@ -47,7 +47,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const modalImage = getModalImage();
 
   const handleStartLearning = () => {
-    trackGameStart(game.id, translatedTitle);
+    trackGameStart(game.id);
     
     if (game.id === '1') {
       setShowSafeTouchGame(true);
