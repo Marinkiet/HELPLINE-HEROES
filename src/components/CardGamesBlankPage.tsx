@@ -8,6 +8,7 @@ interface CardGamesBlankPageProps {
 
 export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
   const { selectedLanguage } = useAudio();
+  const [showHowToPlay, setShowHowToPlay] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-400 via-yellow-300 to-yellow-200 relative overflow-hidden">
@@ -70,7 +71,12 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           {/* Navigation menu */}
           <div className="border-t border-gray-700 py-3">
             <nav className="flex justify-center space-x-8 text-yellow-400 text-sm font-semibold">
-              <span className="hover:text-yellow-300 cursor-pointer transition-colors">How To Play</span>
+              <span 
+                onClick={() => setShowHowToPlay(true)}
+                className="hover:text-yellow-300 cursor-pointer transition-colors"
+              >
+                How To Play
+              </span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Buy the Games</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Helpline Heroes of Facts</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">The story so far</span>
@@ -128,7 +134,10 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <span className="text-4xl lg:text-2xl">unsafe situations.</span>
               </h1>
               
-              <button className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-black text-2xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200 border-4 border-white">
+              <button 
+                onClick={() => setShowHowToPlay(true)}
+                className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-black text-2xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200 border-4 border-white"
+              >
                 How Do You Play?
               </button>
             </div>
@@ -216,3 +225,228 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
     </div>
   );
 }
+      {/* How to Play Modal */}
+      {showHowToPlay && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-t-3xl">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-black">How to Play Helpline Heroes</h2>
+                <button
+                  onClick={() => setShowHowToPlay(false)}
+                  className="text-white hover:text-gray-200 p-2 hover:bg-white/20 rounded-full transition-colors duration-200"
+                  aria-label="Close how to play"
+                >
+                  <ArrowLeft className="w-8 h-8" />
+                </button>
+              </div>
+              <p className="text-blue-100 text-lg font-semibold mt-2">
+                The awareness-building board game that helps kids learn to recognize, resist & report unsafe situations
+              </p>
+            </div>
+
+            <div className="p-8 space-y-8">
+              {/* Game Overview */}
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-xl">
+                <h3 className="text-2xl font-bold text-yellow-800 mb-4">🎯 Game Overview</h3>
+                <p className="text-yellow-700 text-lg leading-relaxed">
+                  Helpline Heroes uses the same educational content from our digital safety games in a fun, 
+                  interactive card format. Players learn about body safety, trusted adults, and speaking up 
+                  while playing together in groups or classrooms.
+                </p>
+              </div>
+
+              {/* Basic Setup */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 rounded-2xl p-6 border border-blue-200">
+                  <h3 className="text-xl font-bold text-blue-800 mb-4 flex items-center">
+                    <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm font-black">1</span>
+                    Basic Setup
+                  </h3>
+                  <ul className="text-blue-700 space-y-2">
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span>2-6 players (or teams in classroom setting)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span>Question cards organized by safety topics</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span>Game board with topic progression path</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      <span>Dice for movement</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-green-50 rounded-2xl p-6 border border-green-200">
+                  <h3 className="text-xl font-bold text-green-800 mb-4 flex items-center">
+                    <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm font-black">2</span>
+                    How to Play
+                  </h3>
+                  <ul className="text-green-700 space-y-2">
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">•</span>
+                      <span>One player reads question to another</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">•</span>
+                      <span>If answer matches card, player moves forward</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">•</span>
+                      <span>Wrong answer? Reader shares correct answer</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">•</span>
+                      <span>Complete all topic questions to advance</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Classroom Mode */}
+              <div className="bg-purple-50 rounded-2xl p-6 border border-purple-200">
+                <h3 className="text-2xl font-bold text-purple-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">🏫</span>
+                  Classroom & Group Play
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-bold text-purple-800 mb-3">👩‍🏫 Teacher/Facilitator Role:</h4>
+                    <ul className="text-purple-700 space-y-2 text-sm">
+                      <li>• Acts as the question reader for all teams</li>
+                      <li>• Guides discussion after each answer</li>
+                      <li>• Provides correct answers when needed</li>
+                      <li>• Ensures safe, supportive learning environment</li>
+                      <li>• Facilitates group reflection on safety topics</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-purple-800 mb-3">👥 Team Play:</h4>
+                    <ul className="text-purple-700 space-y-2 text-sm">
+                      <li>• Divide class into small teams (3-5 students)</li>
+                      <li>• Teams work together to answer questions</li>
+                      <li>• Encourage discussion within teams</li>
+                      <li>• Teams can challenge each other</li>
+                      <li>• Celebrate learning, not just winning</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Safety Topics */}
+              <div className="bg-orange-50 rounded-2xl p-6 border border-orange-200">
+                <h3 className="text-2xl font-bold text-orange-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">🛡️</span>
+                  Safety Topics Covered
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white p-4 rounded-xl shadow-sm">
+                    <h4 className="font-bold text-green-800 mb-2">🕵️ Safe Touch Detective</h4>
+                    <p className="text-green-700 text-sm">Learn about good touch vs bad touch and body safety</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl shadow-sm">
+                    <h4 className="font-bold text-blue-800 mb-2">💖 Trusted Heroes Circle</h4>
+                    <p className="text-blue-700 text-sm">Identify trusted adults and recognize warning signs</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl shadow-sm">
+                    <h4 className="font-bold text-purple-800 mb-2">🎤 Brave Voice</h4>
+                    <p className="text-purple-700 text-sm">Practice speaking up and reporting unsafe situations</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Game Rules */}
+              <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">📋</span>
+                  Detailed Game Rules
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-white p-4 rounded-xl border-l-4 border-blue-400">
+                    <h4 className="font-bold text-blue-800 mb-2">🎲 Turn Sequence:</h4>
+                    <ol className="text-gray-700 space-y-1 text-sm list-decimal list-inside">
+                      <li>Player rolls dice to determine movement</li>
+                      <li>Another player (or facilitator) reads question card</li>
+                      <li>Player gives their answer</li>
+                      <li>Check answer against card solution</li>
+                      <li>Move forward if correct, stay if incorrect</li>
+                      <li>Discuss the safety lesson together</li>
+                    </ol>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl border-l-4 border-green-400">
+                    <h4 className="font-bold text-green-800 mb-2">🏆 Winning Conditions:</h4>
+                    <ul className="text-gray-700 space-y-1 text-sm">
+                      <li>• Complete ALL questions in each safety topic deck</li>
+                      <li>• Progress through: Recognition → Response → Reporting → Support</li>
+                      <li>• Everyone wins when everyone learns!</li>
+                      <li>• Focus on understanding, not speed</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-xl border-l-4 border-red-400">
+                    <h4 className="font-bold text-red-800 mb-2">❤️ Important Reminders:</h4>
+                    <ul className="text-gray-700 space-y-1 text-sm">
+                      <li>• Create a safe, non-judgmental environment</li>
+                      <li>• Encourage questions and discussion</li>
+                      <li>• Remind players they can talk to trusted adults anytime</li>
+                      <li>• Emphasize that learning about safety is brave and important</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Age Recommendations */}
+              <div className="bg-cyan-50 rounded-2xl p-6 border border-cyan-200">
+                <h3 className="text-2xl font-bold text-cyan-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">👶</span>
+                  Age Recommendations
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white p-4 rounded-xl text-center">
+                    <div className="text-2xl mb-2">🌟</div>
+                    <h4 className="font-bold text-cyan-800 mb-1">Ages 6-8</h4>
+                    <p className="text-cyan-700 text-sm">Basic safety concepts with adult guidance</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl text-center">
+                    <div className="text-2xl mb-2">🎯</div>
+                    <h4 className="font-bold text-cyan-800 mb-1">Ages 9-11</h4>
+                    <p className="text-cyan-700 text-sm">Independent play with peer discussion</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl text-center">
+                    <div className="text-2xl mb-2">🚀</div>
+                    <h4 className="font-bold text-cyan-800 mb-1">Ages 12-14</h4>
+                    <p className="text-cyan-700 text-sm">Advanced scenarios and leadership roles</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call to Action */}
+              <div className="text-center bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-4">Ready to Start Playing?</h3>
+                <p className="text-blue-100 mb-6">
+                  Get your Helpline Heroes card game and start building safety awareness in your community!
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200">
+                    Buy the Game
+                  </button>
+                  <button 
+                    onClick={() => setShowHowToPlay(false)}
+                    className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition-colors duration-200"
+                  >
+                    Back to Games
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
