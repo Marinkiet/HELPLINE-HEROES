@@ -267,7 +267,7 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
           {currentScenario === 4 && (
             <div className="flex justify-center mb-6">
               <img 
-                src={neighbour} 
+                src={student} 
                 alt="Neighbour Helping with Homework"
                 className="w-100 h-auto rounded-lg"
               />
