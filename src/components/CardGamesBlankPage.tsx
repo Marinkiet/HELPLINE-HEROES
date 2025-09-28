@@ -116,7 +116,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
 
             {/* Center - Main text and button */}
             <div className="text-center">
-              <h1 className="text-5xl lg:text-3xl font-black text-white mb-12 leading-tight drop-shadow-2xl">
+              <h1 className="text-5xl lg:text-5xl font-black text-white mb-12 leading-tight drop-shadow-2xl">
                 Trustline heroes is engaging, empowering
                 <br />
                 <span className="text-4xl lg:text-2xl">& simple to play.</span>
