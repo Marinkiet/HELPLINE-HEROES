@@ -4,7 +4,6 @@ import { AudioPlayer } from '../AudioPlayer';
 import { useAudio } from '../../contexts/AudioContext';
 import { gameContent } from '../../data/gameContent';
 import upperGif from '../../assets/upper.gif';
-import lowerGif from '../../assets/lower.gif';
 import { elevenLabsService } from '../../services/elevenLabsService';
 
 interface BodyPartsExplorationProps {
@@ -112,7 +111,7 @@ export function BodyPartsExploration({ onComplete }: BodyPartsExplorationProps) 
                     />
                   ) : (
                     <img 
-                      src={lowerGif} 
+                      src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/lower.gif"
                       alt="Lower body safety diagram"
                       className="w-80 h-auto border-2 border-gray-200 rounded-lg"
                     />
