@@ -101,8 +101,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               >
                 Buy the Games
               </span>
-              <span className="hover:text-yellow-300 cursor-pointer transition-colors">Helpline Heroes Facts</span>
-              <span className="hover:text-yellow-300 cursor-pointer transition-colors">The story so far</span>
+       
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Contact</span>
             </nav>
           </div>
