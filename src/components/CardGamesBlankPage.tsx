@@ -179,8 +179,8 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="relative bg-purple-600 rounded-lg p-6 w-80 h-80 shadow-2xl">
                   {/* Board header */}
                   <div className="text-center mb-4">
-                    <h3 className="text-yellow-400 text-2xl font-black">GAME BOARD</h3>
-                    <p className="text-white text-sm font-semibold">junior edition</p>
+                    <h3 className="text-yellow-400 text-2xl font-black">GAME CARD</h3>
+          
                   </div>
                   
                   {/* Main game board grid */}
