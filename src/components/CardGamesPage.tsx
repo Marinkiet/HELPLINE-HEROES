@@ -105,35 +105,11 @@ export function CardGamesPage({ onBack }: CardGamesPageProps) {
                 <div className="absolute inset-0 bg-black/40 rounded-lg transform translate-x-3 translate-y-3"></div>
                 
                 <div className="relative w-80 h-[480px] bg-black rounded-lg shadow-2xl p-6 flex flex-col">
-                  {/* Irish flag on box */}
-                  <div className="flex mb-3">
-                    <div className="w-5 h-4 bg-green-500"></div>
-                    <div className="w-5 h-4 bg-white"></div>
-                    <div className="w-5 h-4 bg-orange-500"></div>
-                  </div>
-                  
-                  <div className="text-white text-sm mb-3 font-semibold">Irish Edition</div>
-                  
-                  {/* Blue smiley */}
-                  <div className="w-20 h-20 bg-blue-500 rounded-lg flex items-center justify-center mb-6">
-                    <div className="text-white text-3xl">😊</div>
-                  </div>
-                  
-                  {/* Main title */}
-                  <h2 className="text-yellow-400 text-5xl font-black mb-3 leading-tight">30 SECONDS</h2>
-                  <p className="text-red-400 text-base italic mb-6 font-medium">the quick thinking fast talking game</p>
-                  
-                  {/* Side text */}
-                  <div className="absolute -left-10 top-1/2 transform -translate-y-1/2 -rotate-90">
-                    <span className="text-yellow-400 text-xl font-black whitespace-nowrap tracking-wider">30 SECONDS</span>
-                  </div>
-                  
-                  {/* Bottom text */}
-                  <div className="mt-auto">
-                    <div className="text-white text-xs opacity-80">
-                      Ages 8+
-                    </div>
-                  </div>
+                  <img 
+                    src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/gamecards.png"
+                    alt="30 Seconds Game Card"
+                    className="w-full h-full object-cover rounded-lg"
+                  />
                 </div>
               </div>
             </div>
