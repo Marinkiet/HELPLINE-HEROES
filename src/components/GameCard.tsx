@@ -142,12 +142,8 @@ export function GameCard({ id, title, description, image, featured = false, onCl
           <p className="text-white/90 text-sm font-semibold">
             {translatedDescription}
           </p>
-          <div className={`mt-4 rounded-full px-4 py-2 inline-block transition-colors duration-200 ${
-            hasContent 
-              ? 'bg-white/30 hover:bg-white/40' 
-              : 'bg-gray-500/50 text-gray-300'
-          }`}>
-            <span className="text-white font-bold text-sm">{hasContent ? 'PLAY' : 'COMING SOON'}</span>
+          <div className="mt-4 bg-white/30 hover:bg-white/40 rounded-full px-4 py-2 inline-block transition-colors duration-200">
+            <span className="text-white font-bold text-sm">PLAY</span>
           </div>
         </div>
       </div>
