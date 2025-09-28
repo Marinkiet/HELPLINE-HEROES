@@ -9,6 +9,7 @@ import { GameModal } from './GameModal';
 import { VideoUploadModal } from './VideoUploadModal';
 import { games, Game } from '../data/games';
 import { appContent } from '../data/appContent';
+import { CardGamesBlankPage } from './CardGamesBlankPage';
 import kidsbg from '../assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './ReportBadTouchButton';
 import { AdultReportButton } from './AdultReportButton';
@@ -27,6 +28,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [currentVideoGame, setCurrentVideoGame] = useState<string>('');
+  const [showCardGames, setShowCardGames] = useState(false);
 
   // Filter games for 6-8 age group (early)
   const filteredGames = useMemo(() => {
@@ -85,9 +87,11 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
   };
 
   const handleCardGamesClick = () => {
-    // Navigate to card games page - this would need to be passed down from App.tsx
-    // For now, we'll just show an alert
-    alert('Card Games page - coming soon!');
+    setShowCardGames(true);
+  };
+
+  const handleBackFromCardGames = () => {
+    setShowCardGames(false);
   };
 
   // Get game title for video modal
@@ -95,6 +99,12 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
     const game = games.find(g => g.id === gameId);
     return game ? game.title[selectedLanguage] : '';
   };
+
+  // Show card games page
+  if (showCardGames) {
+    return <CardGamesBlankPage onBack={handleBackFromCardGames} />;
+  }
+
   return (
     <div className="min-h-screen bg-yellow-300">
       <div className="relative z-10">
