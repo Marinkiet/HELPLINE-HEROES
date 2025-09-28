@@ -33,20 +33,25 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           <div className="flex items-center justify-between h-20">
             {/* Left side - Logo and branding */}
             <div className="flex items-center space-x-4">
-           
+              {/* Irish flag */}
+              <div className="flex">
+                <div className="w-6 h-4 bg-green-500"></div>
+                <div className="w-6 h-4 bg-white"></div>
+                <div className="w-6 h-4 bg-orange-500"></div>
+              </div>
               
               {/* Blue smiley face logo */}
               <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
                 <div className="text-white text-xl">😊</div>
               </div>
               
-              <div className="text-white text-sm font-semibold">English Edition</div>
+              <div className="text-white text-sm font-semibold">Irish Edition</div>
             </div>
 
             {/* Center - Main logo */}
             <div className="text-center">
-              <h1 className="text-4xl font-black text-yellow-400">Trustline Heroes</h1>
-              <p className="text-sm text-red-400 italic font-medium">quick learning and confidence-building</p>
+              <h1 className="text-4xl font-black text-yellow-400">30 SECONDS</h1>
+              <p className="text-sm text-red-400 italic font-medium">the quick thinking fast talking game</p>
             </div>
 
             {/* Right side - Social media icons */}
@@ -174,11 +179,8 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="relative bg-purple-600 rounded-lg p-6 w-80 h-80 shadow-2xl">
                   {/* Board header */}
                   <div className="text-center mb-4">
-                    <img 
-                      src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/carddemo.png"
-                      alt="Game Card Demo"
-                      className="w-full h-16 object-cover rounded-lg"
-                    />
+                    <h3 className="text-yellow-400 text-2xl font-black">GAME BOARD</h3>
+                    <p className="text-white text-sm font-semibold">junior edition</p>
                   </div>
                   
                   {/* Main game board grid */}
