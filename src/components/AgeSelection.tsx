@@ -2,7 +2,6 @@ import React from 'react';
 import { useAudio } from '../contexts/AudioContext';
 import kidsbg from '../assets/kidsbg.jpg';
 import starImg from '../assets/star.jpg';
-import bookImg from '../assets/book.jpg';
 
 
 interface AgeSelectionProps {
@@ -71,7 +70,7 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         nr: 'Izigigaba zokufunda zezingane zasesikoleni',
         nso: 'Dipalangwa tša go ithuta tša bana ba sekolo'
       },
-      image: bookImg,
+      image: 'https://trustlineheroes.s3.eu-north-1.amazonaws.com/book.jpg',
       bgColor: 'from-blue-400 to-purple-500',
       iconColor: 'text-blue-600'
     },
