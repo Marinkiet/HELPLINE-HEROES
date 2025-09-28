@@ -117,15 +117,17 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             {/* Center - Main text and button */}
             <div className="text-center">
               <h1 className="text-5xl lg:text-6xl font-black text-white mb-12 leading-tight drop-shadow-2xl">
-                30 Seconds & 30 Seconds junior
+                Trustline heroes is engaging, empowering
                 <br />
-                <span className="text-4xl lg:text-5xl">are fun, fast-paced</span>
+                <span className="text-4xl lg:text-5xl">& simple to play.</span>
                 <br />
-                <span className="text-4xl lg:text-5xl">& easy to play</span>
+                <span className="text-4xl lg:text-5xl">An awareness-building</span>
                 <br />
-                <span className="text-4xl lg:text-5xl">general knowledge</span>
+                <span className="text-4xl lg:text-5xl">board game that helps kids</span>
                 <br />
-                <span className="text-4xl lg:text-5xl">board games</span>
+                <span className="text-4xl lg:text-5xl">learn to recognize, resist & report</span>
+                <br />
+                <span className="text-4xl lg:text-5xl">unsafe situations.</span>
               </h1>
               
               <button className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-black text-2xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200 border-4 border-white">
