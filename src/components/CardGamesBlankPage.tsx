@@ -125,6 +125,177 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
     });
   };
 
+  // How to Play modal content translations
+  const howToPlayContent = {
+    title: {
+      en: "How to Play Helpline Heroes",
+      af: "Hoe om Hulplyn Helde te Speel",
+      zu: "Indlela Yokudlala i-Helpline Heroes",
+      xh: "Indlela Yokudlala i-Helpline Heroes",
+      st: "Tsela ea ho Bapala Helpline Heroes",
+      tn: "Tsela ya go Tshameka Helpline Heroes",
+      ts: "Ndlela yo Tlanga Helpline Heroes",
+      ve: "Ndila ya u Tamba Helpline Heroes",
+      nr: "Indlela Yokudlala i-Helpline Heroes",
+      nso: "Tsela ya go Bapalela Helpline Heroes"
+    },
+    subtitle: {
+      en: "The awareness-building board game that helps kids learn to recognize, resist & report unsafe situations",
+      af: "Die bewustheidsbou-bordspel wat kinders help om onveilige situasies te herken, weerstand te bied en te rapporteer",
+      zu: "Umdlalo webhodi owakha ukuqwashisa osiza izingane ukuthi zifunde ukubona, ukumelana nokubika izimo ezingaphephile",
+      xh: "Umdlalo webhodi owakha ulwazi onceda abantwana ukuba bafunde ukuqonda, ukumelana nokuxela iimeko ezingakhuselekanga",
+      st: "Papali ea boto e ahang tlhokomeliso e thusang bana ho ithuta ho tseba, ho hanyetsa le ho bega maemo a sa sireletsehang",
+      tn: "Motshameko wa boto o o agang temogo o o thusang bana go ithuta go lemoga, go lwantsha le go begela maemo a a sa babalesegang",
+      ts: "Ntlangu wa boto lowu akaka ku tiva lowu pfunaka vana ku dyondza ku vona, ku lwisana na ku vika swiyimo leswi nga hlayisekangiki",
+      ve: "Mutambo wa boto u akaho ndivho u thusaho vhana u guda u divha, u lwisana na u pfi zwithu zwo sa vhushaaho",
+      nr: "Umdlalo webhodi owakha ukuqwashisa osiza izingane ukuthi zifunde ukubona, ukumelana nokubika izimo ezingaphephile",
+      nso: "Papadi ya boto ye e agago temogo ye e thušago bana go ithuta go lemoga, go lwantšha le go begela maemo a a sa šireletšegago"
+    },
+    gameOverview: {
+      en: "🎯 Game Overview",
+      af: "🎯 Spel Oorsig",
+      zu: "🎯 Ukubuka Umdlalo",
+      xh: "🎯 Imbonakalo Yomdlalo",
+      st: "🎯 Kakaretso ea Papali",
+      tn: "🎯 Kakaretso ya Motshameko",
+      ts: "🎯 Vuyelo bya Ntlangu",
+      ve: "🎯 Vhubvumeleli ha Mutambo",
+      nr: "🎯 Ukubuka Umdlalo",
+      nso: "🎯 Kakaretšo ya Papadi"
+    },
+    gameOverviewText: {
+      en: "Helpline Heroes uses the same educational content from our digital safety games in a fun, interactive card format. Players learn about body safety, trusted adults, and speaking up while playing together in groups or classrooms.",
+      af: "Hulplyn Helde gebruik dieselfde opvoedkundige inhoud van ons digitale veiligheidsspeletjies in 'n prettige, interaktiewe kaartformaat. Spelers leer oor liggaamsveiligheid, vertroude volwassenes, en uitpraat terwyl hulle saam in groepe of klaskamers speel.",
+      zu: "I-Helpline Heroes isebenzisa okuqukethwe kwezemfundo okufanayo emidlalweni yethu yokuphephela yedijithali ngefomethi yamakhadi ajabulisayo, asebenzisanayo. Abadlali bafunda ngokuphepha komzimba, abantu abadala abathembekile, nokukhuluma ngenkathi bedlala ndawonye emaqenjini noma emakilasini.",
+      xh: "I-Helpline Heroes isebenzisa umxholo wezemfundo ofanayo ovela kwimidlalo yethu yokhuseleko yedijithali kwifomati yamakhadi amnandi, asebenzisanayo. Abadlali bafunda ngokhuseleko lomzimba, abantu abadala abathembekileyo, nokuthetha ngelixa bedlala kunye ngamaqela okanye emaklasini.",
+      st: "Helpline Heroes e sebelisa litaba tse tšoanang tsa thuto ho tsoa lipapaling tsa rona tsa polokeho tsa dijithale ka sebopeho sa likarete tse monate, tse sebelisanang. Libapali li ithuta ka polokeho ea 'mele, batho ba baholo ba tšepahalang, le ho bua ha li ntse li bapala hammoho lihlopha kapa likamoreng tsa ho ithuta.",
+      tn: "Helpline Heroes e dirisa diteng tse di tshwanang tsa thuto go tswa metshamekong ya rona ya pabalesego ya dijithale ka sebopego sa dikarata tse di monate, tse di dirisanang. Batshameki ba ithuta ka pabalesego ya mmele, bagolo ba ba ikanyegang, le go bua fa ba ntse ba tshameka mmogo mo ditlhopheng kgotsa mo diphapošing.",
+      ts: "Helpline Heroes yi tirhisa nhundzu yo fanana wa dyondzo ku suka eka mintlangu ya hina ya vuhlayiseki ya dijithale hi xivumbeko xa tikhadi leti tsakisaka, leti tirhisanaka. Vatlangi va dyondza hi vuhlayiseki bya miri, vanhu va vadala lava tshembhekaka, na ku vulavula loko va ri karhi va tlanga swin'we eka mintlawa kumbe eka tikilasini.",
+      ve: "Helpline Heroes i shumisa zwine zwa pfunzo zwo linganaho u bva kha mitambo yanga ya vhushai ya dijithale nga muvhumbeo wa makhadzi a tsakisaho, a shumisanaho. Vhatambi vha guda nga vhushai ha muvhili, vhathu vhahulwane vho teaho, na u amba musi vho tshi tamba vhone eka zwigwada kana eka makilasini.",
+      nr: "I-Helpline Heroes isebenzisa okuqukethwe kwezemfundo okufanayo emidlalweni yethu yokuphephela yedijithali ngefomethi yamakhadi ajabulisayo, asebenzisanayo. Abadlali bafunda ngokuphepha komzimba, abantu abadala abathembekile, nokukhuluma ngenkathi bedlala ndawonye emaqenjini noma emakilasini.",
+      nso: "Helpline Heroes e šomiša dikagare tše di swanago tša thuto go tšwa metshamekong ya rena ya polokego ya dijithale ka sebopego sa dikarata tše di thabišago, tše di šomišanago. Batshameki ba ithuta ka polokego ya mmele, bagolo ba tšhepegago, le go bolela ge ba dutše ba tshameka mmogo ditlhopheng goba diphapošing."
+    },
+    basicSetup: {
+      en: "Basic Setup",
+      af: "Basiese Opstelling",
+      zu: "Ukumisa Okuyisisekelo",
+      xh: "Ukuseta Okusisiseko",
+      st: "Tlhophiso ea Motheo",
+      tn: "Tlhophiso ya Motheo",
+      ts: "Nhlengeletano wa Xisekelo",
+      ve: "Ndzudzanyo wa Mutheo",
+      nr: "Ukumisa Okuyisisekelo",
+      nso: "Tlhophišo ya Motheo"
+    },
+    howToPlayTitle: {
+      en: "How to Play",
+      af: "Hoe om te Speel",
+      zu: "Indlela Yokudlala",
+      xh: "Indlela Yokudlala",
+      st: "Tsela ea ho Bapala",
+      tn: "Tsela ya go Tshameka",
+      ts: "Ndlela yo Tlanga",
+      ve: "Ndila ya u Tamba",
+      nr: "Indlela Yokudlala",
+      nso: "Tsela ya go Bapalela"
+    },
+    classroomMode: {
+      en: "Classroom & Group Play",
+      af: "Klaskamer & Groepspel",
+      zu: "Ikilasi Nokudlala Kweqembu",
+      xh: "Igumbi Lokufundela Nomdlalo Weqela",
+      st: "Phaposi le Papali ea Sehlopha",
+      tn: "Phaposi le Motshameko wa Setlhopha",
+      ts: "Kilasi na Ntlangu wa Ntlawa",
+      ve: "Kilasi na Mutambo wa Tshigwada",
+      nr: "Ikilasi Nokudlala Kweqembu",
+      nso: "Phapošo le Papadi ya Sehlopha"
+    },
+    safetyTopics: {
+      en: "Safety Topics Covered",
+      af: "Veiligheidsonderwerpe Gedek",
+      zu: "Izihloko Zokuphepha Ezihlanganisiwe",
+      xh: "Izihloko Zokhuseleko Eziqukiweyo",
+      st: "Lihlooho tsa Polokeho tse Koahetsoeng",
+      tn: "Dihlooho tsa Pabalesego tse di Akaretseng",
+      ts: "Tihloko ta Vuhlayiseki leti Katsiweeke",
+      ve: "Dziṱahe dza Vhushai dzo Katswaho",
+      nr: "Izihloko Zokuphepha Ezihlanganisiwe",
+      nso: "Dihloko tša Polokego tše di Akaretšwego"
+    },
+    gameRules: {
+      en: "Detailed Game Rules",
+      af: "Gedetailleerde Spelreëls",
+      zu: "Imithetho Yomdlalo Enemininingwane",
+      xh: "Imithetho Yomdlalo Eneenkcukacha",
+      st: "Melao ea Papali e Qaqileng",
+      tn: "Melao ya Motshameko e e Tseneletseng",
+      ts: "Milawu ya Ntlangu leyi Antswisiweke",
+      ve: "Milayo ya Mutambo yo Andadzeaho",
+      nr: "Imithetho Yomdlalo Enemininingwane",
+      nso: "Melao ya Papadi ye e Tseneletšego"
+    },
+    ageRecommendations: {
+      en: "Age Recommendations",
+      af: "Ouderdomsaanbevelings",
+      zu: "Izincomo Zeminyaka",
+      xh: "Iingcebiso Zeminyaka",
+      st: "Likeletso tsa Lilemo",
+      tn: "Dikeletso tsa Dingwaga",
+      ts: "Switsundzuxo swa Malembe",
+      ve: "Themendelo dza Minwaha",
+      nr: "Izincomo Zeminyaka",
+      nso: "Dikeletšo tša Mengwaga"
+    },
+    readyToStart: {
+      en: "Ready to Start Playing?",
+      af: "Gereed om te Begin Speel?",
+      zu: "Ukulungele Ukuqala Ukudlala?",
+      xh: "Ukulungele Ukuqala Ukudlala?",
+      st: "U se u Lokiselitse ho Qala ho Bapala?",
+      tn: "O setse o Siametse go Simolola go Tshameka?",
+      ts: "U lulamerile ku Sungula ku Tlanga?",
+      ve: "Ni lugiselelwa u Thoma u Tamba?",
+      nr: "Ukulungele Ukuqala Ukudlala?",
+      nso: "O lokišeditše go Thoma go Bapalela?"
+    },
+    readyToStartText: {
+      en: "Get your Helpline Heroes card game and start building safety awareness in your community!",
+      af: "Kry jou Hulplyn Helde kaartspel en begin bou veiligheidsbewustheid in jou gemeenskap!",
+      zu: "Thola umdlalo wakho wamakhadi we-Helpline Heroes futhi uqale ukwakha ukuqwashisa ngokuphepha emphakathini wakho!",
+      xh: "Fumana umdlalo wakho wamakhadi we-Helpline Heroes kwaye uqalise ukwakha ulwazi lokhuseleko kuluntu lwakho!",
+      st: "Fumana papali ea hao ea likarete ea Helpline Heroes 'me u qale ho aha tlhokomeliso ea polokeho sechabeng sa hao!",
+      tn: "Bona motshameko wa gago wa dikarata wa Helpline Heroes mme o simolole go aga temogo ya pabalesego mo setšhabeng sa gago!",
+      ts: "Kuma ntlangu wa wena wa tikhadi ta Helpline Heroes naswona u sungula ku aka ku tiva ka vuhlayiseki eka vaaki va wena!",
+      ve: "Wanani mutambo waṋu wa makhadzi a Helpline Heroes nahone ni thome u fhaṱa ndivho ya vhushai kha tshitshavha tshaṋu!",
+      nr: "Thola umdlalo wakho wamakhadi we-Helpline Heroes futhi uqale ukwakha ukuqwashisa ngokuphepha emphakathini wakho!",
+      nso: "Hwetša papadi ya gago ya dikarata ya Helpline Heroes gomme o thome go aga temogo ya polokego setšhabeng sa gago!"
+    },
+    buyTheGame: {
+      en: "Buy the Game",
+      af: "Koop die Spel",
+      zu: "Thenga Umdlalo",
+      xh: "Thenga Umdlalo",
+      st: "Reka Papali",
+      tn: "Reka Motshameko",
+      ts: "Xava Ntlangu",
+      ve: "Rengelani Mutambo",
+      nr: "Thenga Umdlalo",
+      nso: "Reka Papadi"
+    },
+    backToGames: {
+      en: "Back to Games",
+      af: "Terug na Speletjies",
+      zu: "Buyela Emidlalweni",
+      xh: "Buyela Kwimidlalo",
+      st: "Kgutlela ho Lipapali",
+      tn: "Boela kwa Metshamekong",
+      ts: "Vuya eka Mintlangu",
+      ve: "Vhuyani kha Mitambo",
+      nr: "Buyela Emidlalweni",
+      nso: "Boela go Metshameko"
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-400 via-yellow-300 to-yellow-200 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -333,7 +504,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             {/* Header */}
             <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-t-3xl">
               <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-black">How to Play Helpline Heroes</h2>
+                <h2 className="text-3xl font-black">{howToPlayContent.title[selectedLanguage]}</h2>
                 <button
                   onClick={() => setShowHowToPlay(false)}
                   className="text-white hover:text-gray-200 p-2 hover:bg-white/20 rounded-full transition-colors duration-200"
@@ -343,18 +514,16 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 </button>
               </div>
               <p className="text-blue-100 text-lg font-semibold mt-2">
-                The awareness-building board game that helps kids learn to recognize, resist & report unsafe situations
+                {howToPlayContent.subtitle[selectedLanguage]}
               </p>
             </div>
 
             <div className="p-8 space-y-8">
               {/* Game Overview */}
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-xl">
-                <h3 className="text-2xl font-bold text-yellow-800 mb-4">🎯 Game Overview</h3>
+                <h3 className="text-2xl font-bold text-yellow-800 mb-4">{howToPlayContent.gameOverview[selectedLanguage]}</h3>
                 <p className="text-yellow-700 text-lg leading-relaxed">
-                  Helpline Heroes uses the same educational content from our digital safety games in a fun, 
-                  interactive card format. Players learn about body safety, trusted adults, and speaking up 
-                  while playing together in groups or classrooms.
+                  {howToPlayContent.gameOverviewText[selectedLanguage]}
                 </p>
               </div>
 
@@ -363,7 +532,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="bg-blue-50 rounded-2xl p-6 border border-blue-200">
                   <h3 className="text-xl font-bold text-blue-800 mb-4 flex items-center">
                     <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm font-black">1</span>
-                    Basic Setup
+                    {howToPlayContent.basicSetup[selectedLanguage]}
                   </h3>
                   <ul className="text-blue-700 space-y-2">
                     <li className="flex items-start">
@@ -388,7 +557,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="bg-green-50 rounded-2xl p-6 border border-green-200">
                   <h3 className="text-xl font-bold text-green-800 mb-4 flex items-center">
                     <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm font-black">2</span>
-                    How to Play
+                    {howToPlayContent.howToPlayTitle[selectedLanguage]}
                   </h3>
                   <ul className="text-green-700 space-y-2">
                     <li className="flex items-start">
@@ -415,7 +584,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               <div className="bg-purple-50 rounded-2xl p-6 border border-purple-200">
                 <h3 className="text-2xl font-bold text-purple-800 mb-4 flex items-center">
                   <span className="text-3xl mr-3">🏫</span>
-                  Classroom & Group Play
+                  {howToPlayContent.classroomMode[selectedLanguage]}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -445,7 +614,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               <div className="bg-orange-50 rounded-2xl p-6 border border-orange-200">
                 <h3 className="text-2xl font-bold text-orange-800 mb-4 flex items-center">
                   <span className="text-3xl mr-3">🛡️</span>
-                  Safety Topics Covered
+                  {howToPlayContent.safetyTopics[selectedLanguage]}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-white p-4 rounded-xl shadow-sm">
@@ -467,7 +636,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                   <span className="text-3xl mr-3">📋</span>
-                  Detailed Game Rules
+                  {howToPlayContent.gameRules[selectedLanguage]}
                 </h3>
                 <div className="space-y-4">
                   <div className="bg-white p-4 rounded-xl border-l-4 border-blue-400">
@@ -508,7 +677,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               <div className="bg-cyan-50 rounded-2xl p-6 border border-cyan-200">
                 <h3 className="text-2xl font-bold text-cyan-800 mb-4 flex items-center">
                   <span className="text-3xl mr-3">👶</span>
-                  Age Recommendations
+                  {howToPlayContent.ageRecommendations[selectedLanguage]}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="bg-white p-4 rounded-xl text-center">
@@ -531,22 +700,22 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
 
               {/* Call to Action */}
               <div className="text-center bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8 rounded-2xl">
-                <h3 className="text-2xl font-bold mb-4">Ready to Start Playing?</h3>
+                <h3 className="text-2xl font-bold mb-4">{howToPlayContent.readyToStart[selectedLanguage]}</h3>
                 <p className="text-blue-100 mb-6">
-                  Get your Helpline Heroes card game and start building safety awareness in your community!
+                  {howToPlayContent.readyToStartText[selectedLanguage]}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button 
                     onClick={() => setShowPurchaseModal(true)}
                     className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Buy the Game
+                    {howToPlayContent.buyTheGame[selectedLanguage]}
                   </button>
                   <button 
                     onClick={() => setShowHowToPlay(false)}
                     className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition-colors duration-200"
                   >
-                    Back to Games
+                    {howToPlayContent.backToGames[selectedLanguage]}
                   </button>
                 </div>
               </div>
