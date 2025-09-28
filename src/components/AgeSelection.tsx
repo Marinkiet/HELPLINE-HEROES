@@ -156,45 +156,30 @@ export function AgeSelection({ onAgeSelect }: AgeSelectionProps) {
         {/* Age Group Cards */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 py-8">
           {ageGroups.map((group) => (
-            <div
+            <button
               key={group.id}
-              className={`w-48 h-48 md:w-64 md:h-64 rounded-full text-white transform transition-all duration-300 flex flex-col items-center justify-center ${
-                group.id === 'early' 
-                  ? 'bg-gradient-to-br from-gray-400 to-gray-500 cursor-not-allowed opacity-60' 
-                  : 'bg-gradient-to-br from-blue-400 to-blue-600 hover:scale-110 hover:shadow-2xl active:scale-95 group cursor-pointer'
-              }`}
-              onClick={group.id !== 'early' ? () => onAgeSelect(group.id) : undefined}
+              className={`w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br ${group.bgColor} text-white transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95 group cursor-pointer flex flex-col items-center justify-center`}
+              onClick={() => onAgeSelect(group.id)}
             >
               {/* Large Image */}
-              <div className={`mb-4 ${group.id !== 'early' ? 'group-hover:animate-bounce' : ''}`}>
+              <div className="mb-4 group-hover:animate-bounce">
                 <img 
                   src={group.image} 
                   alt={group.title[selectedLanguage]}
-                  className={`w-12 h-12 md:w-20 md:h-20 object-cover rounded-full ${
-                    group.id === 'early' ? 'grayscale' : ''
-                  }`}
+                  className="w-12 h-12 md:w-20 md:h-20 object-cover rounded-full"
                 />
               </div>
               
               {/* Age Range */}
               <div className="text-center">
-                <span className={`text-2xl md:text-3xl font-black ${
-                  group.id === 'early' ? 'text-gray-300' : 'text-white'
-                }`}>
+                <span className="text-2xl md:text-3xl font-black text-white">
                   {group.ageRange}
                 </span>
-                <p className={`text-sm md:text-lg font-bold mt-1 ${
-                  group.id === 'early' ? 'text-gray-300' : 'text-white/90'
-                }`}>
+                <p className="text-sm md:text-lg font-bold mt-1 text-white/90">
                   {group.title[selectedLanguage]}
                 </p>
-                {group.id === 'early' && (
-                  <p className="text-xs text-gray-400 mt-2 font-semibold">
-                    Coming Soon
-                  </p>
-                )}
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
