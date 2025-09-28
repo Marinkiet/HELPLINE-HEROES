@@ -459,9 +459,6 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                   <button 
                     onClick={() => setShowPurchaseModal(true)}
                     className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200"
-                  <button 
-                    onClick={() => setShowPurchaseModal(true)}
-                    className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200"
                   >
                     Buy the Game
                   </button>
