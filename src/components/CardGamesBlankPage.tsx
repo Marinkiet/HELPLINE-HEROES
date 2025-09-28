@@ -186,12 +186,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           {/* Navigation menu */}
           <div className="border-t border-gray-700 py-3">
             <nav className="flex justify-center space-x-8 text-yellow-400 text-sm font-semibold">
-              <span 
-                onClick={handleHowToPlayClick}
-                className="hover:text-yellow-300 cursor-pointer transition-colors"
-              >
-                {content.howToPlay[selectedLanguage]}
-              </span>
+            
               <span 
                 onClick={handlePurchaseClick}
                 className="hover:text-yellow-300 cursor-pointer transition-colors"
