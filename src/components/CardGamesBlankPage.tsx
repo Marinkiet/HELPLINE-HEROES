@@ -156,10 +156,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                   <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
                     <div className="text-white text-2xl">😊</div>
                   </div>
-                  
-                  {/* Junior title */}
-                  <h3 className="text-yellow-400 text-3xl font-black mb-2 leading-tight">30 SECONDS</h3>
-                  <p className="text-red-400 text-sm italic mb-4 font-medium">the quick thinking fast talking game</p>
+            
                   
                   {/* Game board preview inside box */}
                   <div className="flex-1 bg-purple-700 rounded-lg p-3">
