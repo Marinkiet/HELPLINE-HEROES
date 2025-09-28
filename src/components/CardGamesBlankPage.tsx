@@ -185,30 +185,11 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                   
                   {/* Main game board grid */}
                   <div className="bg-purple-700 rounded-lg p-4 h-56">
-                    <div className="grid grid-cols-8 gap-1 h-full">
-                      {Array.from({ length: 64 }, (_, i) => {
-                        // Create a spiral board pattern like in the reference
-                        const colors = [
-                          'bg-red-400', 'bg-green-400', 'bg-blue-400', 'bg-yellow-400', 
-                          'bg-orange-400', 'bg-pink-400', 'bg-purple-400', 'bg-cyan-400'
-                        ];
-                        
-                        // Create a more interesting pattern
-                        let colorIndex;
-                        if (i < 8) colorIndex = 0; // Top row - red
-                        else if (i >= 56) colorIndex = 1; // Bottom row - green
-                        else if (i % 8 === 0) colorIndex = 2; // Left column - blue
-                        else if (i % 8 === 7) colorIndex = 3; // Right column - yellow
-                        else colorIndex = (i % 4) + 4; // Interior - other colors
-                        
-                        return (
-                          <div
-                            key={i}
-                            className={`rounded-sm ${colors[colorIndex]} hover:opacity-80 transition-opacity cursor-pointer shadow-sm`}
-                          />
-                        );
-                      })}
-                    </div>
+                    <img 
+                      src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/carddemo.png"
+                      alt="Game Board"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                   
                   {/* Board footer */}
