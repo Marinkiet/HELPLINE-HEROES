@@ -9,7 +9,7 @@ import { GameModal } from './GameModal';
 import { VideoUploadModal } from './VideoUploadModal';
 import { games, Game } from '../data/games';
 import { appContent } from '../data/appContent';
-import { CardGamesBlankPage } from './CardGamesBlankPage';
+import { CardGamesPage } from './CardGamesPage';
 import kidsbg from '../assets/kidsbg.jpg';
 import { ReportBadTouchButton } from './ReportBadTouchButton';
 import { AdultReportButton } from './AdultReportButton';
@@ -102,7 +102,7 @@ export function Age5to7Page({ onBackToAgeSelection, onCommunitySafetyClick, onSh
 
   // Show card games page
   if (showCardGames) {
-    return <CardGamesBlankPage onBack={handleBackFromCardGames} />;
+    return <CardGamesPage onBack={handleBackFromCardGames} />;
   }
 
   return (
