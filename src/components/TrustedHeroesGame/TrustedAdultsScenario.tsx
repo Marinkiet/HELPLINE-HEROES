@@ -5,7 +5,6 @@ import { useAudio } from '../../contexts/AudioContext';
 import { useEngagement } from '../../contexts/EngagementContext';
 import { trustedHeroesContent } from '../../data/trustedHeroesContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
-import cleaning from '../../assets/classroomCleaning.gif'
 import doctorExam from '../../assets/doctorExam.jpg'
 import student from '../../assets/student.jpg'
 import neighbour from '../../assets/neighbour.gif'
@@ -228,7 +227,7 @@ export function TrustedAdultsScenario({ onComplete }: TrustedAdultsScenarioProps
           {currentScenario === 0 && (
             <div className="flex justify-center mb-6">
               <img 
-                src={cleaning} 
+                src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/-classroomCleaning.gif"
                 alt="Teacher and Student"
                 className="w-100 h-auto rounded-lg"
               />
