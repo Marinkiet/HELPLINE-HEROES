@@ -150,13 +150,6 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                     <div className="w-4 h-3 bg-orange-500"></div>
                   </div>
                   
-                  <div className="text-white text-sm mb-2 font-semibold">junior</div>
-                  
-                  {/* Blue smiley */}
-                  <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
-                    <div className="text-white text-2xl">😊</div>
-                  </div>
-            
                   
                   {/* Game board preview inside box */}
                   <div className="flex-1 bg-purple-700 rounded-lg p-3">
