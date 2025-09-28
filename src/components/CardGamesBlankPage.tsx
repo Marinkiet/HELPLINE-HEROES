@@ -145,10 +145,14 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                 <div className="relative w-72 h-80 bg-purple-600 rounded-lg shadow-2xl p-4 flex flex-col">
                   {/* Irish flag on junior box */}
                   <div className="flex mb-2">
-                    <div className="w-4 h-3 bg-green-500"></div>
-                    <div className="w-4 h-3 bg-white"></div>
-                    <div className="w-4 h-3 bg-orange-500"></div>
-                  </div>
+                        <div className="w-4 h-3 bg-black"></div>
+                        <div className="w-4 h-3 bg-green-500"></div>
+                        <div className="w-4 h-3 bg-yellow-400"></div>
+                        <div className="w-4 h-3 bg-white"></div>
+                        <div className="w-4 h-3 bg-red-600"></div>
+                        <div className="w-4 h-3 bg-blue-600"></div>
+                      </div>
+
                   
                   
                   {/* Game board preview inside box */}
