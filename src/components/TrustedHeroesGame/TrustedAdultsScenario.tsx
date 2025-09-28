@@ -7,7 +7,7 @@ import { trustedHeroesContent } from '../../data/trustedHeroesContent';
 import { elevenLabsService } from '../../services/elevenLabsService';
 import doctorExam from '../../assets/doctorExam.jpg'
 import student from '../../assets/student.jpg'
-import neighbour from '../../assets/neighbour.gif'
+
 import stranger from '../../assets/strangerSweets.jpg'
 
 interface TrustedAdultsScenarioProps {
