@@ -23,6 +23,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
   const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
   const [showBraveVoiceGame, setShowBraveVoiceGame] = React.useState(false);
+  
   if (!isOpen || !game) return null;
 
   // Get translated content
@@ -44,6 +45,25 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   };
 
   const modalImage = getModalImage();
+
+  const handleStartLearning = () => {
+    trackGameStart(game.id, translatedTitle);
+    
+    if (game.id === '1') {
+      setShowSafeTouchGame(true);
+    } else if (game.id === '2') {
+      setShowTrustedHeroesGame(true);
+    } else if (game.id === '3') {
+      setShowBraveVoiceGame(true);
+    } else {
+      // For other games, show a placeholder
+      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
+      trackInteraction('coming_soon_game_click', {
+        game_id: game.id,
+        game_title: game.title[selectedLanguage]
+      });
+    }
+  };
 
   // Handle Safe Touch Detective game specifically
   if (showSafeTouchGame && game.id === '1') {
@@ -77,15 +97,9 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
           setShowBraveVoiceGame(false);
           onClose();
         }}
-
-      // For other games, show a placeholder
-      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
-      trackInteraction('coming_soon_game_click', {
-        game_id: game.id,
-        game_title: game.title[selectedLanguage]
-      });
-    }
-  };
+      />
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
