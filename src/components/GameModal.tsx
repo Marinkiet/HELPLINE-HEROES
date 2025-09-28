@@ -8,6 +8,7 @@ import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
 import { BraveVoiceGameContainer } from './BraveVoiceGame/BraveVoiceGameContainer';
+import { FeelingSafeAtHomeGameContainer } from './FeelingSafeAtHomeGame/FeelingSafeAtHomeGameContainer';
 import hug from '../assets/hug.jpg';
 import frontl from '../assets/frontl.png';
 import shout from '../assets/shout.jpg';
@@ -24,6 +25,7 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
   const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
   const [showBraveVoiceGame, setShowBraveVoiceGame] = React.useState(false);
+  const [showFeelingSafeAtHomeGame, setShowFeelingSafeAtHomeGame] = React.useState(false);
 
   if (!isOpen || !game) return null;
 
@@ -83,6 +85,18 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
     );
   }
 
+  // Handle Feeling Safe at Home game specifically
+  if (showFeelingSafeAtHomeGame && game.id === '9') {
+    return (
+      <FeelingSafeAtHomeGameContainer 
+        onClose={() => {
+          setShowFeelingSafeAtHomeGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
   const handleStartLearning = () => {
     if (game.id === '1') {
       setShowSafeTouchGame(true);
@@ -93,9 +107,12 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
     } else if (game.id === '3') {
       setShowBraveVoiceGame(true);
       trackGameStart('3', game.title[selectedLanguage]);
+    } else if (game.id === '9') {
+      setShowFeelingSafeAtHomeGame(true);
+      trackGameStart('9', game.title[selectedLanguage]);
     } else {
       // For other games, show a placeholder
-      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
+      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, Brave Voice, and Feeling Safe at Home.');
       trackInteraction('coming_soon_game_click', {
         game_id: game.id,
         game_title: game.title[selectedLanguage]
