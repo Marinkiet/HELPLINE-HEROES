@@ -240,13 +240,10 @@ export function TouchScenarioGame({ onComplete }: TouchScenarioGameProps) {
           )}
           {currentScenario === 2 && (
             <div className="flex justify-center mb-6">
-              <video 
-                src={bathtimeMp4} 
-                autoPlay
-                loop
-                muted
+              <img 
+                src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/bathtime.gif"
+                alt="Parent helping child with bath time"
                 className="w-100 h-auto rounded-lg"
-                aria-label="Parent helping child with bath time"
               />
             </div>
           )}

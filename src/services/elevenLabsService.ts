@@ -55,11 +55,16 @@ class ElevenLabsService {
           console.log('✅ Real Eleven Labs speech generated successfully!');
           return audioUrl;
         } else {
-          const errorText = await response.text();
-          console.error('❌ Eleven Labs API error:', response.status, response.statusText, errorText);
+          if (response.status === 401) {
+            const errorText = await response.text();
+            console.warn('⚠️ Eleven Labs API quota exceeded, falling back to simulated audio:', errorText);
+          } else {
+            const errorText = await response.text();
+            console.error('❌ Eleven Labs API error:', response.status, response.statusText, errorText);
+          }
         }
       } catch (error) {
-        console.error('❌ Eleven Labs API request failed:', error);
+        console.warn('⚠️ Eleven Labs API request failed, falling back to simulated audio:', error);
       }
     }
     
