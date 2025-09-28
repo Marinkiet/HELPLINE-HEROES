@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, Facebook, Instagram, Twitter } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
+import { useEngagement } from '../contexts/EngagementContext';
 
 interface CardGamesBlankPageProps {
   onBack: () => void;
@@ -8,6 +9,7 @@ interface CardGamesBlankPageProps {
 
 export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
   const { selectedLanguage } = useAudio();
+  const { trackInteraction } = useEngagement();
   const [showHowToPlay, setShowHowToPlay] = React.useState(false);
   const [showPurchaseModal, setShowPurchaseModal] = React.useState(false);
   const [selectedGameLanguage, setSelectedGameLanguage] = React.useState('english');
@@ -27,6 +29,101 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
 
   const gamePrice = 150; // R150 per box
   const totalPrice = gamePrice * quantity;
+
+  // Content translations
+  const content = {
+    title: {
+      en: "HELPLINE HEROES",
+      af: "HULPLYN HELDE",
+      zu: "AMAQHAWE OMUGQA WOSIZO",
+      xh: "AMAQHAWE OMGCA WONCEDO",
+      st: "LIQHAWE TSA MOHALA WA THUSO",
+      tn: "DIQHAKGA TSA MOGALA WA THUSO",
+      ts: "TIQHAKGA TA RIQINGHO RA MPFUNO",
+      ve: "MAGWALA A LUTINGO LWA THUSO",
+      nr: "AMAQHAWE OMUGQA WOSIZO",
+      nso: "MAGWALA A MOGALA WA THUŠO"
+    },
+    subtitle: {
+      en: "where kids learn to recognize, resist & report",
+      af: "waar kinders leer om te herken, weerstand te bied en te rapporteer",
+      zu: "lapho izingane zifunda ukubona, ukumelana nokubika",
+      xh: "apho abantwana bafunda ukuqonda, ukumelana nokuxela",
+      st: "moo bana ba ithutang ho tseba, ho hanyetsa le ho bega",
+      tn: "koo bana ba ithutang go lemoga, go lwantsha le go begela",
+      ts: "laha vana va dyondzaka ku vona, ku lwisana na ku vika",
+      ve: "hune vhana vha gudaho u divha, u lwisana na u pfi",
+      nr: "lapho izingane zifunda ukubona, ukumelana nokubika",
+      nso: "moo bana ba ithutago go lemoga, go lwantšha le go begela"
+    },
+    howToPlay: {
+      en: "How To Play",
+      af: "Hoe Om Te Speel",
+      zu: "Indlela Yokudlala",
+      xh: "Indlela Yokudlala",
+      st: "Tsela ea ho Bapala",
+      tn: "Tsela ya go Tshameka",
+      ts: "Ndlela yo Tlanga",
+      ve: "Ndila ya u Tamba",
+      nr: "Indlela Yokudlala",
+      nso: "Tsela ya go Bapalela"
+    },
+    buyTheGames: {
+      en: "Buy the Games",
+      af: "Koop die Speletjies",
+      zu: "Thenga Imidlalo",
+      xh: "Thenga Imidlalo",
+      st: "Reka Lipapali",
+      tn: "Reka Metshameko",
+      ts: "Xava Mintlangu",
+      ve: "Rengelani Mitambo",
+      nr: "Thenga Imidlalo",
+      nso: "Reka Metshameko"
+    },
+    mainDescription: {
+      en: "Trustline heroes is engaging, empowering & simple to play. An awareness-building board game that helps kids learn to recognize, resist & report unsafe situations.",
+      af: "Trustline heroes is boeiend, bemagtigend en maklik om te speel. 'n Bewustheidsbou-bordspel wat kinders help om onveilige situasies te herken, weerstand te bied en te rapporteer.",
+      zu: "I-Trustline heroes iyabandakanya, inikeza amandla futhi ilula ukuyidlala. Umdlalo webhodi owakha ukuqwashisa osiza izingane ukuthi zifunde ukubona, ukumelana nokubika izimo ezingaphephile.",
+      xh: "I-Trustline heroes iyabandakanya, inika amandla kwaye ilula ukuyidlala. Umdlalo webhodi owakha ulwazi onceda abantwana ukuba bafunde ukuqonda, ukumelana nokuxela iimeko ezingakhuselekanga.",
+      st: "Trustline heroes e khahlang, e matlafatsa 'me e bonolo ho e bapala. Papali ea boto e ahang tlhokomeliso e thusang bana ho ithuta ho tseba, ho hanyetsa le ho bega maemo a sa sireletsehang.",
+      tn: "Trustline heroes e kgatlhang, e nonofileng mme e motlhofo go e tshameka. Motshameko wa boto o o agang temogo o o thusang bana go ithuta go lemoga, go lwantsha le go begela maemo a a sa babalesegang.",
+      ts: "Trustline heroes yi tsakisa, yi pfumelela naswona yi olova ku yi tlanga. Ntlangu wa boto lowu akaka ku tiva lowu pfunaka vana ku dyondza ku vona, ku lwisana na ku vika swiyimo leswi nga hlayisekangiki.",
+      ve: "Trustline heroes yo takadza, yo fhulufhedzea nahone yo lalama u tamba. Mutambo wa boto u akaho ndivho u thusaho vhana u guda u divha, u lwisana na u pfi zwithu zwo sa vhushaaho.",
+      nr: "I-Trustline heroes iyabandakanya, inikeza amandla futhi ilula ukuyidlala. Umdlalo webhodi owakha ukuqwashisa osiza izingane ukuthi zifunde ukubona, ukumelana nokubika izimo ezingaphephile.",
+      nso: "Trustline heroes e kgahlišago, e maatlafatšago gomme e bonolo go e bapalela. Papadi ya boto ye e agago temogo ye e thušago bana go ithuta go lemoga, go lwantšha le go begela maemo a a sa šireletšegago."
+    },
+    howDoYouPlay: {
+      en: "How Do You Play?",
+      af: "Hoe Speel Jy?",
+      zu: "Udlala Kanjani?",
+      xh: "Udlala Njani?",
+      st: "U bapala Joang?",
+      tn: "O tshameka Jang?",
+      ts: "U tlanga Njhani?",
+      ve: "Ni tamba Hani?",
+      nr: "Udlala Kanjani?",
+      nso: "O bapalela Bjang?"
+    }
+  };
+
+  // Track language-aware interactions
+  const handleHowToPlayClick = () => {
+    setShowHowToPlay(true);
+    trackInteraction('how_to_play_click', {
+      page: 'card_games',
+      language: selectedLanguage
+    });
+  };
+
+  const handlePurchaseClick = () => {
+    setShowPurchaseModal(true);
+    trackInteraction('purchase_modal_open', {
+      page: 'card_games',
+      language: selectedLanguage,
+      selected_game_language: selectedGameLanguage,
+      quantity: quantity
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-400 via-yellow-300 to-yellow-200 relative overflow-hidden">
@@ -68,8 +165,8 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
 
             {/* Center - Main logo */}
             <div className="text-center">
-              <h1 className="text-4xl font-black text-yellow-400">HELPLINE HEROES</h1>
-              <p className="text-sm text-red-400 italic font-medium">where kids learn to recognize, resist & report</p>
+              <h1 className="text-4xl font-black text-yellow-400">{content.title[selectedLanguage]}</h1>
+              <p className="text-sm text-red-400 italic font-medium">{content.subtitle[selectedLanguage]}</p>
             </div>
 
             {/* Right side - Social media icons */}
@@ -90,16 +187,16 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
           <div className="border-t border-gray-700 py-3">
             <nav className="flex justify-center space-x-8 text-yellow-400 text-sm font-semibold">
               <span 
-                onClick={() => setShowHowToPlay(true)}
+                onClick={handleHowToPlayClick}
                 className="hover:text-yellow-300 cursor-pointer transition-colors"
               >
-                How To Play
+                {content.howToPlay[selectedLanguage]}
               </span>
               <span 
-                onClick={() => setShowPurchaseModal(true)}
+                onClick={handlePurchaseClick}
                 className="hover:text-yellow-300 cursor-pointer transition-colors"
               >
-                Buy the Games
+                {content.buyTheGames[selectedLanguage]}
               </span>
 
             </nav>
@@ -142,24 +239,14 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             {/* Center - Main text and button */}
             <div className="text-center">
               <h1 className="text-5xl lg:text-6xl font-black text-white mb-12 leading-tight drop-shadow-2xl">
-                Trustline heroes is engaging, empowering
-                <br />
-                <span className="text-4xl lg:text-2xl">& simple to play.</span>
-                <br />
-                <span className="text-4xl lg:text-2xl">An awareness-building</span>
-                <br />
-                <span className="text-4xl lg:text-2xl">board game that helps kids</span>
-                <br />
-                <span className="text-4xl lg:text-2xl">learn to recognize, resist & report</span>
-                <br />
-                <span className="text-4xl lg:text-2xl">unsafe situations.</span>
+                {content.mainDescription[selectedLanguage]}
               </h1>
               
               <button 
-                onClick={() => setShowHowToPlay(true)}
+                onClick={handleHowToPlayClick}
                 className="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-black text-2xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200 border-4 border-white"
               >
-                How Do You Play?
+                {content.howDoYouPlay[selectedLanguage]}
               </button>
             </div>
 
