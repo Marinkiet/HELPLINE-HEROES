@@ -240,7 +240,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             </div>
             {/* Cart count badge */}
             <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">{quantity}</span>
+              <span className="text-white text-sm font-bold">0</span>
             </div>
           </div>
         </div>
