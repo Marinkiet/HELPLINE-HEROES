@@ -73,7 +73,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">How To Play</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Buy the Games</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">30 Seconds of Facts</span>
-              <span className="hover:text-yellow-300 cursor-pointer transition-colors">News</span>
+
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">The story so far</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Contact</span>
             </nav>
