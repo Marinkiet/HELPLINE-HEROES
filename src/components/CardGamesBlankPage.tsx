@@ -163,20 +163,11 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                   
                   {/* Game board preview inside box */}
                   <div className="flex-1 bg-purple-700 rounded-lg p-3">
-                    <div className="grid grid-cols-6 gap-1 h-full">
-                      {Array.from({ length: 36 }, (_, i) => (
-                        <div
-                          key={i}
-                          className={`rounded-sm ${
-                            i % 6 === 0 ? 'bg-red-400' :
-                            i % 6 === 1 ? 'bg-green-400' :
-                            i % 6 === 2 ? 'bg-blue-400' : 
-                            i % 6 === 3 ? 'bg-yellow-400' :
-                            i % 6 === 4 ? 'bg-orange-400' : 'bg-pink-400'
-                          }`}
-                        />
-                      ))}
-                    </div>
+                    <img 
+                      src="https://trustlineheroes.s3.eu-north-1.amazonaws.com/gamebaord.png"
+                      alt="Game Board"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
                   
                   {/* Ages indicator */}
