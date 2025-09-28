@@ -419,8 +419,8 @@ class EngagementService {
       if (response.ok) {
         const data = await response.json();
         
-        // Map region to South African provinces if country is South Africa
-        let mappedRegion = data.region;
+        // Only map region to South African provinces if country is South Africa
+        let mappedRegion = null;
         if (data.country_code === 'ZA' || data.country_name === 'South Africa') {
           mappedRegion = this.mapToSouthAfricanProvince(data.region, data.city);
         }
@@ -438,8 +438,8 @@ class EngagementService {
   }
 
   // Map location data to South African provinces
-  private mapToSouthAfricanProvince(region: string, city: string): string {
-    if (!region && !city) return 'Unknown';
+  private mapToSouthAfricanProvince(region: string, city: string): string | null {
+    if (!region && !city) return null;
     
     const regionLower = (region || '').toLowerCase();
     const cityLower = (city || '').toLowerCase();
@@ -503,8 +503,8 @@ class EngagementService {
       return 'North West';
     }
     
-    // Return original region if no mapping found
-    return region || 'Unknown';
+    // Return null if no mapping found to avoid constraint violation
+    return null;
   }
 
   // Get session ID for external use
