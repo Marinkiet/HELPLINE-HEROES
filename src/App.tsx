@@ -15,6 +15,7 @@ import { GameGrid } from './components/GameGrid';
 import { SearchBar } from './components/SearchBar';
 import { GameModal } from './components/GameModal';
 import { CardGamesPage } from './components/CardGamesPage';
+import { CardGamesBlankPage } from './components/CardGamesBlankPage';
 import { games, Game } from './data/games';
 import { appContent } from './data/appContent';
 import kidsbg from './assets/kidsbg.jpg';
@@ -174,7 +175,7 @@ function AppContent() {
 
   // Show card games page
   if (showCardGames) {
-    return <CardGamesPage onBack={handleBackFromCardGames} />;
+    return <CardGamesBlankPage onBack={handleBackFromCardGames} />;
   }
 
   // Show age selection if no age group is selected
