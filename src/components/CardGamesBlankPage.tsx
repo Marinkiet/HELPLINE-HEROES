@@ -9,6 +9,24 @@ interface CardGamesBlankPageProps {
 export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
   const { selectedLanguage } = useAudio();
   const [showHowToPlay, setShowHowToPlay] = React.useState(false);
+  const [showPurchaseModal, setShowPurchaseModal] = React.useState(false);
+  const [selectedGameLanguage, setSelectedGameLanguage] = React.useState('english');
+  const [quantity, setQuantity] = React.useState(1);
+
+  const gameLanguages = [
+    { code: 'english', name: 'English' },
+    { code: 'zulu', name: 'Zulu' },
+    { code: 'xhosa', name: 'Xhosa' },
+    { code: 'sesotho', name: 'Sesotho' },
+    { code: 'setswana', name: 'Setswana' },
+    { code: 'tsonga', name: 'Tsonga' },
+    { code: 'south_ndebele', name: 'South Ndebele' },
+    { code: 'venda', name: 'Venda' },
+    { code: 'northern_sotho', name: 'Northern Sotho (Sepedi)' }
+  ];
+
+  const gamePrice = 150; // R150 per box
+  const totalPrice = gamePrice * quantity;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-400 via-yellow-300 to-yellow-200 relative overflow-hidden">
@@ -77,7 +95,12 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
               >
                 How To Play
               </span>
-              <span className="hover:text-yellow-300 cursor-pointer transition-colors">Buy the Games</span>
+              <span 
+                onClick={() => setShowPurchaseModal(true)}
+                className="hover:text-yellow-300 cursor-pointer transition-colors"
+              >
+                Buy the Games
+              </span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Helpline Heroes of Facts</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">The story so far</span>
               <span className="hover:text-yellow-300 cursor-pointer transition-colors">Contact</span>
@@ -217,7 +240,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             </div>
             {/* Cart count badge */}
             <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">0</span>
+              <span className="text-white text-sm font-bold">{quantity}</span>
             </div>
           </div>
         </div>
@@ -433,7 +456,13 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                   Get your Helpline Heroes card game and start building safety awareness in your community!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200">
+                  <button 
+                    onClick={() => setShowPurchaseModal(true)}
+                    className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200"
+                  <button 
+                    onClick={() => setShowPurchaseModal(true)}
+                    className="bg-white text-purple-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-200"
+                  >
                     Buy the Game
                   </button>
                   <button 
@@ -443,6 +472,195 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
                     Back to Games
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Purchase Modal */}
+      {showPurchaseModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-t-3xl">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-black">Buy Helpline Heroes Card Game</h2>
+                <button
+                  onClick={() => setShowPurchaseModal(false)}
+                  className="text-white hover:text-gray-200 p-2 hover:bg-white/20 rounded-full transition-colors duration-200"
+                  aria-label="Close purchase modal"
+                >
+                  <ArrowLeft className="w-8 h-8" />
+                </button>
+              </div>
+              <p className="text-blue-100 text-lg font-semibold mt-2">
+                The complete physical card game for home, school, or community use
+              </p>
+            </div>
+
+            <div className="p-8 space-y-6">
+              {/* Product Overview */}
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-xl">
+                <h3 className="text-2xl font-bold text-blue-800 mb-4">📦 What's Included</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white p-4 rounded-xl text-center shadow-sm">
+                    <div className="text-3xl mb-2">🎲</div>
+                    <h4 className="font-bold text-blue-800 mb-1">Game Board</h4>
+                    <p className="text-blue-700 text-sm">Colorful safety topic progression board</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl text-center shadow-sm">
+                    <div className="text-3xl mb-2">🃏</div>
+                    <h4 className="font-bold text-blue-800 mb-1">Question Cards</h4>
+                    <p className="text-blue-700 text-sm">100+ educational safety questions</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl text-center shadow-sm">
+                    <div className="text-3xl mb-2">🎯</div>
+                    <h4 className="font-bold text-blue-800 mb-1">Game Pieces</h4>
+                    <p className="text-blue-700 text-sm">Dice and player tokens included</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pricing */}
+              <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
+                <div className="text-center mb-6">
+                  <h3 className="text-3xl font-black text-green-800 mb-2">💰 Pricing</h3>
+                  <div className="text-6xl font-black text-green-600 mb-2">R{gamePrice}</div>
+                  <p className="text-green-700 text-lg font-semibold">per complete game box</p>
+                  <p className="text-green-600 text-sm">Includes board, cards, dice & instructions</p>
+                </div>
+              </div>
+
+              {/* Language Selection */}
+              <div className="bg-purple-50 border border-purple-200 rounded-2xl p-6">
+                <h3 className="text-2xl font-bold text-purple-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">🌍</span>
+                  Choose Your Game Language
+                </h3>
+                <p className="text-purple-700 mb-4">
+                  Select the language for your card game. All questions, instructions, and game materials will be in your chosen language.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {gameLanguages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => setSelectedGameLanguage(lang.code)}
+                      className={`p-3 rounded-xl font-semibold transition-all duration-200 ${
+                        selectedGameLanguage === lang.code
+                          ? 'bg-purple-600 text-white shadow-lg'
+                          : 'bg-white text-purple-700 hover:bg-purple-100 border border-purple-200'
+                      }`}
+                    >
+                      {lang.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quantity Selection */}
+              <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6">
+                <h3 className="text-2xl font-bold text-orange-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">📊</span>
+                  Quantity
+                </h3>
+                <div className="flex items-center justify-center space-x-4">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold w-12 h-12 rounded-full transition-colors duration-200"
+                  >
+                    -
+                  </button>
+                  <div className="bg-white border-2 border-orange-300 rounded-xl px-6 py-3 min-w-[80px] text-center">
+                    <span className="text-2xl font-bold text-orange-800">{quantity}</span>
+                  </div>
+                  <button
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold w-12 h-12 rounded-full transition-colors duration-200"
+                  >
+                    +
+                  </button>
+                </div>
+                <p className="text-center text-orange-700 mt-3 font-semibold">
+                  Perfect for classrooms - order multiple sets for group activities!
+                </p>
+              </div>
+
+              {/* Order Summary */}
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">📋 Order Summary</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700 font-semibold">Game Language:</span>
+                    <span className="text-gray-800 font-bold">
+                      {gameLanguages.find(lang => lang.code === selectedGameLanguage)?.name}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700 font-semibold">Quantity:</span>
+                    <span className="text-gray-800 font-bold">{quantity} box{quantity > 1 ? 'es' : ''}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-700 font-semibold">Price per box:</span>
+                    <span className="text-gray-800 font-bold">R{gamePrice}</span>
+                  </div>
+                  <div className="border-t border-gray-300 pt-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xl font-bold text-gray-800">Total:</span>
+                      <span className="text-3xl font-black text-green-600">R{totalPrice}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Educational Benefits */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6">
+                <h3 className="text-2xl font-bold text-yellow-800 mb-4 flex items-center">
+                  <span className="text-3xl mr-3">🎓</span>
+                  Educational Benefits
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-bold text-yellow-800 mb-2">🏠 For Families:</h4>
+                    <ul className="text-yellow-700 space-y-1 text-sm">
+                      <li>• Start important safety conversations at home</li>
+                      <li>• Age-appropriate content for different children</li>
+                      <li>• Fun way to reinforce digital safety lessons</li>
+                      <li>• Quality family bonding time</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-yellow-800 mb-2">🏫 For Educators:</h4>
+                    <ul className="text-yellow-700 space-y-1 text-sm">
+                      <li>• Curriculum-aligned safety education</li>
+                      <li>• Interactive group learning activities</li>
+                      <li>• Facilitator guide included</li>
+                      <li>• Supports classroom discussions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Purchase Actions */}
+              <div className="text-center bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-4">Ready to Order?</h3>
+                <p className="text-blue-100 mb-6">
+                  Get your Helpline Heroes card game delivered to your door!
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="bg-white text-purple-600 font-bold py-4 px-8 rounded-xl hover:bg-gray-100 transition-colors duration-200 text-lg">
+                    🛒 Add to Cart - R{totalPrice}
+                  </button>
+                  <button 
+                    onClick={() => setShowPurchaseModal(false)}
+                    className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-xl transition-colors duration-200 text-lg"
+                  >
+                    Continue Browsing
+                  </button>
+                </div>
+                <p className="text-blue-100 text-sm mt-4">
+                  Free shipping within South Africa • 30-day money-back guarantee
+                </p>
               </div>
             </div>
           </div>
