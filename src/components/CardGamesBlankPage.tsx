@@ -50,7 +50,7 @@ export function CardGamesBlankPage({ onBack }: CardGamesBlankPageProps) {
             {/* Center - Main logo */}
             <div className="text-center">
               <h1 className="text-4xl font-black text-yellow-400">HELPLINE HEROES</h1>
-              <p className="text-sm text-red-400 italic font-medium">the quick thinking fast talking game</p>
+              <p className="text-sm text-red-400 italic font-medium">where kids learn to recognize, resist & report</p>
             </div>
 
             {/* Right side - Social media icons */}
