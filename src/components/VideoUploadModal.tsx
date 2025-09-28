@@ -26,7 +26,7 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUp
           url: "hhttps://youtu.be/QCSYmKo_QXs0",
           title: "🕵️ Safe Touch Detective: Good Touch vs Bad Touch",
           description: "Learn the difference between safe touches and unsafe touches to keep your body safe!",
-          duration: "4:32",
+          duration: "0:53",
           infoTitle: "Safe Touch Education Video",
           infoDescription: "This educational video teaches children about the difference between good touches and bad touches. Learn about private parts, trusted adults, and how to say \"NO\" to unsafe touches."
         };
