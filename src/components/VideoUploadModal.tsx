@@ -32,7 +32,7 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUp
         };
       case '2': // Trusted Heroes Circle
         return {
-          url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0",
+          url: "",
           title: "💖 Trusted Heroes Circle: Who Can You Trust?",
           description: "Meet your trusted heroes and learn who you can talk to when you need help!",
           duration: "3:45",
