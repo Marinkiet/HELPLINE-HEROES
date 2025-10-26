@@ -41,7 +41,7 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUp
         };
       case '3': // Brave Voice
         return {
-          url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&modestbranding=1&rel=0",
+          url: "",
           title: "🎤 Brave Voice: Speaking Up for Safety",
           description: "Learn how to use your brave voice to stay safe and help others!",
           duration: "4:15",
