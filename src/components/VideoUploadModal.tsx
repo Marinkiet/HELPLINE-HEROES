@@ -23,7 +23,7 @@ export function VideoUploadModal({ isOpen, onClose, gameTitle, gameId }: VideoUp
     switch (gameId) {
       case '1': // Safe Touch Detective
         return {
-          url: "https://www.youtube.com/embed/QCSYmKo_QXs?autoplay=1&controls=1&modestbranding=1&rel=0",
+          url: "https://trustlineheroes.s3.eu-north-1.amazonaws.com/video4kids+(1).mp4",
           title: "🕵️ Safe Touch Detective: Good Touch vs Bad Touch",
           description: "Learn the difference between safe touches and unsafe touches to keep your body safe!",
           duration: "00:53",
