@@ -1,9 +1,10 @@
 import { AudioConfig, VOICE_IDS } from '../types/audio';
+import { pollyService } from './pollyService';
 
 class ElevenLabsService {
   private apiKey: string = '';
   private baseUrl = 'https://api.elevenlabs.io/v1';
-  
+
   constructor() {
     // Get API key from environment variables
     this.apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY || '';
@@ -57,17 +58,30 @@ class ElevenLabsService {
         } else {
           if (response.status === 401) {
             const errorText = await response.text();
-            console.warn('⚠️ Eleven Labs API quota exceeded, falling back to simulated audio:', errorText);
+            console.warn('⚠️ Eleven Labs API authentication failed (401), trying AWS Polly fallback:', errorText);
           } else {
             const errorText = await response.text();
             console.error('❌ Eleven Labs API error:', response.status, response.statusText, errorText);
           }
         }
       } catch (error) {
-        console.warn('⚠️ Eleven Labs API request failed, falling back to simulated audio:', error);
+        console.warn('⚠️ Eleven Labs API request failed, trying AWS Polly fallback:', error);
       }
     }
-    
+
+    // Try AWS Polly as fallback
+    if (pollyService.isConfigured()) {
+      try {
+        console.log('🔄 Attempting AWS Polly fallback...');
+        const audioUrl = await pollyService.generateSpeech(config);
+        return audioUrl;
+      } catch (error) {
+        console.warn('⚠️ AWS Polly fallback failed, using simulated audio:', error);
+      }
+    } else {
+      console.log('⚠️ AWS Polly not configured, skipping fallback...');
+    }
+
     console.log('⚠️ Falling back to simulated audio...');
     
     // FALLBACK SIMULATED AUDIO (Used when API fails or no key provided)
@@ -130,14 +144,16 @@ class ElevenLabsService {
   // Generate star click sound effect
   async generateStarClickSound(): Promise<string> {
     console.log('⭐ Generating star click sound effect...');
-    
+
+    // Try to use a simpler synthetic sound for star clicks
+    // (Polly not ideal for sound effects)
     try {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
       const sampleRate = audioContext.sampleRate;
       const duration = 0.5; // Short sound effect
       const buffer = audioContext.createBuffer(1, sampleRate * duration, sampleRate);
       const data = buffer.getChannelData(0);
-      
+
       // Create a magical "ding" sound for star clicks
       for (let i = 0; i < data.length; i++) {
         const time = i / sampleRate;
@@ -146,14 +162,14 @@ class ElevenLabsService {
                       Math.sin(2 * Math.PI * 1108 * time) * 0.3 * Math.exp(-time * 4) + // Higher harmonic
                       Math.sin(2 * Math.PI * 1318 * time) * 0.2 * Math.exp(-time * 5) + // Even higher
                       Math.sin(2 * Math.PI * 440 * time) * 0.1 * Math.exp(-time * 2);   // Lower foundation
-        
+
         data[i] = sample;
       }
-      
+
       const audioBuffer = this.bufferToWave(buffer);
       const audioBlob = new Blob([audioBuffer], { type: 'audio/wav' });
       const audioUrl = URL.createObjectURL(audioBlob);
-      
+
       console.log('✅ Star click sound effect created!');
       return audioUrl;
     } catch (error) {
