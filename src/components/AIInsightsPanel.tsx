@@ -16,11 +16,12 @@ export function AIInsightsPanel() {
     try {
       setLoading(true);
       setError(null);
-      const data = await educationalAnalysisService.generateComprehensiveAnalysis(30);
+      // Use GPT-4 Turbo powered analysis
+      const data = await educationalAnalysisService.generateGPTAnalysis(30);
       setAnalysis(data);
     } catch (err) {
       console.error('Error loading analysis:', err);
-      setError('Failed to load AI insights');
+      setError('Failed to load AI insights. Please check your OpenAI API configuration.');
     } finally {
       setLoading(false);
     }
@@ -70,7 +71,10 @@ export function AIInsightsPanel() {
       <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-          <p className="ml-4 text-gray-600">Analyzing performance data...</p>
+          <div className="ml-4">
+            <p className="text-gray-900 font-medium">GPT-4 Turbo is analyzing your data...</p>
+            <p className="text-gray-500 text-sm mt-1">This may take 10-15 seconds</p>
+          </div>
         </div>
       </div>
     );
@@ -111,7 +115,7 @@ export function AIInsightsPanel() {
             <div>
               <h2 className="text-2xl font-bold">AI Educational Insights</h2>
               <p className="text-purple-100 text-sm">
-                Analysis generated {analysis.generatedAt.toLocaleDateString()}
+                Powered by GPT-4 Turbo • Analysis generated {analysis.generatedAt.toLocaleDateString()}
               </p>
             </div>
           </div>

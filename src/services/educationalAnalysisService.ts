@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { openaiService } from './openaiService';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -568,6 +569,129 @@ class EducationalAnalysisService {
       console.error('Error in getQuestionInsights:', error);
       return [];
     }
+  }
+
+  /**
+   * Generate GPT-4 Turbo powered comprehensive analysis
+   */
+  async generateGPTAnalysis(
+    daysBack: number = 30
+  ): Promise<ComprehensiveAnalysis | null> {
+    try {
+      // Check if OpenAI is configured
+      if (!openaiService.isConfigured()) {
+        console.warn('OpenAI not configured, falling back to rule-based analysis');
+        return await this.generateComprehensiveAnalysis(daysBack);
+      }
+
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - daysBack);
+
+      // Fetch raw performance data
+      const patterns = await this.getPerformanceByCategory();
+      const questionInsights = await this.getQuestionInsights('all');
+
+      // Fetch overall metrics
+      const { data: overallData } = await supabase
+        .from('game_sessions')
+        .select('session_id, points_earned, duration_seconds, completed')
+        .gte('created_at', startDate.toISOString());
+
+      const { data: responseData } = await supabase
+        .from('detailed_question_responses')
+        .select('is_correct, question_category, player_id, players!inner(age_group, province)')
+        .gte('created_at', startDate.toISOString());
+
+      // Prepare data for GPT analysis
+      const performanceData = {
+        dateRange: {
+          start: startDate.toISOString(),
+          end: endDate.toISOString(),
+          days: daysBack
+        },
+        overallMetrics: {
+          totalStudents: new Set(overallData?.map(s => s.session_id) || []).size,
+          totalGamesPlayed: overallData?.length || 0,
+          totalQuestionsAnswered: responseData?.length || 0,
+          overallAccuracy: responseData && responseData.length > 0
+            ? (responseData.filter(r => r.is_correct).length / responseData.length) * 100
+            : 0,
+          avgSessionDuration: overallData && overallData.length > 0
+            ? overallData.reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / overallData.length
+            : 0
+        },
+        performanceByCategory: patterns.slice(0, 10), // Top 10 lowest performing
+        performanceByAgeGroup: this.aggregateByDemographic(responseData || [], 'age_group'),
+        performanceByProvince: this.aggregateByDemographic(responseData || [], 'province'),
+        difficultQuestions: questionInsights.slice(0, 5) // Top 5 most difficult
+      };
+
+      // Call GPT-4 Turbo for analysis
+      const gptResponse = await openaiService.analyzeEducationalData(performanceData);
+
+      if (!gptResponse.success || !gptResponse.data) {
+        console.error('GPT analysis failed:', gptResponse.error);
+        return await this.generateComprehensiveAnalysis(daysBack);
+      }
+
+      // Parse GPT response
+      let gptAnalysis;
+      try {
+        gptAnalysis = typeof gptResponse.data === 'string'
+          ? JSON.parse(gptResponse.data)
+          : gptResponse.data;
+      } catch (parseError) {
+        console.error('Failed to parse GPT response:', parseError);
+        return await this.generateComprehensiveAnalysis(daysBack);
+      }
+
+      // Map GPT analysis to our format
+      return {
+        generatedAt: new Date(),
+        dataDateRange: {
+          start: startDate,
+          end: endDate
+        },
+        overallMetrics: performanceData.overallMetrics,
+        identifiedIssues: gptAnalysis.identifiedIssues || [],
+        recommendations: gptAnalysis.recommendations || [],
+        trendAnalysis: gptAnalysis.trendAnalysis || {
+          improvingAreas: [],
+          decliningAreas: [],
+          stableAreas: []
+        }
+      };
+    } catch (error) {
+      console.error('Error generating GPT analysis:', error);
+      return await this.generateComprehensiveAnalysis(daysBack);
+    }
+  }
+
+  /**
+   * Helper: Aggregate performance by demographic
+   */
+  private aggregateByDemographic(data: any[], field: 'age_group' | 'province') {
+    const grouped = data.reduce((acc: any, item: any) => {
+      const key = item.players?.[field] || 'unknown';
+      if (!acc[key]) {
+        acc[key] = {
+          category: key,
+          total: 0,
+          correct: 0
+        };
+      }
+      acc[key].total++;
+      if (item.is_correct) acc[key].correct++;
+      return acc;
+    }, {});
+
+    return Object.values(grouped).map((g: any) => ({
+      category: g.category,
+      totalResponses: g.total,
+      correctResponses: g.correct,
+      accuracyRate: (g.correct / g.total) * 100
+    })).sort((a: any, b: any) => a.accuracyRate - b.accuracyRate);
   }
 }
 
