@@ -22,7 +22,7 @@ interface GPTResponse {
 class OpenAIService {
   private apiKey: string;
   private baseUrl = 'https://api.openai.com/v1/chat/completions';
-  private model = 'gpt-o3';
+  private model = 'GPT‑3.5‑turbo';
 
   constructor() {
     this.apiKey = import.meta.env.VITE_OPENAI_API_KEY || '';
