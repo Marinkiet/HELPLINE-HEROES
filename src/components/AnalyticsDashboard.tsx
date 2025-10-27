@@ -528,9 +528,15 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
               <button
                 onClick={generateAISuggestions}
                 disabled={loadingAI}
-                className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+                className="bg-purple-600 hover:bg-prple-700 disabled:bg-purple-400 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
               >
-               
+                <Brain className="w-4 h-4" />
+                <span>{loadingAI ? 'Analyzing...' : 'Q Suggestions'}</span>
+              </button>
+              <button
+                onClick={handleShowTrackingInfo}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+              >
                 <Database className="w-4 h-4" />
                 <span>Tracking Info</span>
               </button>
