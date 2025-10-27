@@ -525,7 +525,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                 <Activity className="w-4 h-4" />
                 <span>Refresh</span>
               </button>
-             AI ? 'Analyzing...' : 'Q Suggestions'}</span>
+              
               </button>
               <button
                 onClick={handleShowTrackingInfo}
