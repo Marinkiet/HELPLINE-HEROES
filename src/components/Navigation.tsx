@@ -1,14 +1,15 @@
 import React from 'react';
-import { Shield, Volume2, VolumeX, Globe, ArrowLeft, BarChart3 } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Globe, ArrowLeft, BarChart3, BookOpen } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 import { LANGUAGES } from '../types/audio';
 
 interface NavigationProps {
   onBackToAgeSelection?: () => void;
   onShowAnalytics?: () => void;
+  onShowDataStorytelling?: () => void;
 }
 
-export function Navigation({ onBackToAgeSelection, onShowAnalytics }: NavigationProps) {
+export function Navigation({ onBackToAgeSelection, onShowAnalytics, onShowDataStorytelling }: NavigationProps) {
   const { isNarrationEnabled, toggleNarration, selectedLanguage, setSelectedLanguage } = useAudio();
 
   return (
@@ -48,7 +49,19 @@ export function Navigation({ onBackToAgeSelection, onShowAnalytics }: Navigation
               </button>
             )}
 
-  
+            {/* Data Storytelling Button */}
+            {onShowDataStorytelling && (
+              <button
+                onClick={onShowDataStorytelling}
+                className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md hover:bg-gray-50 transition-colors duration-200"
+                aria-label="View Data Stories"
+              >
+                <BookOpen className="w-4 h-4 text-purple-600" />
+                <span className="text-sm font-semibold text-gray-700">Stories</span>
+              </button>
+            )}
+
+
 
             {/* Language Selector */}
             <div className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md">
@@ -105,6 +118,18 @@ export function Navigation({ onBackToAgeSelection, onShowAnalytics }: Navigation
               >
                 <BarChart3 className="w-4 h-4 text-blue-600" />
                 <span className="text-sm font-semibold text-gray-700">Analytics</span>
+              </button>
+            )}
+
+            {/* Mobile Data Storytelling Button */}
+            {onShowDataStorytelling && (
+              <button
+                onClick={onShowDataStorytelling}
+                className="flex items-center space-x-2 bg-white rounded-lg p-2 shadow-md hover:bg-gray-50 transition-colors duration-200"
+                aria-label="View Data Stories"
+              >
+                <BookOpen className="w-4 h-4 text-purple-600" />
+                <span className="text-sm font-semibold text-gray-700">Stories</span>
               </button>
             )}
 

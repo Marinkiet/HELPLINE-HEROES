@@ -4,6 +4,7 @@ import { AudioProvider } from './contexts/AudioContext';
 import { EngagementProvider } from './contexts/EngagementContext';
 import { useEngagement } from './contexts/EngagementContext';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
+import { ResponsiveDataStorytellingDashboard } from './components/ResponsiveDataStorytellingDashboard';
 import { AgeSelection } from './components/AgeSelection';
 import { Age5to7Page } from './components/Age5to7Page';
 import { Navigation } from './components/Navigation';
@@ -37,6 +38,7 @@ function AppContent() {
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [showDataStorytelling, setShowDataStorytelling] = useState(false);
   const [hasSessionBeenInitialized, setHasSessionBeenInitialized] = useState(false);
   const [showCardGames, setShowCardGames] = useState(false);
 
@@ -173,6 +175,18 @@ function AppContent() {
     return <AnalyticsDashboard onBack={() => setShowAnalytics(false)} />;
   }
 
+  // Show data storytelling dashboard
+  if (showDataStorytelling) {
+    return (
+      <div>
+        <Navigation
+          onBackToAgeSelection={() => setShowDataStorytelling(false)}
+        />
+        <ResponsiveDataStorytellingDashboard />
+      </div>
+    );
+  }
+
   // Show card games page
   if (showCardGames) {
     return <CardGamesBlankPage onBack={handleBackFromCardGames} />;
@@ -196,9 +210,10 @@ function AppContent() {
   return (
       <div className="min-h-screen bg-yellow-300">
         <div className="relative z-10">
-          <Navigation 
+          <Navigation
             onBackToAgeSelection={handleBackToAgeSelection}
             onShowAnalytics={() => setShowAnalytics(true)}
+            onShowDataStorytelling={() => setShowDataStorytelling(true)}
           />
           <div className="w-full"
           style={{
