@@ -72,7 +72,7 @@ export function AIInsightsPanel() {
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
           <div className="ml-4">
-            <p className="text-gray-900 font-medium">GPT-4 Turbo is analyzing your data...</p>
+            <p className="text-gray-900 font-medium">Analyzing your data...</p>
             <p className="text-gray-500 text-sm mt-1">This may take 10-15 seconds</p>
           </div>
         </div>
