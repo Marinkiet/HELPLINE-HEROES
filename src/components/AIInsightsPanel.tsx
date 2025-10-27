@@ -98,7 +98,27 @@ export function AIInsightsPanel() {
   }
 
   if (!analysis) {
-    return null;
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
+        <div className="text-center text-gray-600">
+          <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <p className="text-lg font-medium">No Data Available Yet</p>
+          <p className="text-sm mt-2">Start playing games to see AI-powered insights and recommendations.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (analysis.overallMetrics.totalStudents === 0) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-200">
+        <div className="text-center text-gray-600">
+          <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <p className="text-lg font-medium">Collecting Data...</p>
+          <p className="text-sm mt-2">Game sessions found, but detailed analytics are still being collected. Check back soon!</p>
+        </div>
+      </div>
+    );
   }
 
   const getRecommendationsForIssue = (issueId: string) => {

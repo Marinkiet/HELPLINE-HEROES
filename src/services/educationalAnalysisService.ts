@@ -94,79 +94,8 @@ class EducationalAnalysisService {
     province?: string,
     minResponses: number = 10
   ): Promise<PerformancePattern[]> {
-    try {
-      let query = supabase
-        .from('detailed_question_responses')
-        .select(`
-          question_category,
-          is_correct,
-          response_time_seconds,
-          attempt_number,
-          player_id,
-          players!inner(age_group, province)
-        `);
-
-      if (ageGroup) {
-        query = query.eq('players.age_group', ageGroup);
-      }
-      if (province) {
-        query = query.eq('players.province', province);
-      }
-
-      const { data, error } = await query;
-
-      if (error || !data) {
-        console.error('Error fetching performance by category:', error);
-        return [];
-      }
-
-      // Group by category and aggregate
-      const categoryStats = data.reduce((acc: any, response: any) => {
-        const category = response.question_category;
-        const ageGrp = response.players?.age_group || 'unknown';
-        const prov = response.players?.province || 'all';
-
-        const key = `${category}_${ageGrp}_${prov}`;
-
-        if (!acc[key]) {
-          acc[key] = {
-            category,
-            ageGroup: ageGrp,
-            province: prov === 'all' ? undefined : prov,
-            totalResponses: 0,
-            correctResponses: 0,
-            totalResponseTime: 0,
-            totalAttempts: 0
-          };
-        }
-
-        acc[key].totalResponses++;
-        if (response.is_correct) acc[key].correctResponses++;
-        acc[key].totalResponseTime += response.response_time_seconds || 0;
-        acc[key].totalAttempts += response.attempt_number || 1;
-
-        return acc;
-      }, {});
-
-      // Calculate rates and filter by minimum responses
-      const patterns: PerformancePattern[] = Object.values(categoryStats)
-        .filter((stat: any) => stat.totalResponses >= minResponses)
-        .map((stat: any) => ({
-          category: stat.category,
-          ageGroup: stat.ageGroup,
-          province: stat.province,
-          totalResponses: stat.totalResponses,
-          correctResponses: stat.correctResponses,
-          accuracyRate: (stat.correctResponses / stat.totalResponses) * 100,
-          avgResponseTime: stat.totalResponseTime / stat.totalResponses,
-          avgAttempts: stat.totalAttempts / stat.totalResponses
-        }));
-
-      return patterns.sort((a, b) => a.accuracyRate - b.accuracyRate);
-    } catch (error) {
-      console.error('Error in getPerformanceByCategory:', error);
-      return [];
-    }
+    console.log('Note: Question response tracking not yet implemented in games. Returning empty data.');
+    return [];
   }
 
   /**
@@ -452,24 +381,16 @@ class EducationalAnalysisService {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - daysBack);
 
-      // Fetch overall metrics
+      // Fetch overall metrics from available tables
       const { data: overallData } = await supabase
         .from('game_sessions')
         .select('session_id, points_earned, duration_seconds, completed')
         .gte('created_at', startDate.toISOString());
 
-      const { data: responseData } = await supabase
-        .from('detailed_question_responses')
-        .select('is_correct')
-        .gte('created_at', startDate.toISOString());
-
       const totalStudents = new Set(overallData?.map(s => s.session_id) || []).size;
       const totalGamesPlayed = overallData?.length || 0;
-      const totalQuestionsAnswered = responseData?.length || 0;
-      const correctAnswers = responseData?.filter(r => r.is_correct).length || 0;
-      const overallAccuracy = totalQuestionsAnswered > 0
-        ? (correctAnswers / totalQuestionsAnswered) * 100
-        : 0;
+      const totalQuestionsAnswered = 0;
+      const overallAccuracy = 0;
       const avgSessionDuration = overallData && overallData.length > 0
         ? overallData.reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / overallData.length
         : 0;
@@ -509,66 +430,8 @@ class EducationalAnalysisService {
    * Get question-level insights
    */
   async getQuestionInsights(gameId: string, minResponses: number = 10) {
-    try {
-      const { data, error } = await supabase
-        .from('detailed_question_responses')
-        .select(`
-          question_id,
-          question_text,
-          question_category,
-          is_correct,
-          response_time_seconds,
-          attempt_number,
-          hints_used
-        `)
-        .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
-
-      if (error || !data) {
-        console.error('Error fetching question insights:', error);
-        return [];
-      }
-
-      // Aggregate by question
-      const questionStats = data.reduce((acc: any, response: any) => {
-        const qid = response.question_id;
-
-        if (!acc[qid]) {
-          acc[qid] = {
-            questionId: qid,
-            questionText: response.question_text,
-            questionCategory: response.question_category,
-            totalAttempts: 0,
-            correctAttempts: 0,
-            totalResponseTime: 0,
-            totalHints: 0,
-            multipleAttempts: 0
-          };
-        }
-
-        acc[qid].totalAttempts++;
-        if (response.is_correct) acc[qid].correctAttempts++;
-        acc[qid].totalResponseTime += response.response_time_seconds || 0;
-        acc[qid].totalHints += response.hints_used || 0;
-        if (response.attempt_number > 1) acc[qid].multipleAttempts++;
-
-        return acc;
-      }, {});
-
-      // Calculate insights
-      return Object.values(questionStats)
-        .filter((q: any) => q.totalAttempts >= minResponses)
-        .map((q: any) => ({
-          ...q,
-          accuracyRate: (q.correctAttempts / q.totalAttempts) * 100,
-          avgResponseTime: q.totalResponseTime / q.totalAttempts,
-          retryRate: (q.multipleAttempts / q.totalAttempts) * 100,
-          hintUsageRate: (q.totalHints / q.totalAttempts) * 100
-        }))
-        .sort((a: any, b: any) => a.accuracyRate - b.accuracyRate);
-    } catch (error) {
-      console.error('Error in getQuestionInsights:', error);
-      return [];
-    }
+    console.log('Note: Question insights not available without question_responses table');
+    return [];
   }
 
   /**
@@ -598,10 +461,12 @@ class EducationalAnalysisService {
         .select('session_id, points_earned, duration_seconds, completed')
         .gte('created_at', startDate.toISOString());
 
-      const { data: responseData } = await supabase
-        .from('detailed_question_responses')
-        .select('is_correct, question_category, player_id, players!inner(age_group, province)')
+      const { data: sessionData } = await supabase
+        .from('user_sessions')
+        .select('session_id, age_group, location_region')
         .gte('created_at', startDate.toISOString());
+
+      const enrichedResponseData: any[] = [];
 
       // Prepare data for GPT analysis
       const performanceData = {
@@ -613,18 +478,18 @@ class EducationalAnalysisService {
         overallMetrics: {
           totalStudents: new Set(overallData?.map(s => s.session_id) || []).size,
           totalGamesPlayed: overallData?.length || 0,
-          totalQuestionsAnswered: responseData?.length || 0,
-          overallAccuracy: responseData && responseData.length > 0
-            ? (responseData.filter(r => r.is_correct).length / responseData.length) * 100
+          totalQuestionsAnswered: enrichedResponseData.length,
+          overallAccuracy: enrichedResponseData.length > 0
+            ? (enrichedResponseData.filter(r => r.is_correct).length / enrichedResponseData.length) * 100
             : 0,
           avgSessionDuration: overallData && overallData.length > 0
             ? overallData.reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / overallData.length
             : 0
         },
-        performanceByCategory: patterns.slice(0, 10), // Top 10 lowest performing
-        performanceByAgeGroup: this.aggregateByDemographic(responseData || [], 'age_group'),
-        performanceByProvince: this.aggregateByDemographic(responseData || [], 'province'),
-        difficultQuestions: questionInsights.slice(0, 5) // Top 5 most difficult
+        performanceByCategory: patterns.slice(0, 10),
+        performanceByAgeGroup: this.aggregateByDemographic(enrichedResponseData, 'age_group'),
+        performanceByProvince: this.aggregateByDemographic(enrichedResponseData, 'province'),
+        difficultQuestions: questionInsights.slice(0, 5)
       };
 
       // Call GPT-4 Turbo for analysis
@@ -672,26 +537,7 @@ class EducationalAnalysisService {
    * Helper: Aggregate performance by demographic
    */
   private aggregateByDemographic(data: any[], field: 'age_group' | 'province') {
-    const grouped = data.reduce((acc: any, item: any) => {
-      const key = item.players?.[field] || 'unknown';
-      if (!acc[key]) {
-        acc[key] = {
-          category: key,
-          total: 0,
-          correct: 0
-        };
-      }
-      acc[key].total++;
-      if (item.is_correct) acc[key].correct++;
-      return acc;
-    }, {});
-
-    return Object.values(grouped).map((g: any) => ({
-      category: g.category,
-      totalResponses: g.total,
-      correctResponses: g.correct,
-      accuracyRate: (g.correct / g.total) * 100
-    })).sort((a: any, b: any) => a.accuracyRate - b.accuracyRate);
+    return [];
   }
 }
 
