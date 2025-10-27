@@ -525,13 +525,7 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
                 <Activity className="w-4 h-4" />
                 <span>Refresh</span>
               </button>
-              <button
-                onClick={generateAISuggestions}
-                disabled={loadingAI}
-                className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
-              >
-                <Brain className="w-4 h-4" />
-                <span>{loadingAI ? 'Analyzing...' : 'Q Suggestions'}</span>
+             AI ? 'Analyzing...' : 'Q Suggestions'}</span>
               </button>
               <button
                 onClick={handleShowTrackingInfo}
