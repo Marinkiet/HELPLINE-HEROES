@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BookOpen, TrendingUp, Users, Target, CheckCircle, XCircle, Clock, Star, Download, RefreshCw, Filter, Brain } from 'lucide-react';
+import { BookOpen, TrendingUp, Users, Target, CheckCircle, XCircle, Clock, Star, Download, RefreshCw, Filter, Brain, ArrowLeft } from 'lucide-react';
 import { analyticsService } from '../services/analyticsService';
 import type {
   LessonAnalyticsSummary,
@@ -8,7 +8,11 @@ import type {
   GPTAnalysisExport
 } from '../types/analytics';
 
-export function EducationalAnalyticsDashboard() {
+interface EducationalAnalyticsDashboardProps {
+  onBack?: () => void;
+}
+
+export function EducationalAnalyticsDashboard({ onBack }: EducationalAnalyticsDashboardProps) {
   const [lessonsSummary, setLessonsSummary] = useState<LessonAnalyticsSummary[]>([]);
   const [topPerforming, setTopPerforming] = useState<LessonAnalyticsSummary[]>([]);
   const [needsImprovement, setNeedsImprovement] = useState<LessonAnalyticsSummary[]>([]);
@@ -132,12 +136,23 @@ export function EducationalAnalyticsDashboard() {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-                <BookOpen className="w-8 h-8 mr-3 text-blue-600" />
-                Educational Analytics Dashboard
-              </h1>
-              <p className="text-gray-600 mt-1">Comprehensive lesson performance and engagement insights</p>
+            <div className="flex items-center space-x-4">
+              {onBack && (
+                <button
+                  onClick={onBack}
+                  className="bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full p-2 transition-colors duration-200"
+                  aria-label="Back"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                </button>
+              )}
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+                  <BookOpen className="w-8 h-8 mr-3 text-blue-600" />
+                  Educational Analytics Dashboard
+                </h1>
+                <p className="text-gray-600 mt-1">Comprehensive lesson performance and engagement insights</p>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <button

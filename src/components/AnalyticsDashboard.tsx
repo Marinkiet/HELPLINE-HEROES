@@ -28,7 +28,11 @@ interface AnalyticsData {
   };
 }
 
-export function AnalyticsDashboard() {
+interface AnalyticsDashboardProps {
+  onBack?: () => void;
+}
+
+export function AnalyticsDashboard({ onBack }: AnalyticsDashboardProps) {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -487,9 +491,20 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Trustline Heroes Analytics</h1>
-              <p className="text-gray-600 mt-1">User engagement and app performance insights</p>
+            <div className="flex items-center space-x-4">
+              {onBack && (
+                <button
+                  onClick={onBack}
+                  className="bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full p-2 transition-colors duration-200"
+                  aria-label="Back"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                </button>
+              )}
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Trustline Heroes Analytics</h1>
+                <p className="text-gray-600 mt-1">User engagement and app performance insights</p>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <select
