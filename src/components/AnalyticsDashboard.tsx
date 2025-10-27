@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { Users, Globe, Clock, Trophy, TrendingUp, MapPin, Languages, Gamepad as GamepadIcon, BarChart3, PieChart, Activity, Calendar, ArrowLeft, Brain, Lightbulb, Database, Shield, Eye, Settings } from 'lucide-react';
+import { AIInsightsPanel } from './AIInsightsPanel';
 
 // Initialize Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -545,6 +546,11 @@ ${i + 1}. **${q.accuracy}% accuracy** - "${q.question_text.substring(0, 100)}...
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* AI Insights Section */}
+        <div className="mb-8">
+          <AIInsightsPanel />
+        </div>
+
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
