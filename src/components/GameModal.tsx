@@ -8,6 +8,11 @@ import { helplineNumbers } from '../data/games';
 import { SafeTouchGameContainer } from './SafeTouchGame/SafeTouchGameContainer';
 import { TrustedHeroesGameContainer } from './TrustedHeroesGame/TrustedHeroesGameContainer';
 import { BraveVoiceGameContainer } from './BraveVoiceGame/BraveVoiceGameContainer';
+import { HelpAFriendGameContainer } from './HelpAFriendGame/HelpAFriendGameContainer';
+import { OnlineSafetyGameContainer } from './OnlineSafetyGame/OnlineSafetyGameContainer';
+import { FeelingSafeGameContainer } from './FeelingSafeGame/FeelingSafeGameContainer';
+import { BullyingResponseGameContainer } from './BullyingResponseGame/BullyingResponseGameContainer';
+import { ReportItRightGameContainer } from './ReportItRightGame/ReportItRightGameContainer';
 import hug from '../assets/hug.jpg';
 import frontl from '../assets/frontl.png';
 import shout from '../assets/shout.jpg';
@@ -24,6 +29,11 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   const [showSafeTouchGame, setShowSafeTouchGame] = React.useState(false);
   const [showTrustedHeroesGame, setShowTrustedHeroesGame] = React.useState(false);
   const [showBraveVoiceGame, setShowBraveVoiceGame] = React.useState(false);
+  const [showHelpAFriendGame, setShowHelpAFriendGame] = React.useState(false);
+  const [showOnlineSafetyGame, setShowOnlineSafetyGame] = React.useState(false);
+  const [showFeelingSafeGame, setShowFeelingSafeGame] = React.useState(false);
+  const [showBullyingResponseGame, setShowBullyingResponseGame] = React.useState(false);
+  const [showReportItRightGame, setShowReportItRightGame] = React.useState(false);
   
   if (!isOpen || !game) return null;
 
@@ -49,16 +59,25 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
 
   const handleStartLearning = () => {
     trackGameStart(game.id, translatedTitle);
-    
+
     if (game.id === '1') {
       setShowSafeTouchGame(true);
     } else if (game.id === '2') {
       setShowTrustedHeroesGame(true);
     } else if (game.id === '3') {
       setShowBraveVoiceGame(true);
+    } else if (game.id === '6') {
+      setShowHelpAFriendGame(true);
+    } else if (game.id === '7') {
+      setShowOnlineSafetyGame(true);
+    } else if (game.id === '9') {
+      setShowFeelingSafeGame(true);
+    } else if (game.id === '10') {
+      setShowBullyingResponseGame(true);
+    } else if (game.id === '12') {
+      setShowReportItRightGame(true);
     } else {
-      // For other games, show a placeholder
-      alert('This game is coming soon! For now, enjoy Safe Touch Detective, Trusted Heroes Circle, and Brave Voice.');
+      alert('This game is coming soon!');
       trackInteraction('coming_soon_game_click', {
         game_id: game.id,
         game_title: game.title[selectedLanguage]
@@ -93,9 +112,69 @@ export function GameModal({ game, isOpen, onClose }: GameModalProps) {
   // Handle Brave Voice game specifically
   if (showBraveVoiceGame && game.id === '3') {
     return (
-      <BraveVoiceGameContainer 
+      <BraveVoiceGameContainer
         onClose={() => {
           setShowBraveVoiceGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
+  // Handle Help a Friend game
+  if (showHelpAFriendGame && game.id === '6') {
+    return (
+      <HelpAFriendGameContainer
+        onClose={() => {
+          setShowHelpAFriendGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
+  // Handle Online Safety Shield game
+  if (showOnlineSafetyGame && game.id === '7') {
+    return (
+      <OnlineSafetyGameContainer
+        onClose={() => {
+          setShowOnlineSafetyGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
+  // Handle Feeling Safe at Home game
+  if (showFeelingSafeGame && game.id === '9') {
+    return (
+      <FeelingSafeGameContainer
+        onClose={() => {
+          setShowFeelingSafeGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
+  // Handle Bullying Response Team game
+  if (showBullyingResponseGame && game.id === '10') {
+    return (
+      <BullyingResponseGameContainer
+        onClose={() => {
+          setShowBullyingResponseGame(false);
+          onClose();
+        }}
+      />
+    );
+  }
+
+  // Handle Report It Right game
+  if (showReportItRightGame && game.id === '12') {
+    return (
+      <ReportItRightGameContainer
+        onClose={() => {
+          setShowReportItRightGame(false);
           onClose();
         }}
       />

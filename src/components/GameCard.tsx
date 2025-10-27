@@ -22,7 +22,7 @@ export function GameCard({ id, title, description, image, featured = false, onCl
   const translatedDescription = typeof description === 'object' ? description[selectedLanguage] : description;
 
   // Check if game has content available
-  const hasContent = ['1', '2', '3'].includes(id); // Safe Touch Detective, Trusted Heroes Circle, Brave Voice
+  const hasContent = ['1', '2', '3', '6', '7', '9', '10', '12'].includes(id); // All active games
 
   // Get background image based on game ID
   const getBackgroundImage = () => {
